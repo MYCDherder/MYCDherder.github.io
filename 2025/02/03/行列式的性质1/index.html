@@ -29,7 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
 
 
 
@@ -464,11 +466,47 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>问题：<br>$$<br>对于任意两个n阶方阵A,B总存在|A||B|&#x3D;|AB|<br>$$<br>这个是我在前言里面提到的结论，大家想必十分熟悉，其实证明也不难</p>
-<p>易得：<br>$$<br>\begin{array}{c}<br>\begin{vmatrix}<br>A &amp; O \<br>d &amp; B<br>\end{vmatrix}&#x3D;|A|\ |B| \<br>\begin{vmatrix}<br>O &amp; AB \<br>-E &amp; B<br>\end{vmatrix}&#x3D;|AB|\<br>\end{array}<br>$$<br>其中$A，B，O ，d，E$均为$n$阶方阵</p>
+                <p>问题：</p>
+<script type="math/tex; mode=display">
+对于任意两个n阶方阵A,B总存在|A||B|=|AB|</script><p>这个是我在前言里面提到的结论，大家想必十分熟悉，其实证明也不难</p>
+<p>易得：</p>
+<script type="math/tex; mode=display">
+\begin{array}{c}
+\begin{vmatrix}
+A & O \\
+d & B
+\end{vmatrix}=|A|\ |B| \\
+\begin{vmatrix}
+O & AB \\
+-E & B
+\end{vmatrix}=|AB|\\
+\end{array}</script><p>其中$A，B，O ，d，E$均为$n$阶方阵</p>
 <p>好吧，其实也不是那么易得，不过这主要是分块矩阵的性质。分块矩阵其实很好理解，用拉普拉斯定理直接看成元素就可以了，如果要详细证明的话，就是用一下行列式按行展开+数学归纳法，我这里就不写太多了（<del>内心OS：矩阵用latex表示好麻烦，不想写</del>）</p>
-<p>我们再对它做一个初等变换，基本上就出来了。<br>$$<br>\begin{bmatrix}<br>E &amp; -A\<br>O &amp; E<br>\end{bmatrix}<br>\begin{bmatrix}<br>O &amp; AB\<br>-E &amp; B<br>\end{bmatrix}&#x3D;<br>\begin{bmatrix}<br>A &amp; O\<br>-E &amp; B<br>\end{bmatrix}<br>$$<br>其中$\begin{bmatrix}E &amp; -A\O &amp; E\end{bmatrix}$是初等分块矩阵，不改变方阵的行列式，故：<br>$$<br>\begin{vmatrix}<br>O &amp; AB \<br>-E &amp; B<br>\end{vmatrix}&#x3D;<br>\begin{vmatrix}<br>A &amp; O \<br>d &amp; B<br>\end{vmatrix}<br>$$<br>即：<br>$$<br>|AB|&#x3D;|A|\ |B|<br>$$</p>
-
+<p>我们再对它做一个初等变换，基本上就出来了。</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+E & -A\\
+O & E
+\end{bmatrix}
+\begin{bmatrix}
+O & AB\\
+-E & B
+\end{bmatrix}=
+\begin{bmatrix}
+A & O\\
+-E & B
+\end{bmatrix}</script><p>其中$\begin{bmatrix}E &amp; -A\O &amp; E\end{bmatrix}$是初等分块矩阵，不改变方阵的行列式，故：</p>
+<script type="math/tex; mode=display">
+\begin{vmatrix}
+O & AB \\
+-E & B
+\end{vmatrix}=
+\begin{vmatrix}
+A & O \\
+d & B
+\end{vmatrix}</script><p>即：</p>
+<script type="math/tex; mode=display">
+|AB|=|A|\ |B|</script>
                 
             </div>
             <hr/>
