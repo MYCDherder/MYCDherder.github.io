@@ -241,7 +241,7 @@
         
         <li><div class="divider"></div></li>
         <li>
-            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+            <a href="https://github.com/MYCDherder/MYCDherder.github.io" class="waves-effect waves-light" target="_blank">
                 <i class="fab fa-github-square fa-fw"></i>Fork Me
             </a>
         </li>
@@ -298,7 +298,7 @@
     }
 </style>
 
-<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+<a href="https://github.com/MYCDherder/MYCDherder.github.io" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
    data-tooltip="Fork Me" data-position="left" data-delay="50">
     <svg viewBox="0 0 250 250" aria-hidden="true">
         <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
@@ -314,6 +314,19 @@
 </header>
 
     
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
 
 
 
@@ -476,7 +489,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="欢迎你来到牧丛的博客！（初来者必读）"><a href="#欢迎你来到牧丛的博客！（初来者必读）" class="headerlink" title="欢迎你来到牧丛的博客！（初来者必读）"></a>欢迎你来到牧丛的博客！（初来者必读）</h1><p>在正式浏览这个博客的主要内容之前，我希望你能够抽出几分钟的时间来阅读一下这篇文章，或许能够节约你的一部分时间。</p>
+                <h1 id="欢迎你来到牧丛的博客！"><a href="#欢迎你来到牧丛的博客！" class="headerlink" title="欢迎你来到牧丛的博客！"></a>欢迎你来到牧丛的博客！</h1><p>在正式浏览这个博客的主要内容之前，我希望你能够抽出几分钟的时间来阅读一下这篇文章，或许能够节约你的一部分时间。</p>
 <p>首先，我想先简单介绍一下有关我博客名字的一些事情。在网址和github那里，你可以看到我注册的名称是“MYCDherder”，而进入博客后的自我介绍中，会告诉你我的昵称叫“牧丛”，这是我个人习惯所导致的。我是个不怎么会起名字的人，我几乎所有的账户，倘若可以用中文表示，那就一律起名为“牧丛”，而若是需要英文，我一般就会使用“MYCD”。但是由于“MYCD”的名字过短，不能通过github的名称审核，我只好将两个名字融合起来，“牧丛”没有直接对应的英文单词，我就取了其中的“牧”字，将其翻译为“herder”，“放牧的人”，两者一结合，问题就迎刃而解了。</p>
 <p>再说说笔者，笔者目前是一名上海交通大学的本科生，就读于信息工程专业。在初高中的学习生活中，笔者一直算不上一个出色的学生，也常常被周围巨佬们的天才表现所震撼。在大学的生活中，笔者也往往比较迟钝，很多消息往往知道得比别人慢，产生了一定的信息差。像个人博客这种东西，也是几个月前，笔者发现一个高中同学已经创建了属于自己的博客时才了解到的。</p>
 <p>当然，笔者创立这个博客，并不是为了盲目地跟风。笔者初入大学，对于大学的学习生活，依然没有能够找到一条稳定而高效的路径。显而易见，初高中以熟练度为主的应试方法必然不会符合大学的教育模式，单纯的高分也不是中国本科教育的目的。笔者建立这个博客，其实也是对自己本科学习方法的一种探索。当然，不同于毫无意义的胡乱尝试，创建并运营博客有着一些明显的好处：</p>
@@ -875,7 +888,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1.6k</span>&nbsp;字
+                class="white-color">1.5k</span>&nbsp;字
             
             
             
