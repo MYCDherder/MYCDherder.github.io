@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="积分的思考1, MYCDherder&#39;s Blog">
+    <meta name="keywords" content="积分的思考2（倍角法）, MYCDherder&#39;s Blog">
     <meta name="description" content="Learning Notes">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>积分的思考1 | MYCDherder&#39;s Blog</title>
+    <title>积分的思考2（倍角法） | MYCDherder&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -330,12 +330,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">积分的思考1</h1>
+                    <h1 class="description center-align post-title">积分的思考2（倍角法）</h1>
                 </div>
             </div>
         </div>
@@ -481,7 +481,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    517
+                    721
                 </div>
                 
 
@@ -498,50 +498,48 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>这篇算不上一个真正意义上的博客内容，主要是笔者在之前看书的时候，发现书本上有一道不定积分题存在计算错误，想要重写纠正一下（<del>可以再水一篇顺便练练latex</del>）：</p>
-<p>问题：求不定积分</p>
+                <p>这篇可以算是一个完整的博客了，主要是笔者在学习倍角法的时候的一些思考：</p>
+<p>倍角法是用来处理三角函数积分的一种基本方法，根源来自于棣莫弗公式：</p>
 <script type="math/tex; mode=display">
-\int{\frac{x+1}{x^3(x-2)^2}}{\rm d}x</script><p>这个题算是一个板子题，就是用待定系数法将被积函数分解。</p>
+(\cos x+i\sin x)^n=\cos nx+i\sin nx</script><p>那么，我们可以非常明显地看出：</p>
 <script type="math/tex; mode=display">
-\frac{x+1}{x^3(x-2)^2}=\frac{A}{x}+\frac{B}{x^2}+\frac{C}{x^3}+\frac{D}{x-2}+\frac{E}{(x-2)^2}</script><p>将左式合并，得到：</p>
+(\cos x+i\sin x)^{-1}=\cos(-x)+i\sin(-x)=\cos x-i\sin x</script><p>那么令：</p>
 <script type="math/tex; mode=display">
-\frac{A}{x}+\frac{B}{x^2}+\frac{C}{x^3}+\frac{D}{x-2}+\frac{E}{(x-2)^2}=\frac{Ax^2(x-2)^2+Bx(x-2)^2+C(x-2)^2+Dx^3(x-2)+Ex^3}{x^3(x-2)^2}</script><p>单看分子：</p>
+\cos x+i\sin x=y</script><p>则：</p>
 <script type="math/tex; mode=display">
-x+1=Ax^2(x-2)^2+Bx(x-2)^2+C(x-2)^2+Dx^3(x-2)+Ex^3</script><p>令$x=0$,得：</p>
+\cos x-i\sin y=\frac{1}{y}</script><p>可以得到：</p>
 <script type="math/tex; mode=display">
-1=4C</script><p>即：</p>
+2\cos x=y+\frac{1}{y}\\
+2i\sin x=y-\frac{1}{y}</script><p>同时可以引申到：</p>
 <script type="math/tex; mode=display">
-C=\frac{1}{4}</script><p>令$x=2$,得：</p>
+2\cos nx=y^n+\frac{1}{y^n}\\
+2i\sin nx=y^n-\frac{1}{y^n}</script><p>那么通过这个方法偶数次幂的正、余弦函数和奇数次幂的余弦函数（奇数次幂的正弦函数虚数部分没有办法消掉）都可以积出来，下面就举一个奇数次幂的余弦函数的例子：</p>
 <script type="math/tex; mode=display">
-3=8E</script><p>即：</p>
-<script type="math/tex; mode=display">
-E=\frac{3}{8}</script><p>基本上可以直接看出来得参数就这两个了，下面还是需要拆开了</p>
-<script type="math/tex; mode=display">
-x+1=(A+D)x^4+(-4A+B-2D+E)x^3+(4A-4B+C)x^2+(4B-4C)x+4C</script><p>从简单的入手：</p>
-<script type="math/tex; mode=display">
-4B-4C=1</script><p>解得：</p>
-<script type="math/tex; mode=display">
-B=\frac{1}{2}</script><p>下面一个：</p>
-<script type="math/tex; mode=display">
-4A-4B+C=0</script><p>解得：</p>
-<script type="math/tex; mode=display">
-A=\frac{7}{16}\\
-D=-\frac{7}{16}</script><p>将解整理一下</p>
-<script type="math/tex; mode=display">
-\begin{cases}
-A=\frac{7}{16}\\
-B=\frac{1}{2}\\
-C=\frac{1}{4}\\
-D=-\frac{7}{16}\\
-E=\frac{3}{8}
-\end{cases}</script><p>因此所求结果为：</p>
+\int \cos^5x{\rm d}x</script><p>将被积函数用二项式展开：</p>
 <script type="math/tex; mode=display">
 \begin{aligned}
-\int{\frac{x+1}{x^3(x-2)^2}}{\rm d}x &= \int[\frac{7}{16}\frac{1}{x}+\frac{1}{2}\frac{1}{x^2}+\frac{1}{4}\frac{1}{x^3}-\frac{7}{16}\frac{1}{x-2}+\frac{3}{8}\frac{1}{(x-2)^2}]{\rm d}x\\
-&=\frac{7}{16}\ln x-\frac{1}{2}\frac{1}{x}-\frac{1}{8}\frac{1}{x^2}-\frac{7}{16}\ln(x-2)-\frac{3}{8}\frac{1}{x-2}+C
-\end{aligned}</script><p>其实这题真的不难，但是其中的系数一定要注意，提到这个题的那本书里面就是因为C项的系数弄错了导致了最后的结果错误。</p>
-<p>题目来源：</p>
-<p>《积分的方法与技巧》（第一版）第11页 例6</p>
+2^5\cos^5x&=(y+\frac{1}{y})^5\\
+&=(y^5+\frac{1}{y^5})+5(y^3+\frac{1}{y^3})+10(y+\frac{1}{y})\\
+&=2\cos 5x+10\cos 3x+20\cos x
+\end{aligned}</script><p>这个方法之所以能够成立，就是在于$y$和$\frac{1}{y}$之间的对称性，这样子就可以运用棣莫弗公式实现降幂，继续操作：</p>
+<script type="math/tex; mode=display">
+\cos^5x=\frac{1}{16}(\cos5x+5\cos3x+10\cos x)</script><p>接下来我们只需要十分优雅地积分就可以了：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\int\cos^5x{\rm d}x&=\int(\frac{1}{16}\cos5x+\frac{5}{16}\cos3x+\frac{5}{8}\cos x){\rm d}x\\
+&=\frac{1}{80}\sin5x+\frac{5}{48}\sin3x+\frac{5}{8}\sin x+C
+\end{aligned}</script><p>推广可知：</p>
+<script type="math/tex; mode=display">
+\int\cos^{2n+1}x{\rm d}x=\frac{1}{2^{2n}}\sum_{k=0}^{n}{2n+1\choose k}\frac{1}{2n+1-2k}\sin(2n+1-2k)x+C</script><p>但其实对于余弦函数的奇次幂，我们还有另外一种积分的方法：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\int\cos^{2n+1}x{\rm d}x&=\int\cos^{2n}x{\rm d}(\sin x) \\
+&=\int(1-\sin^2x)^n{\rm d}(\sin x)\\
+&=\int[1-n\sin^2x+\frac{n(n-1)}{2!}\sin^4x-\frac{n(n-1)(n-2)}{3!}\sin^6x+\cdots+(-1)^n\sin^{2n}x]{\rm d}(\sin x)\\
+&=\sin x-n\frac{\sin^3x}{3}+\frac{n(n-1)}{2!}\frac{\sin^5x}{5}-\frac{n(n-1)(n-2)}{3!}\frac{\sin^7x}{7}+\cdots+(-1)^n\frac{\sin^{2n+1}x}{2n+1}+C\\
+&=\sum_{k=0}^n(-1)^k{n\choose k}\frac{1}{2k+1}\sin^{(2k+1)}x+C
+\end{aligned}</script><p>原本笔者还想在这两个式子里面找一些关联的，但是看了半天没有什么进展，笔者之前用Casio算过，如果加个上下限，两者结果是一样的（<del>废话</del>），但是这里面的每一个数项肯定不是一一对应的，如果有大佬对于这个有很妙的想法，可以发到我的QQ邮箱（1195653586@qq.com），如果愿意指导我，笔者将不甚感激。</p>
+<p>参考书籍：《积分的方法与技巧》（第一版）</p>
 
                 
             </div>
@@ -568,7 +566,7 @@ E=\frac{3}{8}
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://mycdherder.github.io/2025/02/10/%E7%A7%AF%E5%88%86%E7%9A%84%E6%80%9D%E8%80%831/">https://mycdherder.github.io/2025/02/10/%E7%A7%AF%E5%88%86%E7%9A%84%E6%80%9D%E8%80%831/</a>
+                    <a href="https://mycdherder.github.io/2025/02/10/%E7%A7%AF%E5%88%86%E7%9A%84%E6%80%9D%E8%80%832/">https://mycdherder.github.io/2025/02/10/%E7%A7%AF%E5%88%86%E7%9A%84%E6%80%9D%E8%80%832/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -647,10 +645,9 @@ E=\frac{3}{8}
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
                 <a href="/2025/02/10/%E7%A7%AF%E5%88%86%E7%9A%84%E6%80%9D%E8%80%831/">
                     <div class="card-image">
@@ -668,9 +665,9 @@ E=\frac{3}{8}
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-10
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2025-02-10
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -683,7 +680,6 @@ E=\frac{3}{8}
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -694,13 +690,13 @@ E=\frac{3}{8}
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2025/02/10/%E7%A7%AF%E5%88%86%E7%9A%84%E6%80%9D%E8%80%832/">
+                <a href="/2025/02/03/%E8%A1%8C%E5%88%97%E5%BC%8F%E7%9A%84%E6%80%A7%E8%B4%A81/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="积分的思考2（倍角法）">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="行列式性质1">
                         
-                        <span class="card-title">积分的思考2（倍角法）</span>
+                        <span class="card-title">行列式性质1</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -711,14 +707,14 @@ E=\frac{3}{8}
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-10
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-03
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%BE%AE%E7%A7%AF%E5%88%86%E5%AD%A6/" class="post-category">
-                                    微积分学
+                            <a href="/categories/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" class="post-category">
+                                    线性代数
                                 </a>
                             
                             

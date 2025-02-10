@@ -42,6 +42,32 @@
   </entry>
   
   <entry>
+    <title>积分的思考2（倍角法）</title>
+    <link href="https://mycdherder.github.io/2025/02/10/%E7%A7%AF%E5%88%86%E7%9A%84%E6%80%9D%E8%80%832/"/>
+    <id>https://mycdherder.github.io/2025/02/10/%E7%A7%AF%E5%88%86%E7%9A%84%E6%80%9D%E8%80%832/</id>
+    <published>2025-02-09T16:00:00.000Z</published>
+    <updated>2025-02-10T06:56:10.611Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;这篇可以算是一个完整的博客了，主要是笔者在学习倍角法的时候的一些思考：&lt;/p&gt;
+&lt;p&gt;倍角法是用来处理三角函数积分的一种基本方法，根源来自于棣莫弗公式：&lt;/p&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;
+(&#92;cos x+i&#92;sin</summary>
+        
+      
+    
+    
+    
+    <category term="微积分学" scheme="https://mycdherder.github.io/categories/%E5%BE%AE%E7%A7%AF%E5%88%86%E5%AD%A6/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>行列式性质1</title>
     <link href="https://mycdherder.github.io/2025/02/03/%E8%A1%8C%E5%88%97%E5%BC%8F%E7%9A%84%E6%80%A7%E8%B4%A81/"/>
     <id>https://mycdherder.github.io/2025/02/03/%E8%A1%8C%E5%88%97%E5%BC%8F%E7%9A%84%E6%80%A7%E8%B4%A81/</id>
