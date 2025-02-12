@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="写在最前面的一些话, MYCDherder&#39;s Blog">
+    <meta name="keywords" content="行列式的性质2, MYCDherder&#39;s Blog">
     <meta name="description" content="Learning Notes">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>写在最前面的一些话 | MYCDherder&#39;s Blog</title>
+    <title>行列式的性质2 | MYCDherder&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -330,12 +330,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/source/images/beginner.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">写在最前面的一些话</h1>
+                    <h1 class="description center-align post-title">行列式的性质2</h1>
                 </div>
             </div>
         </div>
@@ -449,12 +449,25 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E8%A1%8C%E5%88%97%E5%BC%8F-%E7%9F%A9%E9%98%B5/">
+                                <span class="chip bg-color">-行列式 -矩阵</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" class="post-category">
+                                线性代数
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -463,7 +476,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2025-01-27
+                    2025-02-12
                 </div>
                 
 
@@ -472,7 +485,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    1.2k
                 </div>
                 
 
@@ -489,25 +502,115 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="欢迎你来到牧丛的博客！"><a href="#欢迎你来到牧丛的博客！" class="headerlink" title="欢迎你来到牧丛的博客！"></a>欢迎你来到牧丛的博客！</h1><p>在正式浏览这个博客的主要内容之前，我希望你能够抽出几分钟的时间来阅读一下这篇文章，或许能够节约你的一部分时间。</p>
-<p>首先，我想先简单介绍一下有关我博客名字的一些事情。在网址和github那里，你可以看到我注册的名称是“MYCDherder”，而进入博客后的自我介绍中，会告诉你我的昵称叫“牧丛”，这是我个人习惯所导致的。我是个不怎么会起名字的人，我几乎所有的账户，倘若可以用中文表示，那就一律起名为“牧丛”，而若是需要英文，我一般就会使用“MYCD”。但是由于“MYCD”的名字过短，不能通过github的名称审核，我只好将两个名字融合起来，“牧丛”没有直接对应的英文单词，我就取了其中的“牧”字，将其翻译为“herder”，“放牧的人”，两者一结合，问题就迎刃而解了。</p>
-<p>再说说笔者，笔者目前是一名上海交通大学的本科生，就读于信息工程专业。在初高中的学习生活中，笔者一直算不上一个出色的学生，也常常被周围巨佬们的天才表现所震撼。在大学的生活中，笔者也往往比较迟钝，很多消息往往知道得比别人慢，产生了一定的信息差。像个人博客这种东西，也是几个月前，笔者发现一个高中同学已经创建了属于自己的博客时才了解到的。</p>
-<p>当然，笔者创立这个博客，并不是为了盲目地跟风。笔者初入大学，对于大学的学习生活，依然没有能够找到一条稳定而高效的路径。显而易见，初高中以熟练度为主的应试方法必然不会符合大学的教育模式，单纯的高分也不是中国本科教育的目的。笔者建立这个博客，其实也是对自己本科学习方法的一种探索。当然，不同于毫无意义的胡乱尝试，创建并运营博客有着一些明显的好处：</p>
-<p>第一，博客的运营需要持续的更新，持续的更新就需要持续的学习与思考，对于自己博客的运营其实也是一种自我的督促。</p>
-<p>第二，更新博客的过程其实也是“费曼学习法”，博客更新的内容是公开的，实质上就是将笔者所学的知识用自己的语言，以通俗易懂的方式教授给别人。在这个过程中，笔者对于知识的理解也会更加透彻。</p>
-<p>当然，创立的博客的好处当然不止这些，但限于篇幅原因，笔者不再继续探讨。下一个需要关注的问题的是，在这个博客中，笔者到底会更新哪些内容呢？目前来说，分为几个板块（后续可能会增多）：</p>
-<ol>
-<li>微积分学</li>
-<li>线性代数</li>
-<li>C++</li>
-<li>理论力学</li>
-</ol>
-<p>当然，读者到这里肯定会发现，这些学科早已发展完善，需要笔者更新什么东西呢？诚然，这些学科经过诸多先哲的开拓和研究，体系早已变得十分成熟，笔者也没有不自量力想去挑战先哲的权威。其实，笔者更多是想把这个博客做成一个类似于学习笔记的东西，当然，这并不意味着笔者会呆板地去照抄教材。笔者希望的，是能够在这些基础学科中找到一些大家忽略的细节，进行一些深度的思考。</p>
-<p>举个最简单的例子，对于两个$n$阶方阵$A，B$，我们都知道$|A||B|=|AB|$，并且能够熟练运用，但是倘若问如何证明，那估计全国90%的本科生都束手无策了。</p>
-<p>除了单纯的巩固细节之外，笔者还希望能够对于一些现有的模型进行自己的思考和阐释。当然，这些思考不一定是笔者率先提出来的，笔者所表述出来的语言也不一定精准，肯定会出现许多的瑕疵，但是笔者认为这个过程对于一个求学者来说是必要的。</p>
-<p>在这个过程中，笔者可能会有一些想到一半就无法继续下去的想法，到时候可能会单独开一个列表，欢迎大家和笔者一起思考和讨论。</p>
-<p>最后，笔者第一次创建并且尝试运营博客，可能会出现很多的bug，如果读者愿意反馈给我，笔者将不胜感激。</p>
-<p>最后的最后，非常感谢大家能够读完这篇文章，愿我们一起学习，一起进步！</p>
+                <p>在行列式中，有一个我们经常用到的性质：</p>
+<script type="math/tex; mode=display">
+|\lambda E_n+AB|=\lambda^{n-m}|\lambda E_m+BA|</script><p>其中$E_n,E_m$是单位矩阵，$A$是$n\times m$的矩阵，B是$m\times n$的矩阵</p>
+<p>我们怎么证明这个结论？其实我看到这个性质的时候第一个想法就是分块构造，$\lambda E$好构造，重点在于$AB$和$BA$这里，所以我一开始进行了这样的一个尝试：</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+\lambda E_n & -A\\
+B & E_m
+\end{bmatrix}</script><p>负号加在$A$还是$B$前面其实关系不大，其实笔者为什么构造这样的一个矩阵？因为如果直接对这个矩阵取行列式，我们可以感觉到出现了$\lambda E_n+AB$和$\lambda E_m+BA$这两个结构，同时注意，我们算两阶行列式的时候，里面的元素是单个的数，必然遵守乘法交换律，但是在这里面的$A,B$两个矩阵不一定可换，所以留给了我们一定的操作空间：</p>
+<p>（下面为了大家理解笔者的意思，笔者会用我自己的语言来说，但是这样比较的不严谨，请大家见谅。）</p>
+<p>我们首先将第二行乘上$A$加到第一行去，但是分块矩阵和普通矩阵一个最大的不同就是在于分块矩阵的元素实际上是矩阵，矩阵需要考虑左乘还是右乘的问题，第二行的单位矩阵不管是左乘$A$还是右乘$A$都没有区别，都可以将第一行的$A$变为空矩阵，但是$B$就没有办法回避掉左乘还是右乘的问题，如何解决呢？现在应该要回归定义：</p>
+<p>在SJTU的《线性代数》教材上面是这么说的：</p>
+<blockquote>
+<p>设$A$是一个$m\times n$的矩阵，对$A$进行一次初等行变换相当于在$A$的左边乘一个相应类型的$m$阶初等矩阵；对$A$进行一次初等列变换相当于在$A$的右边乘一个相应类型的$n$阶初等矩阵</p>
+</blockquote>
+<p>那么用最简单的话来描述是什么？</p>
+<blockquote>
+<p>左乘是行变换，右乘是列变换</p>
+</blockquote>
+<p>我们刚才想要的操作是什么？行变换。那好，左乘：</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+E_n&A\\
+O&E_m
+\end{bmatrix}
+\begin{bmatrix}
+\lambda E_n&-A\\
+B&E_m
+\end{bmatrix}=
+\begin{bmatrix}
+\lambda E_n+AB&O\\
+B&E_m
+\end{bmatrix}</script><p>注意，笔者这里提到的左乘，既是指我的初等分块矩阵是左乘到构造矩阵上面的，也是指$A$是左乘到$B$上面的（其实这俩是绑定的<span class="github-emoji"><span>😄</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span>）</p>
+<p>那如果我们消掉的不是$A$，而是$B$呢？</p>
+<p>那也很简单，右乘：</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+\lambda E_n&-A\\
+B&E_m
+\end{bmatrix}
+\begin{bmatrix}
+E_n&O\\
+-B&E_m
+\end{bmatrix}=
+\begin{bmatrix}
+\lambda E_n+AB&-A\\
+O&E_m
+\end{bmatrix}</script><p>我们发现我们这里的思路出现问题了，只出现了$AB$，没有出现$BA$，怎么办？</p>
+<p>我们捋清一下我们刚才的思路，第一步，通过行变换消掉$A$，非常成功，第二步，通过列变换消掉$B$，这个有些失败。但是很明显我们还有两条路没有自己思考过，即通过列变换消掉$A$，和通过行变换消掉$B$，我们可以把两者都试一试（其实只要一种就可以了）</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+\lambda E_n&-A\\
+B&E_m
+\end{bmatrix}
+\begin{bmatrix}
+E_n&\frac{1}{\lambda}A\\
+O&E_m
+\end{bmatrix}=
+\begin{bmatrix}
+\lambda E_n&O\\
+B&\frac{1}{\lambda}BA+E_m
+\end{bmatrix}</script><script type="math/tex; mode=display">
+\begin{bmatrix}
+E_n&O\\
+-\frac{1}{\lambda}B&E_m
+\end{bmatrix}
+\begin{bmatrix}
+\lambda E_n&-A\\
+B&E_m
+\end{bmatrix}=
+\begin{bmatrix}
+\lambda E_n&-A\\
+O&\frac{1}{\lambda}BA+E_m
+\end{bmatrix}</script><p>这里面都出现了我们需要的部分，说明我们的路走对了，我们任取两个：</p>
+<script type="math/tex; mode=display">
+\begin{array}{c}
+\begin{bmatrix}
+E_n&A\\
+O&E_m
+\end{bmatrix}
+\begin{bmatrix}
+\lambda E_n&-A\\
+B&E_m
+\end{bmatrix}=
+\begin{bmatrix}
+\lambda E_n+AB&O\\
+B&E_m
+\end{bmatrix}\\
+\begin{bmatrix}
+\lambda E_n&-A\\
+B&E_m
+\end{bmatrix}
+\begin{bmatrix}
+E_n&\frac{1}{\lambda}A\\
+O&E_m
+\end{bmatrix}=
+\begin{bmatrix}
+\lambda E_n&O\\
+B&\frac{1}{\lambda}BA+E_m
+\end{bmatrix}
+\end{array}</script><p>对于两边同时取行列式即可得到：</p>
+<script type="math/tex; mode=display">
+|\lambda E_n+AB||E_m|=|\lambda E_n||\frac{1}{\lambda}BA+E_m|</script><p>即：</p>
+<script type="math/tex; mode=display">
+|\lambda E_n+AB|=\lambda^n\lambda^{-m}|\lambda E_m+BA|</script><p>所以：</p>
+<script type="math/tex; mode=display">
+|\lambda E_n+AB|=\lambda^{n-m}|\lambda E_m+BA|</script><p>结论就很快出来了。</p>
+<p>后记：笔者一直希望把自己思考问题的全过程都分享给大家，在这个过程中笔者尽可能用准确地语言简洁地表达自己地意思，但是由于笔者水平地局限，不可避免地会出现一些不严谨的地方，希望大家能够谅解。</p>
+<p>参考资料：《线性代数》（上海交通大学数学科学学院 组编）</p>
 
                 
             </div>
@@ -534,7 +637,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://mycdherder.github.io/2025/01/27/%E5%86%99%E5%9C%A8%E6%9C%80%E5%89%8D%E9%9D%A2%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AF%9D/">https://mycdherder.github.io/2025/01/27/%E5%86%99%E5%9C%A8%E6%9C%80%E5%89%8D%E9%9D%A2%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AF%9D/</a>
+                    <a href="https://mycdherder.github.io/2025/02/12/%E8%A1%8C%E5%88%97%E5%BC%8F%E7%9A%84%E6%80%A7%E8%B4%A82/">https://mycdherder.github.io/2025/02/12/%E8%A1%8C%E5%88%97%E5%BC%8F%E7%9A%84%E6%80%A7%E8%B4%A82/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -571,7 +674,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/%E8%A1%8C%E5%88%97%E5%BC%8F-%E7%9F%A9%E9%98%B5/">
+                                    <span class="chip bg-color">-行列式 -矩阵</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -613,17 +720,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2025/02/03/%E8%A1%8C%E5%88%97%E5%BC%8F%E7%9A%84%E6%80%A7%E8%B4%A81/">
+                <a href="/2025/02/12/%E8%A1%8C%E5%88%97%E5%BC%8F%E7%9A%84%E6%80%A7%E8%B4%A82/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="行列式性质1">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="行列式的性质2">
                         
-                        <span class="card-title">行列式性质1</span>
+                        <span class="card-title">行列式的性质2</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -633,9 +741,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2025-02-03
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-12
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -648,6 +756,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -663,15 +772,16 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2025/01/27/%E5%86%99%E5%9C%A8%E6%9C%80%E5%89%8D%E9%9D%A2%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AF%9D/">
+                <a href="/2025/02/10/%E7%A7%AF%E5%88%86%E7%9A%84%E6%80%9D%E8%80%831/">
                     <div class="card-image">
                         
-                        <img src="/source/images/beginner.jpg" class="responsive-img" alt="写在最前面的一些话">
                         
-                        <span class="card-title">写在最前面的一些话</span>
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="积分的思考1">
+                        
+                        <span class="card-title">积分的思考1</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -682,17 +792,20 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-01-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-10
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            MYCDherder
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%BE%AE%E7%A7%AF%E5%88%86%E5%AD%A6/" class="post-category">
+                                    微积分学
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
