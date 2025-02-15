@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="行列式的性质2, MYCDherder&#39;s Blog">
+    <meta name="keywords" content="斐波那契数列的矩阵快速幂算法, MYCDherder&#39;s Blog">
     <meta name="description" content="Learning Notes">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>行列式的性质2 | MYCDherder&#39;s Blog</title>
+    <title>斐波那契数列的矩阵快速幂算法 | MYCDherder&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -330,12 +330,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">行列式的性质2</h1>
+                    <h1 class="description center-align post-title">斐波那契数列的矩阵快速幂算法</h1>
                 </div>
             </div>
         </div>
@@ -451,12 +451,16 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E7%9F%A9%E9%98%B5/">
-                                <span class="chip bg-color">矩阵</span>
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
                             </a>
                         
-                            <a href="/tags/%E8%A1%8C%E5%88%97%E5%BC%8F/">
-                                <span class="chip bg-color">行列式</span>
+                            <a href="/tags/%E5%BF%AB%E9%80%9F%E5%B9%82/">
+                                <span class="chip bg-color">快速幂</span>
+                            </a>
+                        
+                            <a href="/tags/%E7%9F%A9%E9%98%B5/">
+                                <span class="chip bg-color">矩阵</span>
                             </a>
                         
                     </div>
@@ -467,8 +471,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" class="post-category">
-                                线性代数
+                            <a href="/categories/C/" class="post-category">
+                                C++
                             </a>
                         
                     </div>
@@ -480,7 +484,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2025-02-12
+                    2025-02-16
                 </div>
                 
 
@@ -489,7 +493,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.2k
+                    1.6k
                 </div>
                 
 
@@ -506,115 +510,97 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>在行列式中，有一个我们经常用到的性质：</p>
-<script type="math/tex; mode=display">
-|\lambda E_n+AB|=\lambda^{n-m}|\lambda E_m+BA|</script><p>其中$E_n,E_m$是单位矩阵，$A$是$n\times m$的矩阵，B是$m\times n$的矩阵</p>
-<p>我们怎么证明这个结论？其实我看到这个性质的时候第一个想法就是分块构造，$\lambda E$好构造，重点在于$AB$和$BA$这里，所以我一开始进行了这样的一个尝试：</p>
-<script type="math/tex; mode=display">
-\begin{bmatrix}
-\lambda E_n & -A\\
-B & E_m
-\end{bmatrix}</script><p>负号加在$A$还是$B$前面其实关系不大，其实笔者为什么构造这样的一个矩阵？因为如果直接对这个矩阵取行列式，我们可以感觉到出现了$\lambda E_n+AB$和$\lambda E_m+BA$这两个结构，同时注意，我们算两阶行列式的时候，里面的元素是单个的数，必然遵守乘法交换律，但是在这里面的$A,B$两个矩阵不一定可换，所以留给了我们一定的操作空间：</p>
-<p>（下面为了大家理解笔者的意思，笔者会用我自己的语言来说，但是这样比较的不严谨，请大家见谅。）</p>
-<p>我们首先将第二行乘上$A$加到第一行去，但是分块矩阵和普通矩阵一个最大的不同就是在于分块矩阵的元素实际上是矩阵，矩阵需要考虑左乘还是右乘的问题，第二行的单位矩阵不管是左乘$A$还是右乘$A$都没有区别，都可以将第一行的$A$变为空矩阵，但是$B$就没有办法回避掉左乘还是右乘的问题，如何解决呢？现在应该要回归定义：</p>
-<p>在SJTU的《线性代数》教材上面是这么说的：</p>
+                <p>我们在学习C++算法的时候会遇到一个十分基本的问题：</p>
 <blockquote>
-<p>设$A$是一个$m\times n$的矩阵，对$A$进行一次初等行变换相当于在$A$的左边乘一个相应类型的$m$阶初等矩阵；对$A$进行一次初等列变换相当于在$A$的右边乘一个相应类型的$n$阶初等矩阵</p>
+<p>我们都知道斐波那契数列：1，1，2，3，5，8，13，$\cdots$，现在已知第一个1记为第一项，第二个1记为第二项，2记为第三项，以此类推，现在我向里面输入一个$n$，请你告诉我数列中第$n$项的数值是多少？</p>
 </blockquote>
-<p>那么用最简单的话来描述是什么？</p>
-<blockquote>
-<p>左乘是行变换，右乘是列变换</p>
-</blockquote>
-<p>我们刚才想要的操作是什么？行变换。那好，左乘：</p>
-<script type="math/tex; mode=display">
-\begin{bmatrix}
-E_n&A\\
-O&E_m
-\end{bmatrix}
-\begin{bmatrix}
-\lambda E_n&-A\\
-B&E_m
-\end{bmatrix}=
-\begin{bmatrix}
-\lambda E_n+AB&O\\
-B&E_m
-\end{bmatrix}</script><p>注意，笔者这里提到的左乘，既是指我的初等分块矩阵是左乘到构造矩阵上面的，也是指$A$是左乘到$B$上面的（其实这俩是绑定的<span class="github-emoji"><span>😄</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span>）</p>
-<p>那如果我们消掉的不是$A$，而是$B$呢？</p>
-<p>那也很简单，右乘：</p>
-<script type="math/tex; mode=display">
-\begin{bmatrix}
-\lambda E_n&-A\\
-B&E_m
-\end{bmatrix}
-\begin{bmatrix}
-E_n&O\\
--B&E_m
-\end{bmatrix}=
-\begin{bmatrix}
-\lambda E_n+AB&-A\\
-O&E_m
-\end{bmatrix}</script><p>我们发现我们这里的思路出现问题了，只出现了$AB$，没有出现$BA$，怎么办？</p>
-<p>我们捋清一下我们刚才的思路，第一步，通过行变换消掉$A$，非常成功，第二步，通过列变换消掉$B$，这个有些失败。但是很明显我们还有两条路没有自己思考过，即通过列变换消掉$A$，和通过行变换消掉$B$，我们可以把两者都试一试（其实只要一种就可以了）</p>
-<script type="math/tex; mode=display">
-\begin{bmatrix}
-\lambda E_n&-A\\
-B&E_m
-\end{bmatrix}
-\begin{bmatrix}
-E_n&\frac{1}{\lambda}A\\
-O&E_m
-\end{bmatrix}=
-\begin{bmatrix}
-\lambda E_n&O\\
-B&\frac{1}{\lambda}BA+E_m
-\end{bmatrix}</script><script type="math/tex; mode=display">
-\begin{bmatrix}
-E_n&O\\
--\frac{1}{\lambda}B&E_m
-\end{bmatrix}
-\begin{bmatrix}
-\lambda E_n&-A\\
-B&E_m
-\end{bmatrix}=
-\begin{bmatrix}
-\lambda E_n&-A\\
-O&\frac{1}{\lambda}BA+E_m
-\end{bmatrix}</script><p>这里面都出现了我们需要的部分，说明我们的路走对了，我们任取两个：</p>
+<p>这个题很多人第一眼会感觉十分简单，确实，它确实不难，我们都十分熟悉斐波那契数列的递推公式：$a<em>n=a</em>{n-1}+a_{n-2}(n\geq2)$</p>
+<p>这天然就给了我们递归的土壤：</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">Fibonacci</span><span class="params">(<span class="type">int</span> n)</span></span>{</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">1</span> || n == <span class="number">2</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    	<span class="keyword">return</span> <span class="built_in">Fibonacci</span> (n - <span class="number">1</span>) + <span class="built_in">Fibonacci</span> (n - <span class="number">2</span>);</span><br><span class="line">}</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    cout &lt;&lt; <span class="built_in">Fibonacci</span>(n) &lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>基本上系统学习过C++的同学都可以写出这段代码，但是这里存在一个非常明显的不足：时间复杂度太高，粗略估计：$O(2^n)$，在这个条件下，基本上$n\geq50$的时候计算机就要算很久才能出结果的（我之前记得计算机每秒的运算次数大概在$10^9$次左右，所以原本以为在40的时候差不多就要卡住了，但是实际操作下来的话50左右才会被卡住，只能说是计算能力又进步了，我out了<span class="github-emoji"><span>😢</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f622.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span>）</p>
+<p>当然，进一步想，我们的斐波那契数列计算太过于重复了，每一次递归，都要再计算一遍很多之前已经计算出结果的函数，那如果我们用一个数组，将我们计算过的数和相数都放在里面，不就大大简便了呢？所以这就是动态规划：</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">	<span class="type">int</span> n;</span><br><span class="line">	cin &gt;&gt; n;</span><br><span class="line">	<span class="type">long</span> <span class="type">long</span> *dp = <span class="keyword">new</span> <span class="type">long</span> <span class="type">long</span> [n + <span class="number">1</span>];</span><br><span class="line">	dp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">	dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">2</span>; i &lt;= n; i++)</span><br><span class="line">		dp[i] = dp[i - <span class="number">1</span>] + dp[i - <span class="number">2</span>];</span><br><span class="line">	cout &lt;&lt; dp[n] &lt;&lt;endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>（我的码风不是特别规范，大家见谅，这里面的算是最基础的动态规划，比较简单，我就不详细说明了）</p>
+<p>通过这个算法，我们已经将时间复杂度降到了$O(n)$的级别，基本上在long long数值范围内的斐波那契数列值我们都可以计算出来了（超出long long数值范围的部分属于数字处理了，在这篇博客里面暂时不讨论，<del>当然不是笔者不会的原因</del>）</p>
+<p>不过正经讲，在笔者做过的信息学竞赛题目中，这类结果一般是让你取模的，所以说更高效的算法也是有必要的。</p>
+<p>在算法结构中，有一种十分巧妙的方法叫做快速幂。如果我们要计算$x^n$，这里面最为直接的方法就是将$n$个$x$相乘，时间复杂度为$O(n)$，但这个方法可以进一步简化，将时间复杂度降到$O(\log_2n)$，代码如下：</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">	<span class="type">int</span> x, n;</span><br><span class="line">	cin &gt;&gt; x &gt;&gt; n;</span><br><span class="line">	<span class="type">int</span> res = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(n &gt; <span class="number">0</span>){</span><br><span class="line">		<span class="keyword">if</span>(n &amp; <span class="number">1</span>)res *= x;</span><br><span class="line">		x = x * x;</span><br><span class="line">		n &gt;&gt; = <span class="number">1</span>;</span><br><span class="line">	}</span><br><span class="line">	cout &lt;&lt; res &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>这种方法其实非常好理解，就是将$n$转换为二进制，每一次只取$n$的末位来看，如果是$1$，那么就将结果乘上$x$，如果是$0$，那就不用管，同时，由于数位不断地左移（注意，$n &gt;&gt; =1$是将$n$右移，但是从位数上来说，就是左移），$x$需要自增，也就是变为$x^2$。</p>
+<p>这个算法的时间复杂度，就是只有$O(\log_2n)$。</p>
+<p>我们知道了这个方法，对于我们解决这个问题有什么帮助呢？</p>
+<p>对于斐波那契数列，特殊矩阵的幂可以计算出斐波那契额数列的结果：</p>
 <script type="math/tex; mode=display">
 \begin{array}{c}
 \begin{bmatrix}
-E_n&A\\
-O&E_m
+1&1\\
+1&0
 \end{bmatrix}
 \begin{bmatrix}
-\lambda E_n&-A\\
-B&E_m
+1&1\\
+1&0
 \end{bmatrix}=
 \begin{bmatrix}
-\lambda E_n+AB&O\\
-B&E_m
+2&1\\
+1&0
 \end{bmatrix}\\
+
 \begin{bmatrix}
-\lambda E_n&-A\\
-B&E_m
+2&1\\
+1&0
 \end{bmatrix}
 \begin{bmatrix}
-E_n&\frac{1}{\lambda}A\\
-O&E_m
+1&1\\
+1&0
 \end{bmatrix}=
 \begin{bmatrix}
-\lambda E_n&O\\
-B&\frac{1}{\lambda}BA+E_m
+3&2\\
+2&1
+\end{bmatrix}\\
+
+\begin{bmatrix}
+3&2\\
+2&1
 \end{bmatrix}
-\end{array}</script><p>对于两边同时取行列式即可得到：</p>
+\begin{bmatrix}
+1&1\\
+1&0
+\end{bmatrix}=
+\begin{bmatrix}
+5&3\\
+3&2
+\end{bmatrix}\\
+\vdots\\
+\begin{bmatrix}
+a_n&a_{n-1}\\
+a_{n-1}&a_{n-2}
+\end{bmatrix}
+\begin{bmatrix}
+1&1\\
+1&0
+\end{bmatrix}=
+\begin{bmatrix}
+a_n+a_{n-1}&a_n\\
+a_{n-1}+a_{n-2}&a_{n-1}
+\end{bmatrix}=
+\begin{bmatrix}
+a_{n+1}&a_n\\
+a_n&a_{n-1}
+\end{bmatrix}\\
+\end{array}</script><p>从中我们可以很轻易地得到：</p>
 <script type="math/tex; mode=display">
-|\lambda E_n+AB||E_m|=|\lambda E_n||\frac{1}{\lambda}BA+E_m|</script><p>即：</p>
-<script type="math/tex; mode=display">
-|\lambda E_n+AB|=\lambda^n\lambda^{-m}|\lambda E_m+BA|</script><p>所以：</p>
-<script type="math/tex; mode=display">
-|\lambda E_n+AB|=\lambda^{n-m}|\lambda E_m+BA|</script><p>结论就很快出来了。</p>
-<p>后记：笔者一直希望把自己思考问题的全过程都分享给大家，在这个过程中笔者尽可能用准确地语言简洁地表达自己地意思，但是由于笔者水平地局限，不可避免地会出现一些不严谨的地方，希望大家能够谅解。</p>
-<p>参考资料：《线性代数》（上海交通大学数学科学学院 组编）</p>
+\begin{bmatrix}
+1&1\\
+1&0
+\end{bmatrix}^n=\begin{bmatrix}
+a_{n+1}&a_n\\
+a_n&a_{n-1}
+\end{bmatrix}\\</script><p>其中$a_n$是斐波那契数列中的第$n$项</p>
+<p>其实通过这些铺垫，我们通过矩阵快速幂来解决斐波那契问题的答案已经呼之欲出了，最后的一道拦路虎就是如何运用C++来计算矩阵的乘法，这个问题我觉得没有单独拎出来讨论的必要（<del>绝对不是因为笔者懒了不想写了</del>,现在已经凌晨1：30了，好困<span class="github-emoji"><span>😢</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f622.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span><span class="github-emoji"><span>😢</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f622.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span>）</p>
+<p>接下来是完整的代码（幸好之前已经写过了<span class="github-emoji"><span>😄</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span>，<del>可以早点睡觉</del>）</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="keyword">typedef</span> vector&lt;ll&gt; vec;</span><br><span class="line"><span class="keyword">typedef</span> vector&lt;vec&gt; mac;<span class="comment">//mac就是用来表示矩阵的</span></span><br><span class="line"><span class="comment">//计算矩阵的相乘</span></span><br><span class="line"><span class="function">mac <span class="title">calmartix</span><span class="params">(mac a,mac b)</span></span>{</span><br><span class="line">	<span class="function">mac <span class="title">ans</span><span class="params">(<span class="number">2</span>, vec(<span class="number">2</span>) )</span></span>;<span class="comment">//只需要一个2*2的矩阵就可以了</span></span><br><span class="line">	<span class="type">int</span> cnt;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i &lt; <span class="number">2</span>; i++)</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>;j &lt; <span class="number">2</span>; j++){</span><br><span class="line">			cnt = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">for</span>(<span class="type">int</span> k = <span class="number">0</span>;k &lt; <span class="number">2</span>;k++)</span><br><span class="line">				cnt += a[i][k] * b[k][j];<span class="comment">//矩阵的计算</span></span><br><span class="line">			ans[i][j] = cnt;</span><br><span class="line">		}</span><br><span class="line">	<span class="keyword">return</span> ans;</span><br><span class="line">}</span><br><span class="line"><span class="comment">//快速幂</span></span><br><span class="line"><span class="function">mac <span class="title">quickcal</span><span class="params">(mac a,ll n)</span></span>{</span><br><span class="line">	<span class="function">mac <span class="title">res</span><span class="params">(<span class="number">2</span>, vec(<span class="number">2</span>))</span></span>;</span><br><span class="line">	res[<span class="number">1</span>][<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">	res[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">	res[<span class="number">1</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">	res[<span class="number">0</span>][<span class="number">1</span>] = <span class="number">0</span>;<span class="comment">//这时候的res是一个单位矩阵</span></span><br><span class="line">	<span class="keyword">while</span>(n &gt; <span class="number">0</span>){</span><br><span class="line">		<span class="keyword">if</span>(n &amp; <span class="number">1</span>) res = <span class="built_in">calmartix</span>(res , a);</span><br><span class="line">		a = <span class="built_in">calmartix</span>(a , a);</span><br><span class="line">		n &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">	}<span class="comment">//矩阵的快速幂</span></span><br><span class="line">	<span class="keyword">return</span> res;</span><br><span class="line">} </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">	<span class="type">int</span> n;</span><br><span class="line">	cin &gt;&gt; n;</span><br><span class="line">	<span class="function">mac <span class="title">ans</span><span class="params">(<span class="number">2</span>,vec(<span class="number">2</span>))</span></span>;</span><br><span class="line">	<span class="function">mac <span class="title">a</span><span class="params">(<span class="number">2</span>,vec(<span class="number">2</span>))</span></span>;</span><br><span class="line">	a[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">	a[<span class="number">0</span>][<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">	a[<span class="number">1</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">	a[<span class="number">1</span>][<span class="number">1</span>] = <span class="number">0</span>;<span class="comment">//这里的a就是我们之前讨论的特殊矩阵</span></span><br><span class="line">	ans = <span class="built_in">quickcal</span>(a ,n);</span><br><span class="line">	cout &lt;&lt; ans[<span class="number">0</span>][<span class="number">1</span>] &lt;&lt; endl; <span class="comment">//这里你也可以cout &lt;&lt; ans[1][0] &lt;&lt; endl;都一样看你心情</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>矩阵的计算次数是一个常数，我们在考虑时间复杂度的时候可以忽略，这个算法的时间复杂度就是$O(log_2n)$</p>
+<p>有兴趣的读者可以自己动手亲自写一写~</p>
+<p>（终于写完了，可以睡觉啦！！！！！）</p>
 
                 
             </div>
@@ -641,7 +627,7 @@ B&\frac{1}{\lambda}BA+E_m
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://mycdherder.github.io/2025/02/12/%E8%A1%8C%E5%88%97%E5%BC%8F%E7%9A%84%E6%80%A7%E8%B4%A82/">https://mycdherder.github.io/2025/02/12/%E8%A1%8C%E5%88%97%E5%BC%8F%E7%9A%84%E6%80%A7%E8%B4%A82/</a>
+                    <a href="https://mycdherder.github.io/2025/02/16/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E9%A2%9D%E6%95%B0%E5%88%97%E7%9A%84%E7%9F%A9%E9%98%B5%E5%BF%AB%E9%80%9F%E5%B9%82%E7%AE%97%E6%B3%95/">https://mycdherder.github.io/2025/02/16/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E9%A2%9D%E6%95%B0%E5%88%97%E7%9A%84%E7%9F%A9%E9%98%B5%E5%BF%AB%E9%80%9F%E5%B9%82%E7%AE%97%E6%B3%95/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -679,12 +665,16 @@ B&\frac{1}{\lambda}BA+E_m
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E7%9F%A9%E9%98%B5/">
-                                    <span class="chip bg-color">矩阵</span>
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
                                 </a>
                             
-                                <a href="/tags/%E8%A1%8C%E5%88%97%E5%BC%8F/">
-                                    <span class="chip bg-color">行列式</span>
+                                <a href="/tags/%E5%BF%AB%E9%80%9F%E5%B9%82/">
+                                    <span class="chip bg-color">快速幂</span>
+                                </a>
+                            
+                                <a href="/tags/%E7%9F%A9%E9%98%B5/">
+                                    <span class="chip bg-color">矩阵</span>
                                 </a>
                             
                         </div>
@@ -728,9 +718,10 @@ B&\frac{1}{\lambda}BA+E_m
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2025/02/16/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E9%A2%9D%E6%95%B0%E5%88%97%E7%9A%84%E7%9F%A9%E9%98%B5%E5%BF%AB%E9%80%9F%E5%B9%82%E7%AE%97%E6%B3%95/">
                     <div class="card-image">
@@ -748,9 +739,9 @@ B&\frac{1}{\lambda}BA+E_m
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2025-02-16
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-16
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -763,6 +754,7 @@ B&\frac{1}{\lambda}BA+E_m
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -789,13 +781,13 @@ B&\frac{1}{\lambda}BA+E_m
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2025/02/10/%E7%A7%AF%E5%88%86%E7%9A%84%E6%80%9D%E8%80%831/">
+                <a href="/2025/02/12/%E8%A1%8C%E5%88%97%E5%BC%8F%E7%9A%84%E6%80%A7%E8%B4%A82/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="积分的思考1">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="行列式的性质2">
                         
-                        <span class="card-title">积分的思考1</span>
+                        <span class="card-title">行列式的性质2</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -806,14 +798,14 @@ B&\frac{1}{\lambda}BA+E_m
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-10
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-12
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%BE%AE%E7%A7%AF%E5%88%86%E5%AD%A6/" class="post-category">
-                                    微积分学
+                            <a href="/categories/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" class="post-category">
+                                    线性代数
                                 </a>
                             
                             
@@ -823,12 +815,12 @@ B&\frac{1}{\lambda}BA+E_m
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%A7%AF%E5%88%86/">
-                        <span class="chip bg-color">积分</span>
+                    <a href="/tags/%E7%9F%A9%E9%98%B5/">
+                        <span class="chip bg-color">矩阵</span>
                     </a>
                     
-                    <a href="/tags/%E5%BE%AE%E7%A7%AF%E5%88%86/">
-                        <span class="chip bg-color">微积分</span>
+                    <a href="/tags/%E8%A1%8C%E5%88%97%E5%BC%8F/">
+                        <span class="chip bg-color">行列式</span>
                     </a>
                     
                 </div>
