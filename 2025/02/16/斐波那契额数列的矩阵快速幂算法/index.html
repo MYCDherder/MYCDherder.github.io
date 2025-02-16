@@ -408,7 +408,7 @@
 </blockquote>
 <p>这个题很多人第一眼会感觉十分简单，确实，它确实不难，我们都十分熟悉斐波那契数列的递推公式：$a<em>n=a</em>{n-1}+a_{n-2}$$(n\ge2)$</p>
 <p>这天然就给了我们递归的土壤：</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#include&lt;bits/stdc++.h&gt;
 using namespace std;
 int Fibonacci(int n){
     if(n == 1 || n == 2)
@@ -422,10 +422,10 @@ int main()
     cin &gt;&gt; n;
     cout &lt;&lt; Fibonacci(n) &lt;&lt;endl;
     return 0;
-}</code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>基本上系统学习过C++的同学都可以写出这段代码，但是这里存在一个非常明显的不足：时间复杂度太高，粗略估计：$O(2^n)$，在这个条件下，基本上$n\geq50$的时候计算机就要算很久才能出结果的（我之前记得计算机每秒的运算次数大概在$10^9$次左右，所以原本以为在40的时候差不多就要卡住了，但是实际操作下来的话50左右才会被卡住，只能说是计算能力又进步了，我out了<span class="github-emoji"><span>😢</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f622.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span>）</p>
 <p>当然，进一步想，我们的斐波那契数列计算太过于重复了，每一次递归，都要再计算一遍很多之前已经计算出结果的函数，那如果我们用一个数组，将我们计算过的数和相数都放在里面，不就大大简便了呢？所以这就是动态规划：</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#include&lt;bits/stdc++.h&gt;
 using namespace std;
 int main()
 {
@@ -438,12 +438,12 @@ int main()
 		dp[i] = dp[i - 1] + dp[i - 2];
 	cout &lt;&lt; dp[n] &lt;&lt;endl;
 	return 0;
-}</code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>（我的码风不是特别规范，大家见谅，这里面的算是最基础的动态规划，比较简单，我就不详细说明了）</p>
 <p>通过这个算法，我们已经将时间复杂度降到了$O(n)$的级别，基本上在long long数值范围内的斐波那契数列值我们都可以计算出来了（超出long long数值范围的部分属于数字处理了，在这篇博客里面暂时不讨论，<del>当然不是笔者不会的原因</del>）</p>
 <p>不过正经讲，在笔者做过的信息学竞赛题目中，这类结果一般是让你取模的，所以说更高效的算法也是有必要的。</p>
 <p>在算法结构中，有一种十分巧妙的方法叫做快速幂。如果我们要计算$x^n$，这里面最为直接的方法就是将$n$个$x$相乘，时间复杂度为$O(n)$，但这个方法可以进一步简化，将时间复杂度降到$O(\log_2n)$，代码如下：</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#include&lt;bits/stdc++.h&gt;
 using namespace std;
 int main()
 {
@@ -457,7 +457,7 @@ int main()
 	}
 	cout &lt;&lt; res &lt;&lt; endl;
 	return 0;
-}</code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这种方法其实非常好理解，就是将$n$转换为二进制，每一次只取$n$的末位来看，如果是$1$，那么就将结果乘上$x$，如果是$0$，那就不用管，同时，由于数位不断地左移（注意，$n &gt;&gt; =1$是将$n$右移，但是从位数上来说，就是左移），$x$需要自增，也就是变为$x^2$。</p>
 <p>这个算法的时间复杂度，就是只有$O(\log_2n)$。</p>
 <p>我们知道了这个方法，对于我们解决这个问题有什么帮助呢？</p>
@@ -530,7 +530,7 @@ a_n&a_{n-1}
 \end{bmatrix}\\</script><p>其中$a_n$是斐波那契数列中的第$n$项</p>
 <p>其实通过这些铺垫，我们通过矩阵快速幂来解决斐波那契问题的答案已经呼之欲出了，最后的一道拦路虎就是如何运用C++来计算矩阵的乘法，这个问题我觉得没有单独拎出来讨论的必要（<del>绝对不是因为笔者懒了不想写了</del>,现在已经凌晨1：30了，好困<span class="github-emoji"><span>😢</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f622.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span><span class="github-emoji"><span>😢</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f622.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span>）</p>
 <p>接下来是完整的代码（幸好之前已经写过了<span class="github-emoji"><span>😄</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span>，<del>可以早点睡觉</del>）</p>
-<pre class="language-c++" data-language="c++"><code class="language-c++">#include&lt;bits/stdc++.h&gt;
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#include&lt;bits/stdc++.h&gt;
 using namespace std;
 typedef long long ll;
 typedef vector&lt;ll&gt; vec;
@@ -575,7 +575,7 @@ int main()
 	ans = quickcal(a ,n);
 	cout &lt;&lt; ans[0][1] &lt;&lt; endl; //这里你也可以cout &lt;&lt; ans[1][0] &lt;&lt; endl;都一样看你心情
 	return 0;
-}</code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>矩阵的计算次数是一个常数，我们在考虑时间复杂度的时候可以忽略，这个算法的时间复杂度就是$O(log_2n)$</p>
 <p>有兴趣的读者可以自己动手亲自写一写~</p>
 <p>（终于写完了，可以睡觉啦！！！！！）</p>
@@ -817,6 +817,8 @@ int main()
 <script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
 
 <!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
 
 
 <!-- 代码块复制 -->
