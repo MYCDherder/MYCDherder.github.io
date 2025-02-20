@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="积分的思考1, MYCDherder">
+    <meta name="keywords" content="多元函数的基本概念, MYCDherder">
     <meta name="description" content="Learning Notes">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>积分的思考1 | MYCDherder</title>
+    <title>多元函数的基本概念 | MYCDherder</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -308,12 +308,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">积分的思考1</h1>
+                    <h1 class="description center-align post-title">多元函数的基本概念</h1>
                 </div>
             </div>
         </div>
@@ -323,10 +323,104 @@
 
 
 
-<main class="container content">
+<main class="post-container content">
 
     
-    <!-- 文章内容详情 -->
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
 <div id="artDetail">
     <div class="card">
         <div class="card-content article-info">
@@ -335,27 +429,18 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%BE%AE%E7%A7%AF%E5%88%86/">
-                                <span class="chip bg-color">微积分</span>
+                            <a href="/tags/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/">
+                                <span class="chip bg-color">多元函数</span>
                             </a>
                         
-                            <a href="/tags/%E7%A7%AF%E5%88%86/">
-                                <span class="chip bg-color">积分</span>
+                            <a href="/tags/%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/">
+                                <span class="chip bg-color">基础概念</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/%E5%BE%AE%E7%A7%AF%E5%88%86%E5%AD%A6/" class="post-category">
-                                微积分学
-                            </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -364,7 +449,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2025-02-10
+                    2025-02-20
                 </div>
                 
 
@@ -373,7 +458,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    517
+                    208
                 </div>
                 
 
@@ -398,50 +483,57 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>这篇算不上一个真正意义上的博客内容，主要是笔者在之前看书的时候，发现书本上有一道不定积分题存在计算错误，想要重写纠正一下（<del>可以再水一篇顺便练练latex</del>）：</p>
-<p>问题：求不定积分</p>
+                <h1 id="多元函数的基本概念"><a href="#多元函数的基本概念" class="headerlink" title="多元函数的基本概念"></a>多元函数的基本概念</h1><h2 id="n维点集知识点"><a href="#n维点集知识点" class="headerlink" title="n维点集知识点"></a>n维点集知识点</h2><h3 id="1-n维点集的定义"><a href="#1-n维点集的定义" class="headerlink" title="1.n维点集的定义"></a>1.n维点集的定义</h3><p>与$R^3$空间类似，所有$n$元有序数组$(x_1,x_2,\cdots,x_n)$的集合在赋予了加法和数乘运算后称为<strong>n维线性空间</strong>，记为$R^n$，$x_1,x_2,\cdots,x_n$称为<strong>n维向量</strong>，常记为：</p>
 <script type="math/tex; mode=display">
-\int{\frac{x+1}{x^3(x-2)^2}}{\rm d}x</script><p>这个题算是一个板子题，就是用待定系数法将被积函数分解。</p>
+\vec x=(x_1,x_2,\cdots,x_n)</script><p>其中$x_1,x_2,\cdots,x_n$称为向量$x$的<strong>坐标</strong>或<strong>分量</strong>，而定义：</p>
 <script type="math/tex; mode=display">
-\frac{x+1}{x^3(x-2)^2}=\frac{A}{x}+\frac{B}{x^2}+\frac{C}{x^3}+\frac{D}{x-2}+\frac{E}{(x-2)^2}</script><p>将左式合并，得到：</p>
+||\vec x||=\Big(\sum_{i=1}^nx_i^2\Big)^\frac{1}{2}</script><p>为向量$\vec x$的模。</p>
+<h3 id="2-点列的收敛性"><a href="#2-点列的收敛性" class="headerlink" title="2.点列的收敛性"></a>2.点列的收敛性</h3><p><strong>定义1</strong>:若$\lim<em>{k\rightarrow+\infty}d(x_k,x_0)=0$，则称点列${x_k}$收敛于$x_0$，记为$\lim</em>{k\rightarrow+\infty}x_k=x_0$</p>
+<p>注意：$\lim<em>{k\rightarrow+\infty}x_k=x_0\Longleftrightarrow\lim</em>{k\rightarrow+\infty}x_k^i=x_0^i,i=1,2,\cdots,n$</p>
+<h3 id="3-邻域"><a href="#3-邻域" class="headerlink" title="3.邻域"></a>3.邻域</h3><p>设$P_0\in R ^n,\delta&gt;0$，则称集合</p>
 <script type="math/tex; mode=display">
-\frac{A}{x}+\frac{B}{x^2}+\frac{C}{x^3}+\frac{D}{x-2}+\frac{E}{(x-2)^2}=\frac{Ax^2(x-2)^2+Bx(x-2)^2+C(x-2)^2+Dx^3(x-2)+Ex^3}{x^3(x-2)^2}</script><p>单看分子：</p>
+U(x_0,\delta)=\{x_k\mid d(x_k,x_0)<\delta\}</script><p>为点$x_0$的邻域，而称：</p>
 <script type="math/tex; mode=display">
-x+1=Ax^2(x-2)^2+Bx(x-2)^2+C(x-2)^2+Dx^3(x-2)+Ex^3</script><p>令$x=0$,得：</p>
+U^*(x_0,\delta)=\{x_k\mid 0<d(x_k,x_0)<\delta\}</script><p>为去心领域。</p>
+<p>其中：$d(x_k,x_0)$有两种表示方式：</p>
 <script type="math/tex; mode=display">
-1=4C</script><p>即：</p>
+\begin{array}{c}
+d(x_k,x_0)=\sqrt{\sum_{i=1}^n(x_k^i-x_0^i)^2}\\
+或\\
+d(x_k,x_0)=|x_k^i-x_0^i|(i=1,2,\cdots,n)
+\end{array}</script><p>上面的叫圆域，下面的叫方域（一般来说，方域在用定义求取多元函数极限的时候比较方便）</p>
+<h3 id="4-内点，外点，边界点，聚点"><a href="#4-内点，外点，边界点，聚点" class="headerlink" title="4.内点，外点，边界点，聚点"></a>4.内点，外点，边界点，聚点</h3><p>内点：设集合$E\subset R^n$，若$\exists\delta&gt;0$使得</p>
 <script type="math/tex; mode=display">
-C=\frac{1}{4}</script><p>令$x=2$,得：</p>
+U(x_0,\delta)\subset E</script><p>则称$P_0$是$E$​的内点，$E$的全体内点构成的集合称为$E$的<strong>内部</strong>或<strong>内核</strong>，记为$E^0$。</p>
+<p>外点：若$\exists\delta&gt;0$使得</p>
 <script type="math/tex; mode=display">
-3=8E</script><p>即：</p>
+U(x_0,\delta)\bigcap E=\emptyset</script><p>则称$P_0$是$E$的外点</p>
+<p>边界点：若$\exists\delta&gt;0$使得</p>
 <script type="math/tex; mode=display">
-E=\frac{3}{8}</script><p>基本上可以直接看出来得参数就这两个了，下面还是需要拆开了</p>
+\begin{array}{c}
+U(x_0,\delta)\bigcap E\neq\emptyset\\
+U(x_0,\delta)\bigcap E^c\neq\emptyset\\
+\end{array}</script><p>则称$P_0$是$E$的边界点，$E$的全体边界点构成的集合称为$E$的<strong>边界</strong>，记为<strong>$\partial E$</strong>。</p>
+<p>聚点：若$\exists\delta&gt;0$使得</p>
 <script type="math/tex; mode=display">
-x+1=(A+D)x^4+(-4A+B-2D+E)x^3+(4A-4B+C)x^2+(4B-4C)x+4C</script><p>从简单的入手：</p>
+U^*(x_0,\delta)\bigcap E\neq\emptyset</script><p>则称$P_0$是$E$的聚点，全体聚点的集合称为<strong>导集</strong>，记为$E’$。</p>
+<p>注：$E$的聚点可以属于$E$，也可以不属于$E$。</p>
+<h3 id="5-开集，闭集，开域，闭域"><a href="#5-开集，闭集，开域，闭域" class="headerlink" title="5.开集，闭集，开域，闭域"></a>5.开集，闭集，开域，闭域</h3><p>开集：若$E$中的点全部都是$E$的内点，则称$E$是$R^n$中的开集</p>
+<p>闭集：若差集$R^n-E$为开集，则称$E$为闭集</p>
+<p>注意：闭集的等价定义还有2个：</p>
 <script type="math/tex; mode=display">
-4B-4C=1</script><p>解得：</p>
-<script type="math/tex; mode=display">
-B=\frac{1}{2}</script><p>下面一个：</p>
-<script type="math/tex; mode=display">
-4A-4B+C=0</script><p>解得：</p>
-<script type="math/tex; mode=display">
-A=\frac{7}{16}\\
-D=-\frac{7}{16}</script><p>将解整理一下</p>
-<script type="math/tex; mode=display">
-\begin{cases}
-A=\frac{7}{16}\\
-B=\frac{1}{2}\\
-C=\frac{1}{4}\\
-D=-\frac{7}{16}\\
-E=\frac{3}{8}
-\end{cases}</script><p>因此所求结果为：</p>
-<script type="math/tex; mode=display">
-\begin{aligned}
-\int{\frac{x+1}{x^3(x-2)^2}}{\rm d}x &= \int[\frac{7}{16}\frac{1}{x}+\frac{1}{2}\frac{1}{x^2}+\frac{1}{4}\frac{1}{x^3}-\frac{7}{16}\frac{1}{x-2}+\frac{3}{8}\frac{1}{(x-2)^2}]{\rm d}x\\
-&=\frac{7}{16}\ln x-\frac{1}{2}\frac{1}{x}-\frac{1}{8}\frac{1}{x^2}-\frac{7}{16}\ln(x-2)-\frac{3}{8}\frac{1}{x-2}+C
-\end{aligned}</script><p>其实这题真的不难，但是其中的系数一定要注意，提到这个题的那本书里面就是因为C项的系数弄错了导致了最后的结果错误。</p>
-<p>题目来源：</p>
-<p>《积分的方法与技巧》（第一版）第11页 例6</p>
+\begin{array}{c}
+\partial E\subset E\longleftrightarrow E是闭集\\
+E中所有的聚点都属于E\longleftrightarrow E是闭集
+\end{array}</script><p>在定义开域和闭域之前，先介绍连通的概念，即$D\subset R^n$，若$D$中任意两点都能用完全属于$D$的折线连接起来，则称$D$是连通的，注意折线是由有线条直线线段依次联结而成的。</p>
+<p>但是我一直有些疑问，如果说$D$是球面（只包含球壳的那种），就不属于连通的呢？有没有巨佬能和我解释一下这个问题？</p>
+<p>开域：连通的开集称为开域</p>
+<p>闭域：区域连同其边界称为闭域</p>
+<h2 id="习题实战"><a href="#习题实战" class="headerlink" title="习题实战"></a>习题实战</h2><p> 对于下列 $\mathbb{R}^2$ 中的点集 $E$，写出 $E$ 的内核 $E^0$，边界集 $\partial E$，导集 $E’$，并判断哪些是开集、闭集、有界集，是否连通，是不是开域或者闭域.</p>
+<p>(1) $E = {(x,y)|x^2 &lt; y &lt; 2x^2}$;</p>
+<p>(2) $E = {(x,y)|x^2 + y^2 \leq 1} \cup {(x,y)|y = 0, 1 \leq x \leq 2}$;</p>
+<p>(3) $E = {(x,y)|(x^2 + y^2)(y^2 - x^2 + 1) \leq 0}$;</p>
+<p>(4) $E = {((x,y)|x,y \in \mathbb{Q}}$.</p>
 
                 
             </div>
@@ -468,7 +560,7 @@ E=\frac{3}{8}
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://mycdherder.github.io/2025/02/10/%E7%A7%AF%E5%88%86%E7%9A%84%E6%80%9D%E8%80%831/">https://mycdherder.github.io/2025/02/10/%E7%A7%AF%E5%88%86%E7%9A%84%E6%80%9D%E8%80%831/</a>
+                    <a href="https://mycdherder.github.io/2025/02/20/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">https://mycdherder.github.io/2025/02/20/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -506,12 +598,12 @@ E=\frac{3}{8}
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%BE%AE%E7%A7%AF%E5%88%86/">
-                                    <span class="chip bg-color">微积分</span>
+                                <a href="/tags/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/">
+                                    <span class="chip bg-color">多元函数</span>
                                 </a>
                             
-                                <a href="/tags/%E7%A7%AF%E5%88%86/">
-                                    <span class="chip bg-color">积分</span>
+                                <a href="/tags/%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/">
+                                    <span class="chip bg-color">基础概念</span>
                                 </a>
                             
                         </div>
@@ -818,17 +910,18 @@ E=\frac{3}{8}
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2025/02/12/%E8%A1%8C%E5%88%97%E5%BC%8F%E7%9A%84%E6%80%A7%E8%B4%A82/">
+                <a href="/2025/02/20/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="行列式的性质2">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="多元函数的基本概念">
                         
-                        <span class="card-title">行列式的性质2</span>
+                        <span class="card-title">多元函数的基本概念</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -838,30 +931,27 @@ E=\frac{3}{8}
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2025-02-12
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-20
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" class="post-category">
-                                    线性代数
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            MYCDherder
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%9F%A9%E9%98%B5/">
-                        <span class="chip bg-color">矩阵</span>
+                    <a href="/tags/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/">
+                        <span class="chip bg-color">多元函数</span>
                     </a>
                     
-                    <a href="/tags/%E8%A1%8C%E5%88%97%E5%BC%8F/">
-                        <span class="chip bg-color">行列式</span>
+                    <a href="/tags/%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/">
+                        <span class="chip bg-color">基础概念</span>
                     </a>
                     
                 </div>
@@ -875,13 +965,13 @@ E=\frac{3}{8}
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2025/02/10/%E7%A7%AF%E5%88%86%E7%9A%84%E6%80%9D%E8%80%832/">
+                <a href="/2025/02/18/%E6%9C%80%E5%A4%A7%E8%BF%9E%E7%BB%AD%E5%AD%90%E5%BA%8F%E5%88%97%E6%B1%82%E5%92%8C/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="积分的思考2（倍角法）">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="最大连续子序列求和">
                         
-                        <span class="card-title">积分的思考2（倍角法）</span>
+                        <span class="card-title">最大连续子序列求和</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -892,14 +982,14 @@ E=\frac{3}{8}
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-10
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-18
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%BE%AE%E7%A7%AF%E5%88%86%E5%AD%A6/" class="post-category">
-                                    微积分学
+                            <a href="/categories/C/" class="post-category">
+                                    C++
                                 </a>
                             
                             
@@ -909,12 +999,12 @@ E=\frac{3}{8}
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%A7%AF%E5%88%86/">
-                        <span class="chip bg-color">积分</span>
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
-                    <a href="/tags/%E5%80%8D%E8%A7%92%E6%B3%95/">
-                        <span class="chip bg-color">倍角法</span>
+                    <a href="/tags/%E6%9C%80%E4%BC%98%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/">
+                        <span class="chip bg-color">最优时间复杂度</span>
                     </a>
                     
                 </div>
@@ -983,6 +1073,100 @@ E=\frac{3}{8}
 
 <script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
 
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
 
     
 
