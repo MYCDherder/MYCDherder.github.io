@@ -544,9 +544,53 @@ E中所有的聚点都属于E\longleftrightarrow E是闭集
 <p>闭域：区域连同其边界称为闭域</p>
 <h2 id="习题实战"><a href="#习题实战" class="headerlink" title="习题实战"></a>习题实战</h2><p> 对于下列 $\mathbb{R}^2$ 中的点集 $E$，写出 $E$ 的内核 $E^0$，边界集 $\partial E$，导集 $E’$，并判断哪些是开集、闭集、有界集，是否连通，是不是开域或者闭域.</p>
 <p>(1) $E = {(x,y)|x^2 &lt; y &lt; 2x^2}$;</p>
-<p>(2) $E = {(x,y)|x^2 + y^2 \leq 1} \cup {(x,y)|y = 0, 1 \leq x \leq 2}$;</p>
+<p>(2) $E = {(x,y)|x^2 + y^2 \leq 1} \cup {(x,y)|y = 0,\ 1 \leq x \leq 2}$;</p>
 <p>(3) $E = {(x,y)|(x^2 + y^2)(y^2 - x^2 + 1) \leq 0}$;</p>
 <p>(4) $E = {((x,y)|x,y \in \mathbb{Q}}$.</p>
+<p>解答：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>题号</th>
+<th>内核$E^0$</th>
+<th>边界集$\partial E$</th>
+<th>导集$E’$</th>
+<th><strong>集合属性</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>（1）</td>
+<td>$E$</td>
+<td>$y=x^2，y=2x^2$</td>
+<td>$x^2\leq y\leq 2x^2$</td>
+<td>无界开集（左右两边不连通）</td>
+</tr>
+<tr>
+<td>（2）</td>
+<td>$x^2+y^2&lt;1$</td>
+<td>$x^2+y^2=1,y=0(1\leq x\leq2)$</td>
+<td>$E$</td>
+<td>有界闭域（有的答案写的是有界闭集应该是不对的？）</td>
+</tr>
+<tr>
+<td>（3）</td>
+<td>$y^2-x^2+1&lt;0$</td>
+<td>$y^2-x^2+1=0,(0,0)$</td>
+<td>$y^2-x^2+1\leq0$</td>
+<td>无界闭集（是双曲线，两边不连通，不是区域）</td>
+</tr>
+<tr>
+<td>（4）</td>
+<td>$\emptyset$</td>
+<td>$E$</td>
+<td>$\emptyset$</td>
+<td>无界闭集（所有点都是边界点，没有相应的开域）</td>
+</tr>
+</tbody>
+</table>
+</div>
 
                 
             </div>
