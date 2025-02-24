@@ -33,9 +33,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="MYCDherder" type="application/atom+xml">
+
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="MYCDherder" type="application/atom+xml">
 </head>
 
 
@@ -467,7 +467,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.4k
+                    3.1k
                 </div>
                 
 
@@ -508,7 +508,7 @@ class linearlist{
     	virtual ~list(){};//为什么这个地方不再构建纯虚函数，我在后面应该会单开一篇来讲纯虚函数的事
 };<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>在上面的代码里除了析构函数以外，其他基本上都是纯虚函数，这样相当于勒令衍生类解决这些问题，这样一个基本的线性表的就构建好了，我们为什么在上面只是设置成员函数，但是没有去设置数据成员？因为线性表有多种表示方式，既可以是顺序表，也可以是链表，链表又可以分为单双链表，顺序表也有多种表达方式，不同的表示方式我们要设置的私有数据成员也不同，我们只能够放到衍生类里面去实现。</p>
-<h2 id="顺序表类"><a href="#顺序表类" class="headerlink" title="顺序表类"></a>顺序表类</h2><p>顺序实现是我们存放数据最自然的一种方式，基本上所有事务我要把它归类，首先都是这么干的，它的基础逻辑就是数组，不过在C++中，数组确实不太好用（主要是在申明的时候就要给定最大容量，这对于经常要使用变量的我们来说还是十分复杂的），但是通过指针，我们就可以很清爽地规避掉这个问题：</p>
+<h2 id="顺序表类"><a href="#顺序表类" class="headerlink" title="顺序表类"></a>顺序表类</h2><h3 id="顺序列表基础申明"><a href="#顺序列表基础申明" class="headerlink" title="顺序列表基础申明"></a>顺序列表基础申明</h3><p>顺序实现是我们存放数据最自然的一种方式，基本上所有事务我要把它归类，首先都是这么干的，它的基础逻辑就是数组，不过在C++中，数组确实不太好用（主要是在申明的时候就要给定最大容量，这对于经常要使用变量的我们来说还是十分复杂的），但是通过指针，我们就可以很清爽地规避掉这个问题：</p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;class T&gt;
 class seqlist: public linearlist&lt;T&gt;{ //通过public的方式来继承linearlist
     private:
@@ -528,7 +528,7 @@ class seqlist: public linearlist&lt;T&gt;{ //通过public的方式来继承linea
     	void traverse() const;
 };<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>基本上还是跟上面一样的说明，但是这次就不能再打太极了，必须解决，不过一个习惯就是不要放在类里面解决（除非真的很短）</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">//~seqlist的实现
+<h3 id="析构函数，clear，length，visit，traverse函数的实现"><a href="#析构函数，clear，length，visit，traverse函数的实现" class="headerlink" title="析构函数，clear，length，visit，traverse函数的实现"></a>析构函数，clear，length，visit，traverse函数的实现</h3><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">//~seqlist的实现
 template &lt;class T&gt;
 seqlist&lt;T&gt;::~seqlist(){
     delete [] data;
@@ -557,7 +557,7 @@ void seqlist&lt;T&gt;::traverse()const{
    	cout &lt;&lt; endl;
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>上面是最简单的几个功能的实现，基本上所有学习过C++的读者都可以轻松自己编写，除了<code>traverse</code>函数的时间复杂度是$O(n)$，其他的时间复杂度都是$O(1)$，接下来几个比较能够体现顺序类列表的特点，我分开来列：</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">//构造函数的实现
+<h3 id="构造函数的实现"><a href="#构造函数的实现" class="headerlink" title="构造函数的实现"></a>构造函数的实现</h3><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">//构造函数的实现
 template &lt;class T&gt;
 seqlist&lt;T&gt;::seqlist(int startsize){
     data = new T [startsize];
@@ -565,7 +565,7 @@ seqlist&lt;T&gt;::seqlist(int startsize){
     currentlength = 0;
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这个其实也非常简单（或许我应该把它列在上面的，算了，<del>懒得动</del>）</p>
-<pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">//search的实现
+<h3 id="search的实现"><a href="#search的实现" class="headerlink" title="search的实现"></a>search的实现</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">//search的实现
 template &lt;class T&gt;
 int seqlist&lt;T&gt;::search(const T &amp;x)const{
     int i;
@@ -573,7 +573,7 @@ int seqlist&lt;T&gt;::search(const T &amp;x)const{
     return ((i == curlength)?-1:i);
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>其实讲真的，基本上所有人都能看得出来这块挺麻烦的，但是搜索就是这样， 除非储存下标，不然就是需要遍历，时间复杂度就是$O(n)$级别的。</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">//doublespace和search函数的实现
+<h3 id="doublespace和search函数的实现"><a href="#doublespace和search函数的实现" class="headerlink" title="doublespace和search函数的实现"></a>doublespace和search函数的实现</h3><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">//doublespace和search函数的实现
 template &lt;class T&gt;
 void seqlist&lt;T&gt;::doublespace(){
     T *tmp = data;
@@ -593,7 +593,158 @@ void seqlist&lt;T&gt;::insert(int i,const T &amp;x){
     curlength++;
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>基本上十分明显了，很简单就是我要插入在第<code>i</code>的位置，那么我把自从第<code>i</code>往后的每一位都向后挪一个位置，再把第<code>i</code>位变成我要的<code>x</code>这样子就完成了，这里就是顺序表和链表最大的不同，不过两者基本上都是$O(n)$的时间复杂度，因为顺序表知道下标但是挪动需要花一定的时间，而链表是挪动不用花时间但是不知道下表（但是实际上可以解决）</p>
-
+<h3 id="remove函数的实现"><a href="#remove函数的实现" class="headerlink" title="remove函数的实现"></a>remove函数的实现</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">//remove的实现
+template &lt;class T&gt;
+void seqlist&lt;T&gt;::remove(int i){
+    for(int j = i; j &lt; curlength; j++)
+        data[j] = data[j + 1];
+    curlength--;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>顺序表就这么多内容了，基本上没有什么例外，确实比较简单，链表在<code>move</code>函数那边比较具有迷惑性，需要好好解释一下的我们接下来探讨</p>
+<h2 id="单链表"><a href="#单链表" class="headerlink" title="单链表"></a>单链表</h2><h3 id="单链表类的定义"><a href="#单链表类的定义" class="headerlink" title="单链表类的定义"></a>单链表类的定义</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">template &lt;class T&gt;
+class slinklist: public linearlist&lt;T&gt;{
+    private:
+    	struct node{
+            T data;
+            node *next;//这两个是链表的基本元素
+            node(const T &amp;x, node *n = NULL){data = x; next = n;}//这里面是node的构造函数
+            node():next(NULL){}//这个是没有初始化的时候的构造函数，将next指针指向NULL是避免错误的一个非常好的做法
+            ~node(){}
+        };
+    	node *head;//这个是头节点
+    	int curlength;//这个是当下的长度
+    	node *move(int i) const;
+    	public:
+    		slinklist();
+    		void clear();
+    		~slinklist(){clear();delete head;}//clear就是将所有除头节点以外的节点全部清除
+    		int length() const {return curlegnth};
+    		void insert(int i,const T &amp;x);
+    		void remove(int i);
+    		int search(const T &amp;x)
+             T visit(int i) const;
+    		void traverse() const;
+};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里里面的定义基本上都跟上面一样，不过这里需要注意的就是<code>node</code>作为结构体，也具有构造函数和析构函数，形式跟类差不多</p>
+<h3 id="move函数的实现"><a href="#move函数的实现" class="headerlink" title="move函数的实现"></a>move函数的实现</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">//move函数的实现
+template&lt;class T&gt;
+typename slinklist&lt;T&gt;::node *slinklist&lt;T&gt;::move(int i) const{//这个地方需要申明的就是typename是一个可有可无的量，其本质就是对编译器申明这里是一个变量名，可能有些不太先进的编译器没有办法识别出来
+    node *p = head;
+    while(i-- &gt;= 0)	p = p -&gt; next;//这里面i-- &gt;= 0总共会循环i + 1次
+    return p;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里面为什么是<code>i + 1</code>次循环？而不是<code>i</code>我们的头节点并不是我们的第0个节点，我们要从头节点移动到第0个节点需要移动1次，第一个节点需要2次……以此类推，你要到第<code>i</code>个节点，就需要<code>i + 1</code>次，那既然如此，我们为什么不直接去除掉<code>head</code>节点，来考虑剩下来的问题？这个问题我们下文会考虑</p>
+<h3 id="构造函数的实现-1"><a href="#构造函数的实现-1" class="headerlink" title="构造函数的实现"></a>构造函数的实现</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">//slinklist的实现
+template&lt;class T&gt;
+slinklist&lt;T&gt;::slinklist(){
+	head = new node;
+    curlength = 0;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>非常简单，没有什么好讲的（<del>所以你干嘛写它呢？</del>）</p>
+<h3 id="clear函数的实现"><a href="#clear函数的实现" class="headerlink" title="clear函数的实现"></a>clear函数的实现</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">//clear函数的实现
+template&lt;class T&gt;
+void slinklist &lt;T&gt; ::clear(){
+	node *p = head-&gt;next ,*q;
+    head-&gt;next = NULL;
+    while(p != NULL){
+		q = p-&gt;next;
+        delete p;
+        p = q;//删除，然后移动到下一个节点
+    }
+    curlength = 0;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>也是非常的简单，不多说了</p>
+<h3 id="insert和remove函数的实现"><a href="#insert和remove函数的实现" class="headerlink" title="insert和remove函数的实现"></a>insert和remove函数的实现</h3><pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">//insert函数的实现
+template&lt;class T&gt;
+void slinklist&lt;T&gt;::insert(int i, const T &amp;x){
+	node *pos;
+    pos = move(i - 1);
+    pos-&gt;next = new node(x, pos-&gt;next);//这里使用了我在定义里面写的node的构造函数
+    curlength++;
+}
+//remove函数的实现
+template&lt;class T&gt;
+void slinklist&lt;T&gt;::remove(int i){
+	node *pos, *delp;
+    pos = move(i - 1);
+    delp = pos-&gt;next;
+    pos-&gt;next = delp-&gt;next;
+    delete delp;
+    curlength--;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>终于来了点有意思的东西了，第一个问题：为什么<code>move</code>函数的参数是<code>i - 1</code>?而不是<code>i</code>呢？我们要去除第<code>i</code>个节点，自然就是要将<code>i - 1</code>和<code>i + 1</code>链接起来，所以实际上，我们将<code>pos</code>移到<code>i - 1</code>的位置是便于操作的，因为我们这边是单链表，你找你的下家容易，但是你去找上家比较的困难</p>
+<p>另外再说，为什么我们需要将<code>node</code>后面写上<code>x, pos-&gt;next</code>的参数，可以参考我在定义里面写的<code>node(const T &amp;x, node *n = NULL){data = x; next = n;}</code>我们将这里面的<code>x</code>变为一个新的节点的<code>data</code>然后将原来<code>pos-&gt;next</code>变作这个新节点的<code>next</code>，最后将<code>post-&gt;next</code>改为这个新节点的地址，如果我们不要求代码的美观度这么高，我们可以写得明显一些：</p>
+<pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">node *tmp = new node;
+tmp-&gt;data = x;
+tmp-&gt;next = pos-&gt;next;
+pos-&gt;next = tmp;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>上面这四行代码可以达到同样的效果</p>
+<p>在<code>remove</code>函数的实现中，注意<code>delp</code>函数的使用，因为<code>delp</code>函数其实是记下来给用来释放空间的，不然会产生内存泄漏。</p>
+<h3 id="search，visit，traverse函数的实现"><a href="#search，visit，traverse函数的实现" class="headerlink" title="search，visit，traverse函数的实现"></a>search，visit，traverse函数的实现</h3><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">//search函数的实现
+template&lt;class T&gt;
+int slinklist&lt;T&gt;::search(const T &amp;x)const{
+	node *p = head-&gt;next;
+    int i = 0;
+    while(p != NULL &amp;&amp; p-&gt;data != x){
+		p = p-&gt;next;
+        i++;
+    }
+    if(p == NULL)
+        return -1;//如果p是到NULL的时候停下来的说明没有找到x，x不存在在顺序链表里
+    else
+        return i;
+}
+//visit函数的实现
+template&lt;class T&gt;
+T slinklist&lt;T&gt;::visit(int i)const{
+	return move(i)-&gt;data;
+}
+//traverse函数的实现
+template&lt;class T&gt;
+void slinklist&lt;T&gt;::traverse()const{
+	node *p = head-&gt;next;
+    while(p != NULL){
+        cout &lt;&lt; p-&gt;data &lt;&lt; " ";
+		p = p-&gt;next;
+    }
+    cout &lt;&lt; endl;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这三个函数还是十分简单的，基本上就是遍历了，没有什么太过困难的。</p>
+<h3 id="无头结点的函数实现"><a href="#无头结点的函数实现" class="headerlink" title="无头结点的函数实现"></a>无头结点的函数实现</h3><p>但是</p>
+<p>你觉得，这就结束了吗？</p>
+<p><strong>不！</strong></p>
+<p>我们还要尝试无头结点的情况下面的单链表，判断为什么拥有头节点是一件更好的事情，我们来尝试一下无头结点情况下的<code>insert</code>和<code>remove</code>函数</p>
+<pre class="line-numbers language-C++" data-language="C++"><code class="language-C++">//无头结点下的insert函数的实现
+template&lt;class T&gt;
+void slinklist&lt;T&gt;::insert(int i, const T &amp;x){
+	if(i == 0){
+		p = head;
+        head = new node(x,p);
+    }
+    else if(i &gt; 0){
+        p = move(i - 2);
+        p-&gt;next = new node(x,p-&gt;next);//其实在i &gt; 0的情况下其实差不多，没有什么太大的区别，就是只能移动i - 2位了
+    }
+    curlength++;
+}
+//无头结点下的remove函数的实现
+template&lt;class T&gt;
+void slinklist&lt;T&gt;::remove(int i){
+	node *pos, *delp;
+    if(i == 0){
+        delp = head;
+        head = delp-&gt;next;
+    }
+    else if(i &gt; 0){
+		p = move(i - 2);
+        delp = p-&gt;next;
+        p-&gt;next = delp-&gt;next;
+    }
+    delete delp;
+    curlength--;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>明显可以看出来复杂得多了，因为我们需要对于有<code>i == 0</code>的情况进行专门的判断，我建议有精力的读者可以自己用笔来画画图，来理解一下为什么这里面<code>i == 0</code>需要专门判断，笔者本来也想写一写然后贴图片上去的，但是作业还没有写完（悲），就不能继续写了</p>
+<h2 id="双链接表"><a href="#双链接表" class="headerlink" title="双链接表"></a>双链接表</h2>
                 
             </div>
             <hr/>
@@ -969,18 +1120,17 @@ void seqlist&lt;T&gt;::insert(int i,const T &amp;x){
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2025/02/22/%E7%BA%BF%E6%80%A7%E8%A1%A8%E6%95%B4%E7%90%86/">
+                <a href="/2025/02/24/%E4%BA%8C%E9%87%8D%E6%9E%81%E9%99%90%E7%9A%84%E5%AD%98%E5%9C%A8%E6%80%A7%E5%88%A4%E6%96%AD/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="线性表整理（更新中）">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="二重极限的存在性判断">
                         
-                        <span class="card-title">线性表整理（更新中）</span>
+                        <span class="card-title">二重极限的存在性判断</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -990,31 +1140,30 @@ void seqlist&lt;T&gt;::insert(int i,const T &amp;x){
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-22
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2025-02-24
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/C/" class="post-category">
-                                    C++
+                            <a href="/categories/%E5%BE%AE%E7%A7%AF%E5%88%86%E5%AD%A6/" class="post-category">
+                                    微积分学
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E9%93%BE%E8%A1%A8/">
-                        <span class="chip bg-color">链表</span>
+                    <a href="/tags/%E5%A4%9A%E5%85%83%E5%87%BD%E6%95%B0/">
+                        <span class="chip bg-color">多元函数</span>
                     </a>
                     
-                    <a href="/tags/%E6%95%B0%E7%BB%84/">
-                        <span class="chip bg-color">数组</span>
+                    <a href="/tags/%E6%9E%81%E9%99%90%E7%9A%84%E5%AD%98%E5%9C%A8/">
+                        <span class="chip bg-color">极限的存在</span>
                     </a>
                     
                 </div>
@@ -1260,7 +1409,7 @@ void seqlist&lt;T&gt;::insert(int i,const T &amp;x){
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">8.2k</span>&nbsp;字
+                class="white-color">10k</span>&nbsp;字
             
             
             
