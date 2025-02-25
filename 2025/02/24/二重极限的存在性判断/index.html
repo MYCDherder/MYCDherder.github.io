@@ -33,9 +33,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="MYCDherder" type="application/atom+xml">
-
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="MYCDherder" type="application/atom+xml">
 </head>
 
 
@@ -467,7 +467,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    63
+                    60
                 </div>
                 
 
@@ -492,7 +492,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="二重极限的存在性判断（更新中）"><a href="#二重极限的存在性判断（更新中）" class="headerlink" title="二重极限的存在性判断（更新中）"></a>二重极限的存在性判断（更新中）</h1><h2 id="二重极限的定义"><a href="#二重极限的定义" class="headerlink" title="二重极限的定义"></a>二重极限的定义</h2><p>我们先来看一下二重极限的定义：</p>
+                <h1 id="二重极限的存在性判断"><a href="#二重极限的存在性判断" class="headerlink" title="二重极限的存在性判断"></a>二重极限的存在性判断</h1><h2 id="二重极限的定义"><a href="#二重极限的定义" class="headerlink" title="二重极限的定义"></a>二重极限的定义</h2><p>我们先来看一下二重极限的定义：</p>
 <script type="math/tex; mode=display">
 \begin{array}{c}
 设二元函数f:U^*(P_0)\rightarrow\mathbb{R}，若存在数A，\forall\varepsilon>0，\exist\delta>0，使得当0<d(P,P_0)<\delta时，\\
@@ -500,6 +500,52 @@
 则称当P（x,y)\rightarrow P(x_0,y_0)时，f(x,y)的极限为A，记为：\\
 \lim_{(x,y)\rightarrow(x_0,y_0)}f(x,y)=A
 \end{array}</script><p>这个实际上就是一元函数极限的推广，但是需要注意的是，一元函数中的洛必达定理和泰勒展开在多元函数这里都不适用，同时我们也要注意到，二重极限和路径无关，那么换而言之，如果二重极限和路径有关，那么这个二重极限就不存在，所以我们通过这个东西就有了很大的操作空间了</p>
+<h2 id="二重极限的存在性判断-1"><a href="#二重极限的存在性判断-1" class="headerlink" title="二重极限的存在性判断"></a>二重极限的存在性判断</h2><h3 id="k值替换"><a href="#k值替换" class="headerlink" title="k值替换"></a>k值替换</h3><p>讨论$(x,y)\rightarrow(0,0)$时二重极限的存在性：</p>
+<script type="math/tex; mode=display">
+f(x,y)=
+\begin{cases}
+\frac{xy}{x^{2}+y^{2}}, & x^{2}+y^{2}\neq 0 \\
+0, & x^{2}+y^{2}=0
+\end{cases}</script><p>我们来看一下这个东西，来熟悉一下</p>
+<script type="math/tex; mode=display">
+令y=kx，则
+\lim_{(x,y)\rightarrow(0,0)}\frac{xy}{x^2+y^2}=\lim_{x\rightarrow0}\frac{kx^2}{(k+1)x^2}=\frac{k}{k+1}</script><p>这个说明原函数和$k$是有关的，即二重极限和路径有关，那么这个二重极限不存在。</p>
+<p>插一句题外话，我发现一个很有意思的问题，这里面$f(x,y)$对于$x$和$y$的偏导数都是存在的，由于这个极限不存在，所以这个二元函数在这里并不连续，所以说，对于多元函数来说，<strong>可偏导不一定能够推出连续，连续也不一定推出可偏导</strong>，这个和一元函数的可导一定连续，连续不一定可导的结论是有出入的。其实从几何上也非常容易看出来，我在这里就不多说了</p>
+<h3 id="三角换元"><a href="#三角换元" class="headerlink" title="三角换元"></a>三角换元</h3><p>还是这道题：</p>
+<script type="math/tex; mode=display">
+令\begin{cases}
+x=r\cos\theta\\
+y=r\sin\theta
+\end{cases}\\
+\lim_{(x,y)\rightarrow(0,0)}\frac{xy}{x^2+y^2}=\lim_{r\rightarrow0}\frac{r^2\sin\theta\cos\theta}{r^2}=\sin\theta\cos\theta</script><p>三角换元，我们发现极限的结果和$\theta$有关，所以二重极限也不存在</p>
+<h3 id="特殊情况辨别"><a href="#特殊情况辨别" class="headerlink" title="特殊情况辨别"></a>特殊情况辨别</h3><p>如此看来，岁月静好，这个规则十分的美好，还有两种形式，给了我们十分重要的解题方法</p>
+<p>但是，还是会出现例外：</p>
+<p>讨论$(x,y)\rightarrow(0,0)$时二重极限的存在性：</p>
+<script type="math/tex; mode=display">
+f(x,y)=
+\begin{cases}
+\frac{x^2y}{x^{4}+y^{2}}, & x^{4}+y^{2}\neq 0 \\
+0, & x^{4}+y^{2}=0
+\end{cases}</script><script type="math/tex; mode=display">
+令y=kx^2，则
+\lim_{(x,y)\rightarrow(0,0)}\frac{x^2y}{x^4+y^2}=\lim_{x\rightarrow0}\frac{kx^4}{(k^2+1)x^4}=\frac{k}{k^2+1}</script><p>这里买呢我们可以很明显地看出和$k$有关，那么这个二重极限是不存在的</p>
+<p>试试三角换元法呢？</p>
+<script type="math/tex; mode=display">
+令\begin{cases}
+x=r\cos\theta\\
+y=r\sin\theta
+\end{cases}\\
+\lim_{(x,y)\rightarrow(0,0)}\frac{x^2y}{x^4+y^2}=\lim_{r\rightarrow0}\frac{r^3\sin\theta\cos^2\theta}{r^4
+\cos^4\theta+r^2\sin^4\theta}=
+\begin{cases}
+0,\sin\theta=0\\
+0,\sin\theta\neq0
+\end{cases}=0</script><p>唉，我们发现出现问题了，三角换元的结果是0，和$\theta$无关，这个和我们使用$k$值替代法得出的结果是矛盾的。</p>
+<p>所以它到底极限存不存在？</p>
+<p>不存在</p>
+<p>用最简单的方法来解释，就是三角换元里面对$\theta$进行了讨论，这个<strong>讨论本身</strong>就说明极限的结果会和$\theta$有关，只不过两种讨论的结果是同一个值。</p>
+<p>我们使用三角换元的时候，只不过为了方便计算，将$r$看作变量，$\theta$可以任取的，但是这两者都是变量，在计算的过程中两者之间不能有任何的约束关系，不然极限就不存在，它就不是任意路线的了。</p>
+<p>（就是为了这点醋包的这顿饺子<span class="github-emoji"><span>😄</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span>）</p>
 
                 
             </div>
