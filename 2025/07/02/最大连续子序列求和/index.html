@@ -19,25 +19,25 @@
   <meta name="author" content="牧丛">
   <meta name="keywords" content="">
   
-    <meta name="description" content="欢迎你来到牧丛的博客！在正式浏览这个博客的主要内容之前，我希望你能够抽出几分钟的时间来阅读一下这篇文章，或许能够节约你的一部分时间。 其实笔者在2025年2月份期间，就开始着手搭建自己的博客，当时使用的是matery主题，当时也更新了一些文章，但是一直存在一些格式上不适配的现象，后来在朋友的推荐下选择了fluid的主题。但是交大大一下的课程堪称恐怖，笔者拼劲全力，实在没有办法在保证课内学习质量的情">
+    <meta name="description" content="最大连续子序列求和题目：  给你一个整数列，$A_1,A_2,A_3,\cdots,A_n$，在其中找到一个连续的子链$A_i,A_{i+1},\cdots,A_j(1\le i\le j\le N)$使得$\sum_{k&#x3D;i}^{j}A_k$的值最大，如果所有的数都是负数，则规定最大连续子链和为$0$  这个其实是非常简单的一道题，随着思维的深入，时间复杂度可以多次降低，比如说，我们肯">
 <meta property="og:type" content="article">
-<meta property="og:title" content="写在最前面">
-<meta property="og:url" content="http://example.com/2025/07/02/%E5%86%99%E5%9C%A8%E6%9C%80%E5%89%8D%E9%9D%A2/index.html">
+<meta property="og:title" content="最大连续子序列求和">
+<meta property="og:url" content="http://example.com/2025/07/02/%E6%9C%80%E5%A4%A7%E8%BF%9E%E7%BB%AD%E5%AD%90%E5%BA%8F%E5%88%97%E6%B1%82%E5%92%8C/index.html">
 <meta property="og:site_name" content="MYCDherder&#39;s Blog">
-<meta property="og:description" content="欢迎你来到牧丛的博客！在正式浏览这个博客的主要内容之前，我希望你能够抽出几分钟的时间来阅读一下这篇文章，或许能够节约你的一部分时间。 其实笔者在2025年2月份期间，就开始着手搭建自己的博客，当时使用的是matery主题，当时也更新了一些文章，但是一直存在一些格式上不适配的现象，后来在朋友的推荐下选择了fluid的主题。但是交大大一下的课程堪称恐怖，笔者拼劲全力，实在没有办法在保证课内学习质量的情">
+<meta property="og:description" content="最大连续子序列求和题目：  给你一个整数列，$A_1,A_2,A_3,\cdots,A_n$，在其中找到一个连续的子链$A_i,A_{i+1},\cdots,A_j(1\le i\le j\le N)$使得$\sum_{k&#x3D;i}^{j}A_k$的值最大，如果所有的数都是负数，则规定最大连续子链和为$0$  这个其实是非常简单的一道题，随着思维的深入，时间复杂度可以多次降低，比如说，我们肯">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/cover/cover1.jpg">
-<meta property="article:published_time" content="2025-07-02T08:00:00.000Z">
-<meta property="article:modified_time" content="2025-07-02T08:47:34.448Z">
+<meta property="article:published_time" content="2025-07-02T08:41:00.918Z">
+<meta property="article:modified_time" content="2025-07-02T08:46:06.488Z">
 <meta property="article:author" content="MYCDherder">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="最优时间复杂度">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/cover/cover1.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>写在最前面 - MYCDherder&#39;s Blog</title>
+  <title>最大连续子序列求和 - MYCDherder&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="写在最前面"></span>
+            <span id="subtitle" data-typed-text="最大连续子序列求和"></span>
           
         </div>
 
@@ -214,7 +214,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-07-02 16:00" pubdate>
+        <time datetime="2025-07-02 16:41" pubdate>
           2025年7月2日 下午
         </time>
       </span>
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.2k 字
+          1k 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          11 分钟
+          9 分钟
         
       </span>
     
@@ -274,23 +274,32 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">写在最前面</h1>
+            <h1 id="seo-header">最大连续子序列求和</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="欢迎你来到牧丛的博客！"><a href="#欢迎你来到牧丛的博客！" class="headerlink" title="欢迎你来到牧丛的博客！"></a>欢迎你来到牧丛的博客！</h1><p>在正式浏览这个博客的主要内容之前，我希望你能够抽出几分钟的时间来阅读一下这篇文章，或许能够节约你的一部分时间。</p>
-<p>其实笔者在2025年2月份期间，就开始着手搭建自己的博客，当时使用的是matery主题，当时也更新了一些文章，但是一直存在一些格式上不适配的现象，后来在朋友的推荐下选择了fluid的主题。但是交大大一下的课程堪称恐怖，笔者拼劲全力，实在没有办法在保证课内学习质量的情况下持续更新博客，无奈只能停更。现在已是暑假，笔者决定重整旗鼓，重新开始博客的更新。下面是我2025年年初写的前言（略有修改）：</p>
-<p>首先，我想先简单介绍一下有关我博客名字的一些事情。在网址和Github那里，你可以看到我注册的名称是“MYCDherder”，而进入博客后的自我介绍中，会告诉你我的昵称叫“牧丛”，这是我个人习惯所导致的。我是个不怎么会起名字的人，我几乎所有的账户，倘若可以用中文表示，那就一律起名为“牧丛”，而若是需要英文，我一般就会使用“MYCD”。但是由于“MYCD”的名字过短，不能通过Github的名称审核，我只好将两个名字融合起来，“牧丛”没有直接对应的英文单词，我就取了其中的“牧”字，将其翻译为“herder”，“放牧的人”，两者一结合，问题就迎刃而解了。</p>
-<p>再说说笔者，笔者目前是一名上海交通大学的本科生，就读于信息工程专业。在初高中的学习生活中，笔者一直算不上一个出色的学生，也常常被周围巨佬们的天才表现所震撼。在大学的生活中，笔者也往往比较迟钝，很多消息往往知道得比别人慢，产生了一定的信息差。像个人博客这种东西，也是几个月前，笔者发现一个高中同学已经创建了属于自己的博客时才了解到的。</p>
-<p>当然，笔者创立这个博客，并不是为了盲目地跟风。笔者初入大学，对于大学的学习生活，依然没有能够找到一条稳定而高效的路径。显而易见，初高中以熟练度为主的应试方法必然不会符合大学的教育模式，单纯的高分也不是中国本科教育的目的。笔者建立这个博客，其实也是对自己本科学习方法的一种探索。当然，不同于毫无意义的胡乱尝试，创建并运营博客有着一些明显的好处：</p>
-<p>第一，博客的运营需要持续的更新，持续的更新就需要持续的学习与思考，对于自己博客的运营其实也是一种自我的督促。</p>
-<p>第二，更新博客的过程其实也是“费曼学习法”，博客更新的内容是公开的，实质上就是将笔者所学的知识用自己的语言，以通俗易懂的方式教授给别人。在这个过程中，笔者对于知识的理解也会更加透彻。</p>
-<p>当然，创立的博客的好处当然不止这些，但限于篇幅原因，笔者不再继续探讨。其实，笔者更多是想把这个博客做成一个类似于学习笔记的东西，当然，这并不意味着笔者会呆板地去照抄教材。笔者希望的，是能够在这些基础学科中找到一些大家忽略的细节，进行一些深度的思考。</p>
-<p>除了单纯的巩固细节之外，笔者还希望能够对于一些现有的模型进行自己的思考和阐释。当然，这些思考不一定是笔者率先提出来的，笔者所表述出来的语言也不一定精准，肯定会出现许多的瑕疵，但是笔者认为这个过程对于一个求学者来说是必要的。</p>
-<p>在这个过程中，笔者可能会有一些想到一半就无法继续下去的想法，到时候可能会单独开一个列表，欢迎大家和笔者一起思考和讨论。</p>
-<p>最后，笔者第一次创建并且尝试运营博客，可能会出现很多的错误和疏漏，如果读者愿意反馈给我，笔者将不胜感激。</p>
-<p>最后的最后，非常感谢大家能够读完这篇文章，愿我们一起学习，一起进步！</p>
+                <h2 id="最大连续子序列求和"><a href="#最大连续子序列求和" class="headerlink" title="最大连续子序列求和"></a>最大连续子序列求和</h2><p>题目：</p>
+<blockquote>
+<p>给你一个整数列，$A_1,A_2,A_3,\cdots,A_n$，在其中找到一个连续的子链$A_i,A_{i+1},\cdots,A_j(1\le i\le j\le N)$使得$\sum_{k&#x3D;i}^{j}A_k$的值最大，如果所有的数都是负数，则规定最大连续子链和为$0$</p>
+</blockquote>
+<p>这个其实是非常简单的一道题，随着思维的深入，时间复杂度可以多次降低，比如说，我们肯定可以想到一个时间复杂度为$O(N^3)$的算法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">maxSubsequenceSum</span><span class="hljs-params">(<span class="hljs-type">int</span> A[],<span class="hljs-type">int</span> size,<span class="hljs-type">int</span> &amp;start,<span class="hljs-type">int</span> &amp;end)</span></span>&#123;<br>    <span class="hljs-type">int</span> result = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; size; i++)<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = i;j &lt; size; j++)&#123;<br>            <span class="hljs-type">int</span> count = <span class="hljs-number">0</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k = i;k &lt;= j; k++)<br>                count += A[k];<br>            <span class="hljs-keyword">if</span>(count &gt; result)&#123;<br>                result = count;<br>                start = i;<br>                end = j;<br>            &#125;<br>		&#125;<br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这个想法比较简单，我就不写注释了。简单分析一下，这里面其实有一个十分浪费的地方，就是每次都需要重新计算$\sum_{k&#x3D;i}^{j}A_k$的值，这种做法实际上是没什么必要的，我们完全可以进行预处理，这样时间复杂度降到了$O(N^2)$，这就是前缀和的方法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">maxSubsequenceSum</span><span class="hljs-params">(<span class="hljs-type">int</span> A[],<span class="hljs-type">int</span> size,<span class="hljs-type">int</span> &amp;start,<span class="hljs-type">int</span> &amp;end)</span></span>&#123;<br>    <span class="hljs-type">int</span> result = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">if</span>(size == <span class="hljs-number">1</span>)&#123;<br>        start = <span class="hljs-number">0</span>;<br>        end = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">max</span>(result, A[<span class="hljs-number">0</span>]);<span class="hljs-comment">//如果只有一个数，那么就不用想那么多，这个数是正数，就是这个正数，这个数是负数，就是0</span><br>    &#125;<br>    <span class="hljs-type">int</span> *sum = <span class="hljs-keyword">new</span> <span class="hljs-type">int</span> [size<span class="hljs-number">+1</span>];<br>    sum[<span class="hljs-number">0</span>] = A[<span class="hljs-number">0</span>];<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>;i &lt; size; i++)<br>        sum[i] = sum[i<span class="hljs-number">-1</span>] + A[i];<span class="hljs-comment">//前缀和，即sum[i]就是A[0]+A[1]+...+A[i]的值</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;i &lt; size; i++)<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = i;j &lt; size; j++)&#123;<br>            <span class="hljs-keyword">if</span>(result &lt;= (sum[j] - sum[i]))&#123;<br>                start = i;<br>                end = j;<br>                result = (sum[j] - sum[i]);<span class="hljs-comment">//这样，我们只需要用sum[j] - sum[i]就可以表示从i到j中所有元素的和</span><br>            &#125; <br>		&#125;<br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>笔者这边申明一下，如果返回结果是$0$，那就不需要再打出来<code>start</code>和<code>end</code>的值了。具体实现可以写在主函数里，笔者这里就不再赘述了。还有就是<code>sum[j]-sum[i]</code>到底需不需要加括号，这个关于C++运算符号优先级的问题，笔者打算后面专门开一篇来介绍。</p>
+<p>可能有人会对我说：</p>
+<p>主播主播，你的方法确实很强，但是还是太吃时间复杂度了，有没有更简便的方法推荐呢？</p>
+<p>有的兄弟有的</p>
+<p>（理解一下笔者的精神状态）</p>
+<p>好了，正经点，其实还有一种$O(n)$的方法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">maxSubsequenceSum</span><span class="hljs-params">(<span class="hljs-type">int</span> A[],<span class="hljs-type">int</span> size,<span class="hljs-type">int</span> &amp;start,<span class="hljs-type">int</span> &amp;end)</span></span>&#123;<br>    <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>, result = <span class="hljs-number">0</span>, count = <span class="hljs-number">0</span>;<br>    start = <span class="hljs-number">0</span>;<span class="hljs-comment">//把起点都初始化一下</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; size; j++)&#123;<span class="hljs-comment">//j往后移，计算这时候的子链和</span><br>        count += A[j];<br>        <span class="hljs-keyword">if</span>(count &gt; result)&#123;<span class="hljs-comment">//如果当下子链和比我之前的结果大，那么就将结果替换为当下的子链和</span><br>            result = count;<br>            start = i;<br>            end = j;<br>		&#125;<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(count &lt; <span class="hljs-number">0</span>)&#123;<span class="hljs-comment">//重点：如果我当下的子链和是小于零的，那么这一段我直接抛掉，将我计算的起始点放到j+1的位置</span><br>            count = <span class="hljs-number">0</span>;<br>            i = j + <span class="hljs-number">1</span>;<br>		&#125;<br>	&#125;<br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>对于这个方法，我写了一些备注，不过可能还是有读者没有看懂，我仔细来说一下：<code>i</code>是起点，是我当下计算子列的起始点，然后我去用<code>j</code>来遍历<code>A[]</code>这个数组，将<code>j</code>的结果累计到<code>count</code>中，每一次循环中，对<code>count</code>进行一次检查，如果<code>count</code>小于<code>0</code>，那么直接将<code>i</code>设为<code>j+1</code>，而<code>count</code>归零。</p>
+<p>为什么这样做是正确的？因为任何一个子数列加上一个和小于0的子数列都会使合成的总数列和变小，那么既然如此，我就不计入和小于0的子数列，这一段，在我眼中，属于“亏本”的状态，不管它前置还是后置，我们都不会加上它，简单来说，就是<strong>如果一段连续数列的和是负数，它就不会是最大子序列的开头。</strong></p>
+<p>如果从数学上理解了这点，这道题就迎刃而解了。</p>
 
                 
               </div>
@@ -299,6 +308,36 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/C/" class="category-chain-item">C++</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%AE%97%E6%B3%95/" class="print-no-link">#算法</a>
+      
+        <a href="/tags/%E6%9C%80%E4%BC%98%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/" class="print-no-link">#最优时间复杂度</a>
+      
+    </div>
   
 </div>
 
@@ -308,8 +347,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>写在最前面</div>
-      <div>http://example.com/2025/07/02/写在最前面/</div>
+      <div>最大连续子序列求和</div>
+      <div>http://example.com/2025/07/02/最大连续子序列求和/</div>
     </div>
     <div class="license-meta">
       
@@ -353,15 +392,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/07/02/%E6%9C%80%E5%A4%A7%E8%BF%9E%E7%BB%AD%E5%AD%90%E5%BA%8F%E5%88%97%E6%B1%82%E5%92%8C/" title="最大连续子序列求和">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">最大连续子序列求和</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2025/07/02/%E5%86%99%E5%9C%A8%E6%9C%80%E5%89%8D%E9%9D%A2/" title="写在最前面">
+                        <span class="hidden-mobile">写在最前面</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
@@ -376,19 +415,6 @@
 
     <div class="side-col d-none d-lg-block col-lg-2">
       
-  <aside class="sidebar" style="margin-left: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
 
     </div>
   </div>
@@ -539,46 +565,6 @@
   
 
 
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
-
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
-    }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
-</script>
 
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
