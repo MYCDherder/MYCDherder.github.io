@@ -284,7 +284,8 @@
             
               <div class="markdown-body">
                 
-                <h1 id="欢迎你来到牧丛的博客！"><a href="#欢迎你来到牧丛的博客！" class="headerlink" title="欢迎你来到牧丛的博客！"></a>欢迎你来到牧丛的博客！</h1><p>在正式浏览这个博客的主要内容之前，我希望你能够抽出几分钟的时间来阅读一下这篇文章，或许能够节约你的一部分时间。</p>
+                <h1 id="欢迎你来到牧丛的博客">欢迎你来到牧丛的博客！</h1>
+<p>在正式浏览这个博客的主要内容之前，我希望你能够抽出几分钟的时间来阅读一下这篇文章，或许能够节约你的一部分时间。</p>
 <p>其实笔者在2025年2月份期间，就开始着手搭建自己的博客，当时使用的是matery主题，当时也更新了一些文章，但是一直存在一些格式上不适配的现象，后来在朋友的推荐下选择了fluid的主题。但是交大大一下的课程堪称恐怖，笔者拼劲全力，实在没有办法在保证课内学习质量的情况下持续更新博客，无奈只能停更。现在已是暑假，笔者决定重整旗鼓，重新开始博客的更新。下面是我2025年年初写的前言（略有修改）：</p>
 <p>首先，我想先简单介绍一下有关我博客名字的一些事情。在网址和Github那里，你可以看到我注册的名称是“MYCDherder”，而进入博客后的自我介绍中，会告诉你我的昵称叫“牧丛”，这是我个人习惯所导致的。我是个不怎么会起名字的人，我几乎所有的账户，倘若可以用中文表示，那就一律起名为“牧丛”，而若是需要英文，我一般就会使用“MYCD”。但是由于“MYCD”的名字过短，不能通过Github的名称审核，我只好将两个名字融合起来，“牧丛”没有直接对应的英文单词，我就取了其中的“牧”字，将其翻译为“herder”，“放牧的人”，两者一结合，问题就迎刃而解了。</p>
 <p>再说说笔者，笔者目前是一名上海交通大学的本科生，就读于信息工程专业。在初高中的学习生活中，笔者一直算不上一个出色的学生，也常常被周围巨佬们的天才表现所震撼。在大学的生活中，笔者也往往比较迟钝，很多消息往往知道得比别人慢，产生了一定的信息差。像个人博客这种东西，也是几个月前，笔者发现一个高中同学已经创建了属于自己的博客时才了解到的。</p>
@@ -420,12 +421,6 @@
 
 
   
-
-
-  
-  
-
-
 
 
 
@@ -644,49 +639,6 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-
-        Fluid.events.registerRefreshCallback(function() {
-          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
-            MathJax.startup.document.state(0);
-            MathJax.texReset();
-            MathJax.typeset();
-            MathJax.typesetPromise();
-          }
-        });
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
