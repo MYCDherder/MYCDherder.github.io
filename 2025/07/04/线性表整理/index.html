@@ -1,0 +1,805 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="牧丛">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="这是一篇对于线性表的整理，还在更新中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线性表整理">
+<meta property="og:url" content="http://example.com/2025/07/04/%E7%BA%BF%E6%80%A7%E8%A1%A8%E6%95%B4%E7%90%86/index.html">
+<meta property="og:site_name" content="MYCDherder&#39;s Blog">
+<meta property="og:description" content="这是一篇对于线性表的整理，还在更新中">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/cover/cover5.jpg">
+<meta property="article:published_time" content="2025-07-04T02:46:00.000Z">
+<meta property="article:modified_time" content="2025-07-04T02:54:08.619Z">
+<meta property="article:author" content="MYCDherder">
+<meta property="article:tag" content="链表">
+<meta property="article:tag" content="数组">
+<meta property="article:tag" content="更新中">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/cover/cover5.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>线性表整理 - MYCDherder&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>MYCDherder&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="线性表整理"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        牧丛
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-07-04 10:46" pubdate>
+          2025年7月4日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          25 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">线性表整理</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="线性表">线性表</h1>
+<h2 id="线性表的基础">线性表的基础</h2>
+<p>线性表的之间定义我就不再多说了，直接来看一下它的基本运算：</p>
+<p>（1）创建一个空的线性表（create）
+（2）删除数据表中的所有线性结构（clear） （3）求线性表的长度（length）
+（4）在第<code>i</code>个位置插图一个元素（insert）
+（5）删除第<code>i</code>个位置的元素（remove）
+（6）搜索元素，检查某个元素<code>x</code>在线性表中是否出现，并返回<code>x</code>的位置（search）
+（7）返回线性表中第<code>i</code>个数据元素的值（visit）
+（8）按序访问线性表的每一个数据元素（traverse）</p>
+<p>我们可以直接产生面向对象的程序设计</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<span class="hljs-comment">//这里面我使用了一个模板，但是实际上不一定需要，只是为了更具有普适性</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">linearlist</span>&#123;<br>    <span class="hljs-keyword">public</span>:<br>    	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">void</span> <span class="hljs-title">create</span><span class="hljs-params">()</span> </span>= <span class="hljs-number">0</span>;<br>    	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">int</span> <span class="hljs-title">length</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>= <span class="hljs-number">0</span>;<span class="hljs-comment">//在类的成员函数里面能加const的都加上const</span><br>    	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span> </span>= <span class="hljs-number">0</span>;<br>    	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">void</span> <span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span> </span>= <span class="hljs-number">0</span>;<br>    	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">int</span> <span class="hljs-title">search</span><span class="hljs-params">(<span class="hljs-type">const</span> T &amp;x)</span> <span class="hljs-type">const</span> </span>= <span class="hljs-number">0</span>;<span class="hljs-comment">//遇到负责类型作为参数的时候，就直接const + 复杂类型 + &amp;这样最节省时间和空间</span><br>    	<span class="hljs-function"><span class="hljs-keyword">virtual</span> T <span class="hljs-title">visit</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span>b <span class="hljs-type">const</span> </span>= <span class="hljs-number">0</span>;<br>    	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">void</span> <span class="hljs-title">traverse</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>= <span class="hljs-number">0</span>;<br>    	<span class="hljs-keyword">virtual</span> ~<span class="hljs-built_in">list</span>()&#123;&#125;;<span class="hljs-comment">//为什么这个地方不再构建纯虚函数，我在后面应该会单开一篇来讲纯虚函数的事</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>在上面的代码里除了析构函数以外，其他基本上都是纯虚函数，这样相当于勒令衍生类解决这些问题，这样一个基本的线性表的就构建好了，我们为什么在上面只是设置成员函数，但是没有去设置数据成员？因为线性表有多种表示方式，既可以是顺序表，也可以是链表，链表又可以分为单双链表，顺序表也有多种表达方式，不同的表示方式我们要设置的私有数据成员也不同，我们只能够放到衍生类里面去实现。</p>
+<h2 id="顺序表类">顺序表类</h2>
+<h3 id="顺序列表基础申明">顺序列表基础申明</h3>
+<p>顺序实现是我们存放数据最自然的一种方式，基本上所有事务我要把它归类，首先都是这么干的，它的基础逻辑就是数组，不过在C++中，数组确实不太好用（主要是在申明的时候就要给定最大容量，这对于经常要使用变量的我们来说还是十分复杂的），但是通过指针，我们就可以很清爽地规避掉这个问题：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">seqlist</span>: <span class="hljs-keyword">public</span> linearlist&lt;T&gt;&#123; <span class="hljs-comment">//通过public的方式来继承linearlist</span><br>    <span class="hljs-keyword">private</span>:<br>		T *data;<br>    	<span class="hljs-type">int</span> curlength;<span class="hljs-comment">//当下长度</span><br>    	<span class="hljs-type">int</span> maxsize;<span class="hljs-comment">//最大长度</span><br>    	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">doublespace</span><span class="hljs-params">()</span></span>;<span class="hljs-comment">//私有的成员函数，将空间双倍，为什么将他设置为私有？因为这个基本上只有在成员函数里面才会运用到，不需要对用户开放，当然，如果你要坚持写在public里面，也没有问题</span><br>    <span class="hljs-keyword">public</span>:<br>    	<span class="hljs-built_in">seqlist</span>(<span class="hljs-type">int</span> startsize);<span class="hljs-comment">//构造函数</span><br>    	~<span class="hljs-built_in">seqlist</span>();<span class="hljs-comment">//析构函数，来清除动态数组的</span><br>    	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">clear</span><span class="hljs-params">()</span></span>;<span class="hljs-comment">//来清除其他东西的</span><br>    	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">length</span><span class="hljs-params">()</span> <span class="hljs-type">const</span></span>;<br>    	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-type">int</span> i, <span class="hljs-type">const</span> T &amp;x)</span></span>;<br>    	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span></span>;<br>    	<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">search</span><span class="hljs-params">(<span class="hljs-type">const</span> T &amp;x)</span> <span class="hljs-type">const</span></span>;<br>    	<span class="hljs-function">T <span class="hljs-title">visit</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span> <span class="hljs-type">const</span></span>;<br>    	<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">traverse</span><span class="hljs-params">()</span> <span class="hljs-type">const</span></span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>基本上还是跟上面一样的说明，但是这次就不能再打太极了，必须解决，不过一个习惯就是不要放在类里面解决（除非真的很短）</p>
+<h3
+id="析构函数clearlengthvisittraverse函数的实现">析构函数，clear，length，visit，traverse函数的实现</h3>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">//~seqlist的实现</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br>seqlist&lt;T&gt;::~<span class="hljs-built_in">seqlist</span>()&#123;<br>    <span class="hljs-keyword">delete</span> [] data;<br>&#125;<br><span class="hljs-comment">//clear的实现</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-type">void</span> seqlist&lt;T&gt;::<span class="hljs-built_in">clear</span>()&#123;<br>    curlength = <span class="hljs-number">0</span>;<br>    maxsize = <span class="hljs-number">0</span>;<br>&#125;<br><span class="hljs-comment">//length的实现</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-type">int</span> seqlist&lt;T&gt;::<span class="hljs-built_in">length</span>()<span class="hljs-type">const</span>&#123;<br>    <span class="hljs-keyword">return</span> curlength;<br>&#125;<br><span class="hljs-comment">//visit的实现</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br>T seqlist&lt;T&gt;::<span class="hljs-built_in">visit</span>(<span class="hljs-type">int</span> i)<span class="hljs-type">const</span>&#123;<br>    <span class="hljs-keyword">return</span> data[i];<br>&#125;<br><span class="hljs-comment">//traverse的实现</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-type">void</span> seqlist&lt;T&gt;::<span class="hljs-built_in">traverse</span>()<span class="hljs-type">const</span>&#123;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt;= curlength; i++)<br>        	cout &lt;&lt; data[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>   	cout &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>上面是最简单的几个功能的实现，基本上所有学习过C++的读者都可以轻松自己编写，除了<code>traverse</code>函数的时间复杂度是<span
+class="math inline"><em>O</em>(<em>n</em>)</span>，其他的时间复杂度都是<span
+class="math inline"><em>O</em>(1)</span>，接下来几个比较能够体现顺序类列表的特点，我分开来列：</p>
+<h3 id="构造函数的实现">构造函数的实现</h3>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">//构造函数的实现</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br>seqlist&lt;T&gt;::<span class="hljs-built_in">seqlist</span>(<span class="hljs-type">int</span> startsize)&#123;<br>    data = <span class="hljs-keyword">new</span> T [startsize];<br>    maxsize = startsize;<br>    currentlength = <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这个其实也非常简单（或许我应该把它列在上面的，算了，<del>懒得动</del>）</p>
+<h3 id="search的实现">search的实现</h3>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-comment">//search的实现</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-type">int</span> seqlist&lt;T&gt;::<span class="hljs-built_in">search</span>(<span class="hljs-type">const</span> T &amp;x)<span class="hljs-type">const</span>&#123;<br>    <span class="hljs-type">int</span> i;<br>    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; curlength &amp;&amp; data[i] != x; i++);<br>    <span class="hljs-keyword">return</span> ((i == curlength)?<span class="hljs-number">-1</span>:i);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>其实讲真的，基本上所有人都能看得出来这块挺麻烦的，但是搜索就是这样，
+除非储存下标，不然就是需要遍历，时间复杂度就是<span
+class="math inline"><em>O</em>(<em>n</em>)</span>级别的。</p>
+<h3
+id="doublespace和search函数的实现">doublespace和search函数的实现</h3>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">//doublespace和search函数的实现</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-type">void</span> seqlist&lt;T&gt;::<span class="hljs-built_in">doublespace</span>()&#123;<br>    T *tmp = data;<br>    maxsize *= <span class="hljs-number">2</span>;<br>    data = <span class="hljs-keyword">new</span> T [maxsize];<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; curlength; i++)<br>        data[i] = tmp[i];<br>    <span class="hljs-keyword">delete</span> [] tmp;<br>&#125;<br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-type">void</span> seqlist&lt;T&gt;::<span class="hljs-built_in">insert</span>(<span class="hljs-type">int</span> i,<span class="hljs-type">const</span> T &amp;x)&#123;<br>	<span class="hljs-keyword">if</span>(curlength == maxsize)<br>		<span class="hljs-built_in">doublespace</span>();<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = i; j &lt; curlength; j++)<br>        data[j + <span class="hljs-number">1</span>] = data[j];<br>    data[i] = x;<br>    curlength++;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>基本上十分明显了，很简单就是我要插入在第<code>i</code>的位置，那么我把自从第<code>i</code>往后的每一位都向后挪一个位置，再把第<code>i</code>位变成我要的<code>x</code>这样子就完成了，这里就是顺序表和链表最大的不同，不过两者基本上都是<span
+class="math inline"><em>O</em>(<em>n</em>)</span>的时间复杂度，因为顺序表知道下标但是挪动需要花一定的时间，而链表是挪动不用花时间但是不知道下表（但是实际上可以解决）</p>
+<h3 id="remove函数的实现">remove函数的实现</h3>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-comment">//remove的实现</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-type">void</span> seqlist&lt;T&gt;::<span class="hljs-built_in">remove</span>(<span class="hljs-type">int</span> i)&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = i; j &lt; curlength; j++)<br>        data[j] = data[j + <span class="hljs-number">1</span>];<br>    curlength--;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>顺序表就这么多内容了，基本上没有什么例外，确实比较简单，链表在<code>move</code>函数那边比较具有迷惑性，需要好好解释一下的我们接下来探讨</p>
+<h2 id="单链表">单链表</h2>
+<h3 id="单链表类的定义">单链表类的定义</h3>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">slinklist</span>: <span class="hljs-keyword">public</span> linearlist&lt;T&gt;&#123;<br>    <span class="hljs-keyword">private</span>:<br>    	<span class="hljs-keyword">struct</span> <span class="hljs-title class_">node</span>&#123;<br>            T data;<br>            node *next;<span class="hljs-comment">//这两个是链表的基本元素</span><br>            <span class="hljs-built_in">node</span>(<span class="hljs-type">const</span> T &amp;x, node *n = <span class="hljs-literal">NULL</span>)&#123;data = x; next = n;&#125;<span class="hljs-comment">//这里面是node的构造函数</span><br>            <span class="hljs-built_in">node</span>():<span class="hljs-built_in">next</span>(<span class="hljs-literal">NULL</span>)&#123;&#125;<span class="hljs-comment">//这个是没有初始化的时候的构造函数，将next指针指向NULL是避免错误的一个非常好的做法</span><br>            ~<span class="hljs-built_in">node</span>()&#123;&#125;<br>        &#125;;<br>    	node *head;<span class="hljs-comment">//这个是头节点</span><br>    	<span class="hljs-type">int</span> curlength;<span class="hljs-comment">//这个是当下的长度</span><br>    	<span class="hljs-function">node *<span class="hljs-title">move</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span> <span class="hljs-type">const</span></span>;<br>    	<span class="hljs-keyword">public</span>:<br>    		<span class="hljs-built_in">slinklist</span>();<br>    		<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">clear</span><span class="hljs-params">()</span></span>;<br>    		~<span class="hljs-built_in">slinklist</span>()&#123;<span class="hljs-built_in">clear</span>();<span class="hljs-keyword">delete</span> head;&#125;<span class="hljs-comment">//clear就是将所有除头节点以外的节点全部清除</span><br>    		<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">length</span><span class="hljs-params">()</span> <span class="hljs-type">const</span> </span>&#123;<span class="hljs-keyword">return</span> curlength&#125;;<br>    		<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-type">int</span> i,<span class="hljs-type">const</span> T &amp;x)</span></span>;<br>    		<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span></span>;<br>    		<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">search</span><span class="hljs-params">(<span class="hljs-type">const</span> T &amp;x)</span></span><br><span class="hljs-function">             T <span class="hljs-title">visit</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span> <span class="hljs-type">const</span></span>;<br>    		<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">traverse</span><span class="hljs-params">()</span> <span class="hljs-type">const</span></span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>这里里面的定义基本上都跟上面一样，不过这里需要注意的就是<code>node</code>作为结构体，也具有构造函数和析构函数，形式跟类差不多</p>
+<h3 id="move函数的实现">move函数的实现</h3>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-comment">//move函数的实现</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-keyword">typename</span> slinklist&lt;T&gt;::node *slinklist&lt;T&gt;::<span class="hljs-built_in">move</span>(<span class="hljs-type">int</span> i) <span class="hljs-type">const</span>&#123;<span class="hljs-comment">//这个地方需要申明的就是typename是一个可有可无的量，其本质就是对编译器申明这里是一个变量名，可能有些不太先进的编译器没有办法识别出来</span><br>    node *p = head;<br>    <span class="hljs-keyword">while</span>(i-- &gt;= <span class="hljs-number">0</span>)	p = p -&gt; next;<span class="hljs-comment">//这里面i-- &gt;= 0总共会循环i + 1次</span><br>    <span class="hljs-keyword">return</span> p;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这里面为什么是<code>i + 1</code>次循环？而不是<code>i</code>我们的头节点并不是我们的第0个节点，我们要从头节点移动到第0个节点需要移动1次，第一个节点需要2次……以此类推，你要到第<code>i</code>个节点，就需要<code>i + 1</code>次，那既然如此，我们为什么不直接去除掉<code>head</code>节点，来考虑剩下来的问题？这个问题我们下文会考虑</p>
+<h3 id="构造函数的实现-1">构造函数的实现</h3>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-comment">//slinklist的实现</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br>slinklist&lt;T&gt;::<span class="hljs-built_in">slinklist</span>()&#123;<br>	head = <span class="hljs-keyword">new</span> node;<br>    curlength = <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>非常简单，没有什么好讲的（<del>所以你干嘛写它呢？</del>）</p>
+<h3 id="clear函数的实现">clear函数的实现</h3>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-comment">//clear函数的实现</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-type">void</span> slinklist &lt;T&gt; ::<span class="hljs-built_in">clear</span>()&#123;<br>	node *p = head-&gt;next ,*q;<br>    head-&gt;next = <span class="hljs-literal">NULL</span>;<br>    <span class="hljs-keyword">while</span>(p != <span class="hljs-literal">NULL</span>)&#123;<br>		q = p-&gt;next;<br>        <span class="hljs-keyword">delete</span> p;<br>        p = q;<span class="hljs-comment">//删除，然后移动到下一个节点</span><br>    &#125;<br>    curlength = <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>也是非常的简单，不多说了</p>
+<h3 id="insert和remove函数的实现">insert和remove函数的实现</h3>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-comment">//insert函数的实现</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-type">void</span> slinklist&lt;T&gt;::<span class="hljs-built_in">insert</span>(<span class="hljs-type">int</span> i, <span class="hljs-type">const</span> T &amp;x)&#123;<br>	node *pos;<br>    pos = <span class="hljs-built_in">move</span>(i - <span class="hljs-number">1</span>);<br>    pos-&gt;next = <span class="hljs-keyword">new</span> <span class="hljs-built_in">node</span>(x, pos-&gt;next);<span class="hljs-comment">//这里使用了我在定义里面写的node的构造函数</span><br>    curlength++;<br>&#125;<br><span class="hljs-comment">//remove函数的实现</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-type">void</span> slinklist&lt;T&gt;::<span class="hljs-built_in">remove</span>(<span class="hljs-type">int</span> i)&#123;<br>	node *pos, *delp;<br>    pos = <span class="hljs-built_in">move</span>(i - <span class="hljs-number">1</span>);<br>    delp = pos-&gt;next;<br>    pos-&gt;next = delp-&gt;next;<br>    <span class="hljs-keyword">delete</span> delp;<br>    curlength--;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>终于来了点有意思的东西了，第一个问题：为什么<code>move</code>函数的参数是<code>i - 1</code>?而不是<code>i</code>呢？我们要去除第<code>i</code>个节点，自然就是要将<code>i - 1</code>和<code>i + 1</code>链接起来，所以实际上，我们将<code>pos</code>移到<code>i - 1</code>的位置是便于操作的，因为我们这边是单链表，你找你的下家容易，但是你去找上家比较的困难</p>
+<p>另外再说，为什么我们需要将<code>node</code>后面写上<code>x, pos-&gt;next</code>的参数，可以参考我在定义里面写的<code>node(const T &amp;x, node *n = NULL)&#123;data = x; next = n;&#125;</code>我们将这里面的<code>x</code>变为一个新的节点的<code>data</code>然后将原来<code>pos-&gt;next</code>变作这个新节点的<code>next</code>，最后将<code>post-&gt;next</code>改为这个新节点的地址，如果我们不要求代码的美观度这么高，我们可以写得明显一些：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs C++">node *tmp = <span class="hljs-keyword">new</span> node;<br>tmp-&gt;data = x;<br>tmp-&gt;next = pos-&gt;next;<br>pos-&gt;next = tmp;<br></code></pre></td></tr></table></figure>
+<p>上面这四行代码可以达到同样的效果</p>
+<p>在<code>remove</code>函数的实现中，注意<code>delp</code>函数的使用，因为<code>delp</code>函数其实是记下来给用来释放空间的，不然会产生内存泄漏。</p>
+<h3
+id="searchvisittraverse函数的实现">search，visit，traverse函数的实现</h3>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">//search函数的实现</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-type">int</span> slinklist&lt;T&gt;::<span class="hljs-built_in">search</span>(<span class="hljs-type">const</span> T &amp;x)<span class="hljs-type">const</span>&#123;<br>	node *p = head-&gt;next;<br>    <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span>(p != <span class="hljs-literal">NULL</span> &amp;&amp; p-&gt;data != x)&#123;<br>		p = p-&gt;next;<br>        i++;<br>    &#125;<br>    <span class="hljs-keyword">if</span>(p == <span class="hljs-literal">NULL</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<span class="hljs-comment">//如果p是到NULL的时候停下来的说明没有找到x，x不存在在顺序链表里</span><br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-keyword">return</span> i;<br>&#125;<br><span class="hljs-comment">//visit函数的实现</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br>T slinklist&lt;T&gt;::<span class="hljs-built_in">visit</span>(<span class="hljs-type">int</span> i)<span class="hljs-type">const</span>&#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-built_in">move</span>(i)-&gt;data;<br>&#125;<br><span class="hljs-comment">//traverse函数的实现</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-type">void</span> slinklist&lt;T&gt;::<span class="hljs-built_in">traverse</span>()<span class="hljs-type">const</span>&#123;<br>	node *p = head-&gt;next;<br>    <span class="hljs-keyword">while</span>(p != <span class="hljs-literal">NULL</span>)&#123;<br>        cout &lt;&lt; p-&gt;data &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>		p = p-&gt;next;<br>    &#125;<br>    cout &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这三个函数还是十分简单的，基本上就是遍历了，没有什么太过困难的。</p>
+<h3 id="无头结点的函数实现">无头结点的函数实现</h3>
+<p>但是</p>
+<p>你觉得，这就结束了吗？</p>
+<p><strong>不！</strong></p>
+<p>我们还要尝试无头结点的情况下面的单链表，判断为什么拥有头节点是一件更好的事情，我们来尝试一下无头结点情况下的<code>insert</code>和<code>remove</code>函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-comment">//无头结点下的insert函数的实现</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-type">void</span> slinklist&lt;T&gt;::<span class="hljs-built_in">insert</span>(<span class="hljs-type">int</span> i, <span class="hljs-type">const</span> T &amp;x)&#123;<br>	<span class="hljs-keyword">if</span>(i == <span class="hljs-number">0</span>)&#123;<br>		p = head;<br>        head = <span class="hljs-keyword">new</span> <span class="hljs-built_in">node</span>(x,p);<br>    &#125;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(i &gt; <span class="hljs-number">0</span>)&#123;<br>        p = <span class="hljs-built_in">move</span>(i - <span class="hljs-number">2</span>);<br>        p-&gt;next = <span class="hljs-keyword">new</span> <span class="hljs-built_in">node</span>(x,p-&gt;next);<span class="hljs-comment">//其实在i &gt; 0的情况下其实差不多，没有什么太大的区别，就是只能移动i - 2位了</span><br>    &#125;<br>    curlength++;<br>&#125;<br><span class="hljs-comment">//无头结点下的remove函数的实现</span><br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-type">void</span> slinklist&lt;T&gt;::<span class="hljs-built_in">remove</span>(<span class="hljs-type">int</span> i)&#123;<br>	node *pos, *delp;<br>    <span class="hljs-keyword">if</span>(i == <span class="hljs-number">0</span>)&#123;<br>        delp = head;<br>        head = delp-&gt;next;<br>    &#125;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(i &gt; <span class="hljs-number">0</span>)&#123;<br>		p = <span class="hljs-built_in">move</span>(i - <span class="hljs-number">2</span>);<br>        delp = p-&gt;next;<br>        p-&gt;next = delp-&gt;next;<br>    &#125;<br>    <span class="hljs-keyword">delete</span> delp;<br>    curlength--;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>明显可以看出来复杂得多了，因为我们需要对于有<code>i == 0</code>的情况进行专门的判断，我建议有精力的读者可以自己用笔来画画图，来理解一下为什么这里面<code>i == 0</code>需要专门判断，笔者本来也想写一写然后贴图片上去的，但是作业还没有写完（悲），就不能继续写了</p>
+<h2 id="总结">总结</h2>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9F%A5%E8%AF%86%E6%95%B4%E7%90%86/" class="category-chain-item">数据结构知识整理</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E9%93%BE%E8%A1%A8/" class="print-no-link">#链表</a>
+      
+        <a href="/tags/%E6%95%B0%E7%BB%84/" class="print-no-link">#数组</a>
+      
+        <a href="/tags/%E6%9B%B4%E6%96%B0%E4%B8%AD/" class="print-no-link">#更新中</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>线性表整理</div>
+      <div>http://example.com/2025/07/04/线性表整理/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>牧丛</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年7月4日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/07/03/%E5%88%86%E5%9D%97%E5%A4%84%E7%90%86%E7%9A%84%E4%B8%80%E9%81%93%E9%A2%98/" title="一道分块处理的题目">
+                        <span class="hidden-mobile">一道分块处理的题目</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
