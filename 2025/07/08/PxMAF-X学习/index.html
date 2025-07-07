@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/cover/cover6.jpg">
 <meta property="article:published_time" content="2025-07-07T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-07-07T21:52:28.373Z">
+<meta property="article:modified_time" content="2025-07-07T21:56:35.369Z">
 <meta property="article:author" content="MYCDherder">
 <meta property="article:tag" content="SMPL">
 <meta property="article:tag" content="PxMAF-X">
@@ -391,22 +391,11 @@ class="math inline">$\sqrt(\frac{2}{fanout})$</span>，<code>fan_out</code>
 <li><code>blocks</code> = 4（该层有 4 个瓶颈块）</li>
 <li><code>stride</code> = 2（需要下采样，特征图尺寸减半）</li>
 </ul>
-<ol type="1">
-<li>第一个瓶颈块：
-<ul>
-<li>输入通道数：256（来自 layer1 的输出）</li>
-<li>中间通道数：128</li>
-<li>输出通道数：128×4 = 512</li>
-<li>包含下采样：1x1 卷积（256→512，stride=2）</li>
-<li>特征图尺寸：从 56x56→28x28</li>
-</ul></li>
-<li>后续三个瓶颈块：
-<ul>
-<li>输入 / 输出通道数：512→512</li>
-<li>中间通道数：128</li>
-<li>特征图尺寸保持 28x28 不变</li>
-</ul></li>
-</ol>
+<p>第一个瓶颈块： - 输入通道数：256（来自 layer1 的输出） -
+中间通道数：128 - 输出通道数：128×4 = 512 - 包含下采样：1x1
+卷积（256→512，stride=2） - 特征图尺寸：从 56x56→28x28</p>
+<p>后续三个瓶颈块： - 输入 / 输出通道数：512→512 - 中间通道数：128 -
+特征图尺寸保持 28x28 不变</p>
 <p>这样子基本上我们的骨干网络就全部讲清楚了，可以不断地往下传。</p>
 <h2 id="特征金字塔网络">特征金字塔网络</h2>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">FeaturePyramidNetwork</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, in_channels_list, out_channels</span>):<br>        <span class="hljs-built_in">super</span>(FeaturePyramidNetwork, <span class="hljs-variable language_">self</span>).__init__()<br>        <span class="hljs-variable language_">self</span>.inner_blocks = nn.ModuleList()<br>        <span class="hljs-variable language_">self</span>.layer_blocks = nn.ModuleList()<br>        <span class="hljs-keyword">for</span> in_channels <span class="hljs-keyword">in</span> in_channels_list:<br>            <span class="hljs-keyword">if</span> in_channels == <span class="hljs-number">0</span>:<br>                <span class="hljs-keyword">continue</span><br>            <span class="hljs-comment"># 1x1 卷积，用于调整不同层级特征的通道数（统一为out_channels）</span><br>            inner_block = nn.Conv2d(in_channels, out_channels, <span class="hljs-number">1</span>)<br>            <span class="hljs-comment"># 3x3 卷积，用于处理融合后的特征</span><br>            layer_block = nn.Conv2d(out_channels, out_channels, <span class="hljs-number">3</span>, padding=<span class="hljs-number">1</span>)<br>            <span class="hljs-variable language_">self</span>.inner_blocks.append(inner_block)<br>            <span class="hljs-variable language_">self</span>.layer_blocks.append(layer_block)<br>			<span class="hljs-comment"># 这里还是对每一层进行BN初始化</span><br>        <span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>.modules():<br>            <span class="hljs-keyword">if</span> <span class="hljs-built_in">isinstance</span>(m, nn.Conv2d):<br>                nn.init.kaiming_uniform_(m.weight, a=<span class="hljs-number">1</span>)<br>                nn.init.constant_(m.bias, <span class="hljs-number">0</span>)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x</span>):<br>        last_inner = <span class="hljs-variable language_">self</span>.inner_blocks[-<span class="hljs-number">1</span>](x[-<span class="hljs-number">1</span>])<br>        results = []<br>        results.append(<span class="hljs-variable language_">self</span>.layer_blocks[-<span class="hljs-number">1</span>](last_inner))<br>        <br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(x) - <span class="hljs-number">2</span>, -<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>):<br>            inner_lateral = <span class="hljs-variable language_">self</span>.inner_blocks[i](x[i])<br>            feat_shape = inner_lateral.shape[-<span class="hljs-number">2</span>:]<br>            last_inner = F.interpolate(last_inner, size=feat_shape, mode=<span class="hljs-string">&quot;nearest&quot;</span>)<br>            last_inner = last_inner + inner_lateral<br>            results.insert(<span class="hljs-number">0</span>, <span class="hljs-variable language_">self</span>.layer_blocks[i](last_inner))<br><br>        <span class="hljs-keyword">return</span> results<br></code></pre></td></tr></table></figure>
