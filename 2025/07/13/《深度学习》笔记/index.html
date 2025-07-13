@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/cover/cover7.jpg">
 <meta property="article:published_time" content="2025-07-13T12:26:00.000Z">
-<meta property="article:modified_time" content="2025-07-13T12:38:44.031Z">
+<meta property="article:modified_time" content="2025-07-13T12:57:10.369Z">
 <meta property="article:author" content="MYCDherder">
 <meta property="article:tag" content="卷积神经网络">
 <meta property="article:tag" content="深度学习模型">
@@ -233,7 +233,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.2k 字
+          2.6k 字
         
       </span>
     
@@ -244,7 +244,7 @@
         
         
         
-          19 分钟
+          22 分钟
         
       </span>
     
@@ -422,6 +422,20 @@ class="math inline"><em>A</em></span>看作沿<span
 class="math inline"><em>v</em><sup>(<em>i</em>)</sup></span>延展<span
 class="math inline"><em>λ</em><sub><em>i</em></sub></span>倍的空间，如下图所示。</p>
 <p><img src="/picture/DeepLearing1.jpg" srcset="/img/loading.gif" lazyload /></p>
+<p>这张图实在是太美妙了，很多我没有办法理解的数学含义，这里看一下就懂了</p>
+<p>虽然任意一个是对称矩阵<span
+class="math inline"><em>A</em></span>都有特征分解，但是特征分解可能并不唯一。如果两个或多个特征向量拥有相同的特征值，那么在由这些特征向量拥有相同的特征值，那么在由这些特征向量产生的生成子空间中，任意一组正交向量都是该特征值对应的特征向量。因此，我们可以等价地从这些特征向量中构成<span
+class="math inline"><em>Q</em></span>作为替代。按照惯例，我们通常按降序排列<span
+class="math inline"><em>B</em></span>中地元素。在该约定下，特征分解唯一，当且仅当所有地特征值都是唯一的。</p>
+<p>矩阵的特征分解给了我们很多关于矩阵的有用信息。矩阵是奇异的，当且仅当含有零特征值。实对称矩阵的特征分解也可以用于优化二次方程<span
+class="math inline"><em>f</em>(<em>x</em>) = <em>x</em><sup><em>T</em></sup><em>A</em><em>x</em></span>，其中限制<span
+class="math inline">||<em>x</em>||<sub>2</sub> = 1</span>。当<span
+class="math inline"><em>x</em></span>等于<span
+class="math inline"><em>A</em></span>的某个特征向量时，<span
+class="math inline"><em>f</em></span>将返回相应的特征值。在限制条件下，函数<span
+class="math inline"><em>f</em></span>的最大值是最大特征值，最小值也是最小特征值。</p>
+<p>参考资料：《深度学习》lan Goodfellow Yoshua Bengio Aaron Courvile
+著</p>
 
                 
               </div>
