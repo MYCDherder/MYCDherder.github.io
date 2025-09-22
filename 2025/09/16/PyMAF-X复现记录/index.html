@@ -1,0 +1,830 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="牧丛">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="笔者从搭建环境开始复现了PyMAF-X模型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PyMAF-X模型完整复现记录">
+<meta property="og:url" content="http://example.com/2025/09/16/PyMAF-X%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="MYCDherder&#39;s Blog">
+<meta property="og:description" content="笔者从搭建环境开始复现了PyMAF-X模型">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/cover/cover6.jpg">
+<meta property="article:published_time" content="2025-09-16T14:07:17.673Z">
+<meta property="article:modified_time" content="2025-09-22T05:14:52.226Z">
+<meta property="article:author" content="MYCDherder">
+<meta property="article:tag" content="SMPL">
+<meta property="article:tag" content="PyMAF-X">
+<meta property="article:tag" content="三维人体模型重建">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/cover/cover6.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>PyMAF-X模型完整复现记录 - MYCDherder&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>MYCDherder&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="PyMAF-X模型完整复现记录"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-author" aria-hidden="true"></i>
+        牧丛
+      </span>
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-09-16 22:07" pubdate>
+          2025年9月16日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          53 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">PyMAF-X模型完整复现记录</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="pymaf-x的复现记录">PyMAF-X的复现记录</h1>
+<p>创建全新环境，命名为PyMAF-X，并激活</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">conda create -n PyMAF-X python==3.10.18<br>conda activate PyMAF-X<br></code></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs bash">Collecting package metadata (current_repodata.json): <span class="hljs-keyword">done</span><br>Solving environment: <span class="hljs-keyword">done</span><br><br>==&gt; WARNING: A newer version of conda exists. &lt;==<br>  current version: 4.9.2<br>  latest version: 25.7.0<br><br>Please update conda by running<br><br>    $ conda update -n base -c defaults conda<br><br><span class="hljs-comment">## Package Plan ##</span><br><br>  environment location: /data1/supersmpl/wzn/.conda/envs/PyMAF-X<br><br>  added / updated specs:<br>    - python==3.10.18<br><br>The following NEW packages will be INSTALLED:<br><br>  _libgcc_mutex      pkgs/main/linux-64::_libgcc_mutex-0.1-main<br>  _openmp_mutex      pkgs/main/linux-64::_openmp_mutex-5.1-1_gnu<br>  bzip2              pkgs/main/linux-64::bzip2-1.0.8-h5eee18b_6<br>  ca-certificates    pkgs/main/linux-64::ca-certificates-2025.7.15-h06a4308_0<br>  expat              pkgs/main/linux-64::expat-2.7.1-h6a678d5_0<br>  ld_impl_linux-64   pkgs/main/linux-64::ld_impl_linux-64-2.40-h12ee557_0<br>  libffi             pkgs/main/linux-64::libffi-3.4.4-h6a678d5_1<br>  libgcc-ng          pkgs/main/linux-64::libgcc-ng-11.2.0-h1234567_1<br>  libgomp            pkgs/main/linux-64::libgomp-11.2.0-h1234567_1<br>  libstdcxx-ng       pkgs/main/linux-64::libstdcxx-ng-11.2.0-h1234567_1<br>  libuuid            pkgs/main/linux-64::libuuid-1.41.5-h5eee18b_0<br>  libxcb             pkgs/main/linux-64::libxcb-1.17.0-h9b100fa_0<br>  ncurses            pkgs/main/linux-64::ncurses-6.5-h7934f7d_0<br>  openssl            pkgs/main/linux-64::openssl-3.0.17-h5eee18b_0<br>  pip                pkgs/main/noarch::pip-25.1-pyhc872135_2<br>  pthread-stubs      pkgs/main/linux-64::pthread-stubs-0.3-h0ce48e5_1<br>  python             pkgs/main/linux-64::python-3.10.18-h1a3bd86_0<br>  readline           pkgs/main/linux-64::readline-8.3-hc2a1206_0<br>  setuptools         pkgs/main/linux-64::setuptools-78.1.1-py310h06a4308_0<br>  sqlite             pkgs/main/linux-64::sqlite-3.50.2-hb25bd0a_1<br>  tk                 pkgs/main/linux-64::tk-8.6.15-h54e0aa7_0<br>  tzdata             pkgs/main/noarch::tzdata-2025b-h04d1e81_0<br>  wheel              pkgs/main/linux-64::wheel-0.45.1-py310h06a4308_0<br>  xorg-libx11        pkgs/main/linux-64::xorg-libx11-1.8.12-h9b100fa_1<br>  xorg-libxau        pkgs/main/linux-64::xorg-libxau-1.0.12-h9b100fa_0<br>  xorg-libxdmcp      pkgs/main/linux-64::xorg-libxdmcp-1.1.5-h9b100fa_0<br>  xorg-xorgproto     pkgs/main/linux-64::xorg-xorgproto-2024.1-h5eee18b_1<br>  xz                 pkgs/main/linux-64::xz-5.6.4-h5eee18b_1<br>  zlib               pkgs/main/linux-64::zlib-1.2.13-h5eee18b_1<br><br>Proceed ([y]/n)? y<br><br>Preparing transaction: <span class="hljs-keyword">done</span><br>Verifying transaction: <span class="hljs-keyword">done</span><br>Executing transaction: <span class="hljs-keyword">done</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># To activate this environment, use</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment">#     $ conda activate PyMAF-X</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># To deactivate an active environment, use</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment">#     $ conda deactivate</span><br></code></pre></td></tr></table></figure>
+<p>环境创建成功，同时主环境由base变为PyMAF-X:</p>
+<p>原：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">(base) wzn@amax:~$<br></code></pre></td></tr></table></figure>
+<p>现：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">(PyMAF-X) wzn@amax:~$<br></code></pre></td></tr></table></figure>
+<ul>
+<li>安装2.3.1版本的torch和11.8版本的cuda，并安装pytorch3d（需要挂VPN）</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">export</span> https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7891<br>pip install torch==2.3.1+cu118 torchvision==0.18.1+cu118 -f &lt;https://download.pytorch.org/whl/torch_stable.html&gt;<br></code></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><code class="hljs bash">Looking <span class="hljs-keyword">in</span> links: &lt;https://download.pytorch.org/whl/torch_stable.html&gt;<br>Collecting torch==2.3.1+cu118<br>  Using cached &lt;https://download.pytorch.org/whl/cu118/torch-2.3.1%2Bcu118-cp310-cp310-linux_x86_64.whl&gt; (839.7 MB)<br>Collecting torchvision==0.18.1+cu118<br>  Using cached &lt;https://download.pytorch.org/whl/cu118/torchvision-0.18.1%2Bcu118-cp310-cp310-linux_x86_64.whl&gt; (6.3 MB)<br>Collecting filelock (from torch==2.3.1+cu118)<br>  Using cached filelock-3.19.1-py3-none-any.whl.metadata (2.1 kB)<br>Collecting typing-extensions&gt;=4.8.0 (from torch==2.3.1+cu118)<br>  Using cached typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)<br>Collecting sympy (from torch==2.3.1+cu118)<br>  Using cached sympy-1.14.0-py3-none-any.whl.metadata (12 kB)<br>Collecting networkx (from torch==2.3.1+cu118)<br>  Using cached networkx-3.4.2-py3-none-any.whl.metadata (6.3 kB)<br>Collecting jinja2 (from torch==2.3.1+cu118)<br>  Using cached jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)<br>Collecting fsspec (from torch==2.3.1+cu118)<br>  Using cached fsspec-2025.7.0-py3-none-any.whl.metadata (12 kB)<br>Collecting nvidia-cuda-nvrtc-cu11==11.8.89 (from torch==2.3.1+cu118)<br>  Using cached nvidia_cuda_nvrtc_cu11-11.8.89-py3-none-manylinux2014_x86_64.whl.metadata (1.5 kB)<br>Collecting nvidia-cuda-runtime-cu11==11.8.89 (from torch==2.3.1+cu118)<br>  Using cached nvidia_cuda_runtime_cu11-11.8.89-py3-none-manylinux2014_x86_64.whl.metadata (1.5 kB)<br>Collecting nvidia-cuda-cupti-cu11==11.8.87 (from torch==2.3.1+cu118)<br>  Using cached nvidia_cuda_cupti_cu11-11.8.87-py3-none-manylinux2014_x86_64.whl.metadata (1.6 kB)<br>Collecting nvidia-cudnn-cu11==8.7.0.84 (from torch==2.3.1+cu118)<br>  Using cached nvidia_cudnn_cu11-8.7.0.84-py3-none-manylinux1_x86_64.whl.metadata (1.6 kB)<br>Collecting nvidia-cublas-cu11==11.11.3.6 (from torch==2.3.1+cu118)<br>  Using cached nvidia_cublas_cu11-11.11.3.6-py3-none-manylinux2014_x86_64.whl.metadata (1.5 kB)<br>Collecting nvidia-cufft-cu11==10.9.0.58 (from torch==2.3.1+cu118)<br>  Using cached nvidia_cufft_cu11-10.9.0.58-py3-none-manylinux2014_x86_64.whl.metadata (1.5 kB)<br>Collecting nvidia-curand-cu11==10.3.0.86 (from torch==2.3.1+cu118)<br>  Using cached nvidia_curand_cu11-10.3.0.86-py3-none-manylinux2014_x86_64.whl.metadata (1.5 kB)<br>Collecting nvidia-cusolver-cu11==11.4.1.48 (from torch==2.3.1+cu118)<br>  Using cached nvidia_cusolver_cu11-11.4.1.48-py3-none-manylinux2014_x86_64.whl.metadata (1.6 kB)<br>Collecting nvidia-cusparse-cu11==11.7.5.86 (from torch==2.3.1+cu118)<br>  Using cached nvidia_cusparse_cu11-11.7.5.86-py3-none-manylinux2014_x86_64.whl.metadata (1.5 kB)<br>Collecting nvidia-nccl-cu11==2.20.5 (from torch==2.3.1+cu118)<br>  Using cached nvidia_nccl_cu11-2.20.5-py3-none-manylinux2014_x86_64.whl.metadata (1.8 kB)<br>Collecting nvidia-nvtx-cu11==11.8.86 (from torch==2.3.1+cu118)<br>  Using cached nvidia_nvtx_cu11-11.8.86-py3-none-manylinux2014_x86_64.whl.metadata (1.7 kB)<br>Collecting triton==2.3.1 (from torch==2.3.1+cu118)<br>  Using cached triton-2.3.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.4 kB)<br>Collecting numpy (from torchvision==0.18.1+cu118)<br>  Using cached numpy-2.2.6-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (62 kB)<br>Collecting pillow!=8.3.*,&gt;=5.3.0 (from torchvision==0.18.1+cu118)<br>  Using cached pillow-11.3.0-cp310-cp310-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.0 kB)<br>Collecting MarkupSafe&gt;=2.0 (from jinja2-&gt;torch==2.3.1+cu118)<br>  Using cached MarkupSafe-3.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.0 kB)<br>Collecting mpmath&lt;1.4,&gt;=1.1.0 (from sympy-&gt;torch==2.3.1+cu118)<br>  Using cached mpmath-1.3.0-py3-none-any.whl.metadata (8.6 kB)<br>Using cached nvidia_cublas_cu11-11.11.3.6-py3-none-manylinux2014_x86_64.whl (417.9 MB)<br>Using cached nvidia_cuda_cupti_cu11-11.8.87-py3-none-manylinux2014_x86_64.whl (13.1 MB)<br>Using cached nvidia_cuda_nvrtc_cu11-11.8.89-py3-none-manylinux2014_x86_64.whl (23.2 MB)<br>Using cached nvidia_cuda_runtime_cu11-11.8.89-py3-none-manylinux2014_x86_64.whl (875 kB)<br>Using cached nvidia_cudnn_cu11-8.7.0.84-py3-none-manylinux1_x86_64.whl (728.5 MB)<br>Using cached nvidia_cufft_cu11-10.9.0.58-py3-none-manylinux2014_x86_64.whl (168.4 MB)<br>Using cached nvidia_curand_cu11-10.3.0.86-py3-none-manylinux2014_x86_64.whl (58.1 MB)<br>Using cached nvidia_cusolver_cu11-11.4.1.48-py3-none-manylinux2014_x86_64.whl (128.2 MB)<br>Using cached nvidia_cusparse_cu11-11.7.5.86-py3-none-manylinux2014_x86_64.whl (204.1 MB)<br>Using cached nvidia_nccl_cu11-2.20.5-py3-none-manylinux2014_x86_64.whl (142.9 MB)<br>Using cached nvidia_nvtx_cu11-11.8.86-py3-none-manylinux2014_x86_64.whl (99 kB)<br>Using cached triton-2.3.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (168.1 MB)<br>Using cached pillow-11.3.0-cp310-cp310-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (6.6 MB)<br>Using cached typing_extensions-4.15.0-py3-none-any.whl (44 kB)<br>Using cached filelock-3.19.1-py3-none-any.whl (15 kB)<br>Using cached fsspec-2025.7.0-py3-none-any.whl (199 kB)<br>Using cached jinja2-3.1.6-py3-none-any.whl (134 kB)<br>Using cached MarkupSafe-3.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (20 kB)<br>Using cached networkx-3.4.2-py3-none-any.whl (1.7 MB)<br>Using cached numpy-2.2.6-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (16.8 MB)<br>Using cached sympy-1.14.0-py3-none-any.whl (6.3 MB)<br>Using cached mpmath-1.3.0-py3-none-any.whl (536 kB)<br>Installing collected packages: mpmath, typing-extensions, sympy, pillow, nvidia-nvtx-cu11, nvidia-nccl-cu11, nvidia-cusparse-cu11, nvidia-curand-cu11, nvidia-cufft-cu11, nvidia-cuda-runtime-cu11, nvidia-cuda-nvrtc-cu11, nvidia-cuda-cupti-cu11, nvidia-cublas-cu11, numpy, networkx, MarkupSafe, fsspec, filelock, triton, nvidia-cusolver-cu11, nvidia-cudnn-cu11, jinja2, torch, torchvision<br>Successfully installed MarkupSafe-3.0.2 filelock-3.19.1 fsspec-2025.7.0 jinja2-3.1.6 mpmath-1.3.0 networkx-3.4.2 numpy-2.2.6 nvidia-cublas-cu11-11.11.3.6 nvidia-cuda-cupti-cu11-11.8.87 nvidia-cuda-nvrtc-cu11-11.8.89 nvidia-cuda-runtime-cu11-11.8.89 nvidia-cudnn-cu11-8.7.0.84 nvidia-cufft-cu11-10.9.0.58 nvidia-curand-cu11-10.3.0.86 nvidia-cusolver-cu11-11.4.1.48 nvidia-cusparse-cu11-11.7.5.86 nvidia-nccl-cu11-2.20.5 nvidia-nvtx-cu11-11.8.86 pillow-11.3.0 sympy-1.14.0 torch-2.3.1+cu118 torchvision-0.18.1+cu118 triton-2.3.1 typing-extensions-4.15.0<br></code></pre></td></tr></table></figure>
+<p>这段时间2min左右</p>
+<p>检验安装结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs bash">pip list<br>Package                  Version<br>------------------------ ------------<br>filelock                 3.19.1<br>fsspec                   2025.7.0<br>Jinja2                   3.1.6<br>MarkupSafe               3.0.2<br>mpmath                   1.3.0<br>networkx                 3.4.2<br>numpy                    2.2.6<br>nvidia-cublas-cu11       11.11.3.6<br>nvidia-cuda-cupti-cu11   11.8.87<br>nvidia-cuda-nvrtc-cu11   11.8.89<br>nvidia-cuda-runtime-cu11 11.8.89<br>nvidia-cudnn-cu11        8.7.0.84<br>nvidia-cufft-cu11        10.9.0.58<br>nvidia-curand-cu11       10.3.0.86<br>nvidia-cusolver-cu11     11.4.1.48<br>nvidia-cusparse-cu11     11.7.5.86<br>nvidia-nccl-cu11         2.20.5<br>nvidia-nvtx-cu11         11.8.86<br>pillow                   11.3.0<br>pip                      25.1<br>setuptools               78.1.1<br>sympy                    1.14.0<br>torch                    2.3.1+cu118<br>torchvision              0.18.1+cu118<br>triton                   2.3.1<br>typing_extensions        4.15.0<br>wheel                    0.45.1<br></code></pre></td></tr></table></figure>
+<p>安装pytorch3d:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pip install <span class="hljs-string">&quot;git+https://github.com/facebookresearch/pytorch3d.git&quot;</span><br></code></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs bash">Collecting git+https://github.com/facebookresearch/pytorch3d.git<br>  Cloning &lt;https://github.com/facebookresearch/pytorch3d.git&gt; to /tmp/pip-req-build-u5th6tzj<br>  Running <span class="hljs-built_in">command</span> git <span class="hljs-built_in">clone</span> --filter=blob:none --quiet &lt;https://github.com/facebookresearch/pytorch3d.git&gt; /tmp/pip-req-build-u5th6tzj<br>  Resolved &lt;https://github.com/facebookresearch/pytorch3d.git&gt; to commit dd068703d1182256c7bacf3eb6014f24c1190369<br>  Preparing metadata (setup.py) ... <span class="hljs-keyword">done</span><br>Collecting iopath (from pytorch3d==0.7.8)<br>  Using cached iopath-0.1.10-py3-none-any.whl<br>Collecting tqdm (from iopath-&gt;pytorch3d==0.7.8)<br>  Using cached tqdm-4.67.1-py3-none-any.whl.metadata (57 kB)<br>Requirement already satisfied: typing_extensions <span class="hljs-keyword">in</span> ./.conda/envs/PyMAF-X/lib/python3.10/site-packages (from iopath-&gt;pytorch3d==0.7.8) (4.15.0)<br>Collecting portalocker (from iopath-&gt;pytorch3d==0.7.8)<br>  Using cached portalocker-3.2.0-py3-none-any.whl.metadata (8.7 kB)<br>Using cached portalocker-3.2.0-py3-none-any.whl (22 kB)<br>Using cached tqdm-4.67.1-py3-none-any.whl (78 kB)<br>Building wheels <span class="hljs-keyword">for</span> collected packages: pytorch3d<br>  DEPRECATION: Building <span class="hljs-string">&#x27;pytorch3d&#x27;</span> using the legacy setup.py bdist_wheel mechanism, <span class="hljs-built_in">which</span> will be removed <span class="hljs-keyword">in</span> a future version. pip 25.3 will enforce this behaviour change. A possible replacement is to use the standardized build interface by setting the `--use-pep517` option, (possibly combined with `--no-build-isolation`), or adding a `pyproject.toml` file to the <span class="hljs-built_in">source</span> tree of <span class="hljs-string">&#x27;pytorch3d&#x27;</span>. Discussion can be found at &lt;https://github.com/pypa/pip/issues/6334&gt;<br>  Building wheel <span class="hljs-keyword">for</span> pytorch3d (setup.py) ... <span class="hljs-keyword">done</span><br>  Created wheel <span class="hljs-keyword">for</span> pytorch3d: filename=pytorch3d-0.7.8-cp310-cp310-linux_x86_64.whl size=6288053 sha256=1badce2ff7365823c8370b0872effed5dca2a9bb6803604d8e6cecfa134fd42e<br>  Stored <span class="hljs-keyword">in</span> directory: /tmp/pip-ephem-wheel-cache-a3e47h4t/wheels/dd/74/cc/b9266c863f19026f796e59a04e1cd9eb3754474a52ce1b66ce<br>Successfully built pytorch3d<br>Installing collected packages: tqdm, portalocker, iopath, pytorch3d<br>Successfully installed iopath-0.1.10 portalocker-3.2.0 pytorch3d-0.7.8 tqdm-4.67.1<br></code></pre></td></tr></table></figure>
+<p>此过程大概2min左右</p>
+<p>P.S：Python，torch和cuda的版本都需要和上述一致，一开始我选择的python版本为3.8就会不兼容，会发生错误</p>
+<p>下载PyMAF-X文件夹，安装requirement.txt里面的安装包</p>
+<p>在bash中使用如下代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> &lt;https://github.com/HongwenZhang/PyMAF-X.git&gt;<br></code></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">Cloning into <span class="hljs-string">&#x27;PyMAF-X&#x27;</span>...<br>remote: Enumerating objects: 424, <span class="hljs-keyword">done</span>.<br>remote: Counting objects: 100% (424/424), <span class="hljs-keyword">done</span>.<br>remote: Compressing objects: 100% (202/202), <span class="hljs-keyword">done</span>.<br>remote: Total 424 (delta 238), reused 396 (delta 212), pack-reused 0 (from 0)<br>Receiving objects: 100% (424/424), 7.25 MiB | 4.80 MiB/s, <span class="hljs-keyword">done</span>.<br>Resolving deltas: 100% (238/238), <span class="hljs-keyword">done</span>.<br></code></pre></td></tr></table></figure>
+<p>此时下载的文件里面是没有data和example的，文件配置如下：</p>
+<p><img src="/picture/PyMAF-X1.jpg" srcset="/img/loading.gif" lazyload /></p>
+<ul>
+<li>通过https://pan.bnu.edu.cn/l/81f0v6下载data文件中的share_data.zip，下载下来解压之后里面就是example和data两个文件夹（里面的文件已经给你全部配好了，不需要额外操作）</li>
+</ul>
+<p>将下载的两个文件转移到PyMAF-X文件夹中，获得的目录如下：</p>
+<p><img src="/picture/PyMAF-X2.jpg" srcset="/img/loading.gif" lazyload /></p>
+<p>运行下面的代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pip install -r requirements.txt<br></code></pre></td></tr></table></figure>
+<p>出现错误：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ERROR: Could not open requirements file: [Errno 2] No such file or directory: <span class="hljs-string">&#x27;requirements.txt&#x27;</span><br></code></pre></td></tr></table></figure>
+<p>错误原因：目录位置不对，应该将bash的位置移动到PyMAF-X文件夹下</p>
+<p>解决代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> PyMAF-X/<br></code></pre></td></tr></table></figure>
+<p>效果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">(PyMAF-X) wzn@amax:~$ <span class="hljs-built_in">cd</span> PyMAF-X/<br>(PyMAF-X) wzn@amax:~/PyMAF-X$ <br></code></pre></td></tr></table></figure>
+<p>再次尝试安装requirements.txt</p>
+<p>出现错误：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><code class="hljs bash">Requirement already satisfied: numpy <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from -r requirements.txt (line 1)) (2.2.6)<br>Collecting scikit-image (from -r requirements.txt (line 2))<br>  Using cached scikit_image-0.25.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (14 kB)<br>Collecting scipy (from -r requirements.txt (line 3))<br>  Using cached scipy-1.15.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)<br>Collecting sklearn (from -r requirements.txt (line 4))<br>  Using cached sklearn-0.0.post12.tar.gz (2.6 kB)<br>  Preparing metadata (setup.py) ... error<br>  error: subprocess-exited-with-error<br>  <br>  × python setup.py egg_info did not run successfully.<br>  │ <span class="hljs-built_in">exit</span> code: 1<br>  ╰─&gt; [15 lines of output]<br>      The <span class="hljs-string">&#x27;sklearn&#x27;</span> PyPI package is deprecated, use <span class="hljs-string">&#x27;scikit-learn&#x27;</span><br>      rather than <span class="hljs-string">&#x27;sklearn&#x27;</span> <span class="hljs-keyword">for</span> pip commands.<br>      <br>      Here is how to fix this error <span class="hljs-keyword">in</span> the main use cases:<br>      - use <span class="hljs-string">&#x27;pip install scikit-learn&#x27;</span> rather than <span class="hljs-string">&#x27;pip install sklearn&#x27;</span><br>      - replace <span class="hljs-string">&#x27;sklearn&#x27;</span> by <span class="hljs-string">&#x27;scikit-learn&#x27;</span> <span class="hljs-keyword">in</span> your pip requirements files<br>        (requirements.txt, setup.py, setup.cfg, Pipfile, etc ...)<br>      - <span class="hljs-keyword">if</span> the <span class="hljs-string">&#x27;sklearn&#x27;</span> package is used by one of your dependencies,<br>        it would be great <span class="hljs-keyword">if</span> you take some <span class="hljs-keyword">time</span> to track <span class="hljs-built_in">which</span> package uses<br>        <span class="hljs-string">&#x27;sklearn&#x27;</span> instead of <span class="hljs-string">&#x27;scikit-learn&#x27;</span> and report it to their issue tracker<br>      - as a last resort, <span class="hljs-built_in">set</span> the environment variable<br>        SKLEARN_ALLOW_DEPRECATED_SKLEARN_PACKAGE_INSTALL=True to avoid this error<br>      <br>      More information is available at<br>      &lt;https://github.com/scikit-learn/sklearn-pypi-package&gt;<br>      [end of output]<br>  <br>  note: This error originates from a subprocess, and is likely not a problem with pip.<br>error: metadata-generation-failed<br><br>× Encountered error <span class="hljs-keyword">while</span> generating package metadata.<br>╰─&gt; See above <span class="hljs-keyword">for</span> output.<br><br>note: This is an issue with the package mentioned above, not pip.<br>hint: See above <span class="hljs-keyword">for</span> details.<br>(PyMAF-X) wzn@amax:~/PyMAF-X$ pip install -r requirements.txt<br>Requirement already satisfied: numpy <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from -r requirements.txt (line 1)) (2.2.6)<br>Collecting scikit-image (from -r requirements.txt (line 2))<br>  Using cached scikit_image-0.25.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (14 kB)<br>Collecting scipy (from -r requirements.txt (line 3))<br>  Using cached scipy-1.15.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)<br>Collecting sklearn (from -r requirements.txt (line 4))<br>  Using cached sklearn-0.0.post12.tar.gz (2.6 kB)<br>  Preparing metadata (setup.py) ... error<br>  error: subprocess-exited-with-error<br>  <br>  × python setup.py egg_info did not run successfully.<br>  │ <span class="hljs-built_in">exit</span> code: 1<br>  ╰─&gt; [15 lines of output]<br>      The <span class="hljs-string">&#x27;sklearn&#x27;</span> PyPI package is deprecated, use <span class="hljs-string">&#x27;scikit-learn&#x27;</span><br>      rather than <span class="hljs-string">&#x27;sklearn&#x27;</span> <span class="hljs-keyword">for</span> pip commands.<br>      <br>      Here is how to fix this error <span class="hljs-keyword">in</span> the main use cases:<br>      - use <span class="hljs-string">&#x27;pip install scikit-learn&#x27;</span> rather than <span class="hljs-string">&#x27;pip install sklearn&#x27;</span><br>      - replace <span class="hljs-string">&#x27;sklearn&#x27;</span> by <span class="hljs-string">&#x27;scikit-learn&#x27;</span> <span class="hljs-keyword">in</span> your pip requirements files<br>        (requirements.txt, setup.py, setup.cfg, Pipfile, etc ...)<br>      - <span class="hljs-keyword">if</span> the <span class="hljs-string">&#x27;sklearn&#x27;</span> package is used by one of your dependencies,<br>        it would be great <span class="hljs-keyword">if</span> you take some <span class="hljs-keyword">time</span> to track <span class="hljs-built_in">which</span> package uses<br>        <span class="hljs-string">&#x27;sklearn&#x27;</span> instead of <span class="hljs-string">&#x27;scikit-learn&#x27;</span> and report it to their issue tracker<br>      - as a last resort, <span class="hljs-built_in">set</span> the environment variable<br>        SKLEARN_ALLOW_DEPRECATED_SKLEARN_PACKAGE_INSTALL=True to avoid this error<br>      <br>      More information is available at<br>      &lt;https://github.com/scikit-learn/sklearn-pypi-package&gt;<br>      [end of output]<br>  <br>  note: This error originates from a subprocess, and is likely not a problem with pip.<br>error: metadata-generation-failed<br><br>× Encountered error <span class="hljs-keyword">while</span> generating package metadata.<br>╰─&gt; See above <span class="hljs-keyword">for</span> output.<br><br>note: This is an issue with the package mentioned above, not pip.<br>hint: See above <span class="hljs-keyword">for</span> details.<br></code></pre></td></tr></table></figure>
+<p>解决方法：将requirement.txt文件里面的sklearn换成scikit-learn</p>
+<p>再次运行安装代码，再次出现错误：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs bash">Collecting openpifpaf==0.13.1 (from -r requirements.txt (line 26))<br>  Using cached openpifpaf-0.13.1.tar.gz (223 kB)<br>  Installing build dependencies ... error<br>  error: subprocess-exited-with-error<br>  <br>  × pip subprocess to install build dependencies did not run successfully.<br>  │ <span class="hljs-built_in">exit</span> code: 1<br>  ╰─&gt; [4 lines of output]<br>      Collecting setuptools<br>        Using cached setuptools-80.9.0-py3-none-any.whl.metadata (6.6 kB)<br>      ERROR: Could not find a version that satisfies the requirement torch==1.9.0 (from versions: 1.11.0, 1.12.0, 1.12.1, 1.13.0, 1.13.1, 2.0.0, 2.0.1, 2.1.0, 2.1.1, 2.1.2, 2.2.0, 2.2.1, 2.2.2, 2.3.0, 2.3.1, 2.4.0, 2.4.1, 2.5.0, 2.5.1, 2.6.0, 2.7.0, 2.7.1, 2.8.0)<br>      ERROR: No matching distribution found <span class="hljs-keyword">for</span> torch==1.9.0<br>      [end of output]<br>  <br>  note: This error originates from a subprocess, and is likely not a problem with pip.<br>error: subprocess-exited-with-error<br><br>× pip subprocess to install build dependencies did not run successfully.<br>│ <span class="hljs-built_in">exit</span> code: 1<br>╰─&gt; See above <span class="hljs-keyword">for</span> output.<br><br>note: This error originates from a subprocess, and is likely not a problem with pip.<br></code></pre></td></tr></table></figure>
+<p>解决方法：在requirement.txt文件中注释掉openpifpaf</p>
+<p>再次尝试安装</p>
+<p>成功，结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br></pre></td><td class="code"><pre><code class="hljs bash">Requirement already satisfied: numpy <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from -r requirements.txt (line 1)) (2.2.6)<br>Collecting scikit-image (from -r requirements.txt (line 2))<br>  Using cached scikit_image-0.25.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (14 kB)<br>Collecting scipy (from -r requirements.txt (line 3))<br>  Using cached scipy-1.15.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)<br>Collecting scikit-learn (from -r requirements.txt (line 4))<br>  Using cached scikit_learn-1.7.1-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (11 kB)<br>Collecting smplx==0.1.28 (from -r requirements.txt (line 5))<br>  Using cached smplx-0.1.28-py3-none-any.whl.metadata (10 kB)<br>Requirement already satisfied: tqdm <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from -r requirements.txt (line 6)) (4.67.1)<br>Collecting yacs (from -r requirements.txt (line 7))<br>  Using cached yacs-0.1.8-py3-none-any.whl.metadata (639 bytes)<br>Collecting numba (from -r requirements.txt (line 8))<br>  Using cached numba-0.61.2-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.8 kB)<br>Collecting opencv-python (from -r requirements.txt (line 9))<br>  Using cached opencv_python-4.12.0.88-cp37-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (19 kB)<br>Collecting tensorboardx (from -r requirements.txt (line 10))<br>  Using cached tensorboardx-2.6.4-py3-none-any.whl.metadata (6.2 kB)<br>Collecting filterpy (from -r requirements.txt (line 11))<br>  Using cached filterpy-1.4.5-py3-none-any.whl<br>Collecting cython (from -r requirements.txt (line 12))<br>  Using cached cython-3.1.3-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (4.7 kB)<br>Collecting chumpy (from -r requirements.txt (line 13))<br>  Using cached chumpy-0.70-py3-none-any.whl<br>Requirement already satisfied: Pillow <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from -r requirements.txt (line 14)) (11.3.0)<br>Collecting trimesh (from -r requirements.txt (line 15))<br>  Using cached trimesh-4.7.4-py3-none-any.whl.metadata (18 kB)<br>Collecting pyrender (from -r requirements.txt (line 16))<br>  Using cached pyrender-0.1.45-py3-none-any.whl.metadata (1.5 kB)<br>Collecting matplotlib (from -r requirements.txt (line 17))<br>  Using cached matplotlib-3.10.6-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (11 kB)<br>Collecting json_tricks (from -r requirements.txt (line 18))<br>  Using cached json_tricks-3.17.3-py2.py3-none-any.whl.metadata (16 kB)<br>Collecting torchgeometry (from -r requirements.txt (line 19))<br>  Using cached torchgeometry-0.1.2-py2.py3-none-any.whl.metadata (2.9 kB)<br>Collecting einops (from -r requirements.txt (line 20))<br>  Using cached einops-0.8.1-py3-none-any.whl.metadata (13 kB)<br>Collecting joblib (from -r requirements.txt (line 21))<br>  Using cached joblib-1.5.2-py3-none-any.whl.metadata (5.6 kB)<br>Collecting boto3 (from -r requirements.txt (line 22))<br>  Using cached boto3-1.40.21-py3-none-any.whl.metadata (6.7 kB)<br>Collecting requests (from -r requirements.txt (line 23))<br>  Using cached requests-2.32.5-py3-none-any.whl.metadata (4.9 kB)<br>Collecting easydict (from -r requirements.txt (line 24))<br>  Using cached easydict-1.13-py3-none-any.whl.metadata (4.2 kB)<br>Collecting pycocotools (from -r requirements.txt (line 25))<br>  Using cached pycocotools-2.0.10-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.3 kB)<br>Collecting kornia (from -r requirements.txt (line 27))<br>  Using cached kornia-0.8.1-py2.py3-none-any.whl.metadata (17 kB)<br>Requirement already satisfied: torch&gt;=1.0.1.post2 <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from smplx==0.1.28-&gt;-r requirements.txt (line 5)) (2.3.1+cu118)<br>Requirement already satisfied: networkx&gt;=3.0 <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from scikit-image-&gt;-r requirements.txt (line 2)) (3.4.2)<br>Collecting imageio!=2.35.0,&gt;=2.33 (from scikit-image-&gt;-r requirements.txt (line 2))<br>  Using cached imageio-2.37.0-py3-none-any.whl.metadata (5.2 kB)<br>Collecting tifffile&gt;=2022.8.12 (from scikit-image-&gt;-r requirements.txt (line 2))<br>  Using cached tifffile-2025.5.10-py3-none-any.whl.metadata (31 kB)<br>Collecting packaging&gt;=21 (from scikit-image-&gt;-r requirements.txt (line 2))<br>  Using cached packaging-25.0-py3-none-any.whl.metadata (3.3 kB)<br>Collecting lazy-loader&gt;=0.4 (from scikit-image-&gt;-r requirements.txt (line 2))<br>  Using cached lazy_loader-0.4-py3-none-any.whl.metadata (7.6 kB)<br>Collecting threadpoolctl&gt;=3.1.0 (from scikit-learn-&gt;-r requirements.txt (line 4))<br>  Using cached threadpoolctl-3.6.0-py3-none-any.whl.metadata (13 kB)<br>Collecting PyYAML (from yacs-&gt;-r requirements.txt (line 7))<br>  Using cached PyYAML-6.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.1 kB)<br>Collecting llvmlite&lt;0.45,&gt;=0.44.0dev0 (from numba-&gt;-r requirements.txt (line 8))<br>  Using cached llvmlite-0.44.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.8 kB)<br>Collecting protobuf&gt;=3.20 (from tensorboardx-&gt;-r requirements.txt (line 10))<br>  Using cached protobuf-6.32.0-cp39-abi3-manylinux2014_x86_64.whl.metadata (593 bytes)<br>Collecting six&gt;=1.11.0 (from chumpy-&gt;-r requirements.txt (line 13))<br>  Using cached six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)<br>Collecting freetype-py (from pyrender-&gt;-r requirements.txt (line 16))<br>  Using cached freetype_py-2.5.1-py3-none-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl.metadata (6.3 kB)<br>Collecting pyglet&gt;=1.4.10 (from pyrender-&gt;-r requirements.txt (line 16))<br>  Using cached pyglet-2.1.8-py3-none-any.whl.metadata (7.7 kB)<br>Collecting PyOpenGL==3.1.0 (from pyrender-&gt;-r requirements.txt (line 16))<br>  Using cached pyopengl-3.1.0-py3-none-any.whl<br>Collecting contourpy&gt;=1.0.1 (from matplotlib-&gt;-r requirements.txt (line 17))<br>  Using cached contourpy-1.3.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.5 kB)<br>Collecting cycler&gt;=0.10 (from matplotlib-&gt;-r requirements.txt (line 17))<br>  Using cached cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)<br>Collecting fonttools&gt;=4.22.0 (from matplotlib-&gt;-r requirements.txt (line 17))<br>  WARNING: Retrying (Retry(total=4, connect=None, <span class="hljs-built_in">read</span>=None, redirect=None, status=None)) after connection broken by <span class="hljs-string">&#x27;ProxyError(&#x27;</span>Cannot connect to proxy.<span class="hljs-string">&#x27;, ConnectionResetError(104, &#x27;</span>Connection reset by peer<span class="hljs-string">&#x27;))&#x27;</span>: /packages/31/ed/abed08178e06fab3513b845c045cb09145c877d50121668add2f308a6c19/fonttools-4.59.2-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata<br>  Downloading fonttools-4.59.2-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (109 kB)<br>Collecting kiwisolver&gt;=1.3.1 (from matplotlib-&gt;-r requirements.txt (line 17))<br>  Using cached kiwisolver-1.4.9-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.whl.metadata (6.3 kB)<br>Collecting pyparsing&gt;=2.3.1 (from matplotlib-&gt;-r requirements.txt (line 17))<br>  Using cached pyparsing-3.2.3-py3-none-any.whl.metadata (5.0 kB)<br>Collecting python-dateutil&gt;=2.7 (from matplotlib-&gt;-r requirements.txt (line 17))<br>  Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)<br>Collecting botocore&lt;1.41.0,&gt;=1.40.21 (from boto3-&gt;-r requirements.txt (line 22))<br>  Downloading botocore-1.40.21-py3-none-any.whl.metadata (5.7 kB)<br>Collecting jmespath&lt;2.0.0,&gt;=0.7.1 (from boto3-&gt;-r requirements.txt (line 22))<br>  Using cached jmespath-1.0.1-py3-none-any.whl.metadata (7.6 kB)<br>Collecting s3transfer&lt;0.14.0,&gt;=0.13.0 (from boto3-&gt;-r requirements.txt (line 22))<br>  Using cached s3transfer-0.13.1-py3-none-any.whl.metadata (1.7 kB)<br>Collecting urllib3!=2.2.0,&lt;3,&gt;=1.25.4 (from botocore&lt;1.41.0,&gt;=1.40.21-&gt;boto3-&gt;-r requirements.txt (line 22))<br>  Using cached urllib3-2.5.0-py3-none-any.whl.metadata (6.5 kB)<br>Collecting charset_normalizer&lt;4,&gt;=2 (from requests-&gt;-r requirements.txt (line 23))<br>  Using cached charset_normalizer-3.4.3-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (36 kB)<br>Collecting idna&lt;4,&gt;=2.5 (from requests-&gt;-r requirements.txt (line 23))<br>  Using cached idna-3.10-py3-none-any.whl.metadata (10 kB)<br>Collecting certifi&gt;=2017.4.17 (from requests-&gt;-r requirements.txt (line 23))<br>  Using cached certifi-2025.8.3-py3-none-any.whl.metadata (2.4 kB)<br>Collecting kornia_rs&gt;=0.1.9 (from kornia-&gt;-r requirements.txt (line 27))<br>  Using cached kornia_rs-0.1.9-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)<br>Requirement already satisfied: filelock <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from torch&gt;=1.0.1.post2-&gt;smplx==0.1.28-&gt;-r requirements.txt (line 5)) (3.19.1)<br>Requirement already satisfied: typing-extensions&gt;=4.8.0 <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from torch&gt;=1.0.1.post2-&gt;smplx==0.1.28-&gt;-r requirements.txt (line 5)) (4.15.0)<br>Requirement already satisfied: sympy <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from torch&gt;=1.0.1.post2-&gt;smplx==0.1.28-&gt;-r requirements.txt (line 5)) (1.14.0)<br>Requirement already satisfied: jinja2 <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from torch&gt;=1.0.1.post2-&gt;smplx==0.1.28-&gt;-r requirements.txt (line 5)) (3.1.6)<br>Requirement already satisfied: fsspec <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from torch&gt;=1.0.1.post2-&gt;smplx==0.1.28-&gt;-r requirements.txt (line 5)) (2025.7.0)<br>Requirement already satisfied: nvidia-cuda-nvrtc-cu11==11.8.89 <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from torch&gt;=1.0.1.post2-&gt;smplx==0.1.28-&gt;-r requirements.txt (line 5)) (11.8.89)<br>Requirement already satisfied: nvidia-cuda-runtime-cu11==11.8.89 <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from torch&gt;=1.0.1.post2-&gt;smplx==0.1.28-&gt;-r requirements.txt (line 5)) (11.8.89)<br>Requirement already satisfied: nvidia-cuda-cupti-cu11==11.8.87 <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from torch&gt;=1.0.1.post2-&gt;smplx==0.1.28-&gt;-r requirements.txt (line 5)) (11.8.87)<br>Requirement already satisfied: nvidia-cudnn-cu11==8.7.0.84 <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from torch&gt;=1.0.1.post2-&gt;smplx==0.1.28-&gt;-r requirements.txt (line 5)) (8.7.0.84)<br>Requirement already satisfied: nvidia-cublas-cu11==11.11.3.6 <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from torch&gt;=1.0.1.post2-&gt;smplx==0.1.28-&gt;-r requirements.txt (line 5)) (11.11.3.6)<br>Requirement already satisfied: nvidia-cufft-cu11==10.9.0.58 <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from torch&gt;=1.0.1.post2-&gt;smplx==0.1.28-&gt;-r requirements.txt (line 5)) (10.9.0.58)<br>Requirement already satisfied: nvidia-curand-cu11==10.3.0.86 <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from torch&gt;=1.0.1.post2-&gt;smplx==0.1.28-&gt;-r requirements.txt (line 5)) (10.3.0.86)<br>Requirement already satisfied: nvidia-cusolver-cu11==11.4.1.48 <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from torch&gt;=1.0.1.post2-&gt;smplx==0.1.28-&gt;-r requirements.txt (line 5)) (11.4.1.48)<br>Requirement already satisfied: nvidia-cusparse-cu11==11.7.5.86 <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from torch&gt;=1.0.1.post2-&gt;smplx==0.1.28-&gt;-r requirements.txt (line 5)) (11.7.5.86)<br>Requirement already satisfied: nvidia-nccl-cu11==2.20.5 <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from torch&gt;=1.0.1.post2-&gt;smplx==0.1.28-&gt;-r requirements.txt (line 5)) (2.20.5)<br>Requirement already satisfied: nvidia-nvtx-cu11==11.8.86 <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from torch&gt;=1.0.1.post2-&gt;smplx==0.1.28-&gt;-r requirements.txt (line 5)) (11.8.86)<br>Requirement already satisfied: triton==2.3.1 <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from torch&gt;=1.0.1.post2-&gt;smplx==0.1.28-&gt;-r requirements.txt (line 5)) (2.3.1)<br>Requirement already satisfied: MarkupSafe&gt;=2.0 <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from jinja2-&gt;torch&gt;=1.0.1.post2-&gt;smplx==0.1.28-&gt;-r requirements.txt (line 5)) (3.0.2)<br>Requirement already satisfied: mpmath&lt;1.4,&gt;=1.1.0 <span class="hljs-keyword">in</span> /data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages (from sympy-&gt;torch&gt;=1.0.1.post2-&gt;smplx==0.1.28-&gt;-r requirements.txt (line 5)) (1.3.0)<br>Using cached smplx-0.1.28-py3-none-any.whl (29 kB)<br>Using cached scikit_image-0.25.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (14.8 MB)<br>Using cached scipy-1.15.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (37.7 MB)<br>Using cached scikit_learn-1.7.1-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (9.7 MB)<br>Using cached yacs-0.1.8-py3-none-any.whl (14 kB)<br>Using cached numba-0.61.2-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (3.8 MB)<br>Using cached llvmlite-0.44.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (42.4 MB)<br>Using cached opencv_python-4.12.0.88-cp37-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (67.0 MB)<br>Using cached tensorboardx-2.6.4-py3-none-any.whl (87 kB)<br>Using cached cython-3.1.3-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.4 MB)<br>Using cached trimesh-4.7.4-py3-none-any.whl (709 kB)<br>Using cached pyrender-0.1.45-py3-none-any.whl (1.2 MB)<br>Downloading matplotlib-3.10.6-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (8.7 MB)<br>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.7/8.7 MB 5.0 MB/s eta 0:00:00<br>Using cached json_tricks-3.17.3-py2.py3-none-any.whl (27 kB)<br>Using cached torchgeometry-0.1.2-py2.py3-none-any.whl (42 kB)<br>Using cached einops-0.8.1-py3-none-any.whl (64 kB)<br>Using cached joblib-1.5.2-py3-none-any.whl (308 kB)<br>Downloading boto3-1.40.21-py3-none-any.whl (139 kB)<br>Downloading botocore-1.40.21-py3-none-any.whl (14.0 MB)<br>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 14.0/14.0 MB 4.8 MB/s eta 0:00:00<br>Using cached jmespath-1.0.1-py3-none-any.whl (20 kB)<br>Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)<br>Using cached s3transfer-0.13.1-py3-none-any.whl (85 kB)<br>Using cached urllib3-2.5.0-py3-none-any.whl (129 kB)<br>Using cached requests-2.32.5-py3-none-any.whl (64 kB)<br>Using cached charset_normalizer-3.4.3-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (152 kB)<br>Using cached idna-3.10-py3-none-any.whl (70 kB)<br>Using cached easydict-1.13-py3-none-any.whl (6.8 kB)<br>Using cached pycocotools-2.0.10-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (455 kB)<br>Using cached kornia-0.8.1-py2.py3-none-any.whl (1.1 MB)<br>Using cached certifi-2025.8.3-py3-none-any.whl (161 kB)<br>Using cached contourpy-1.3.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (325 kB)<br>Using cached cycler-0.12.1-py3-none-any.whl (8.3 kB)<br>Downloading fonttools-4.59.2-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (4.8 MB)<br>   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.8/4.8 MB 4.5 MB/s eta 0:00:00<br>Using cached imageio-2.37.0-py3-none-any.whl (315 kB)<br>Using cached kiwisolver-1.4.9-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.whl (1.6 MB)<br>Using cached kornia_rs-0.1.9-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.8 MB)<br>Using cached lazy_loader-0.4-py3-none-any.whl (12 kB)<br>Using cached packaging-25.0-py3-none-any.whl (66 kB)<br>Using cached protobuf-6.32.0-cp39-abi3-manylinux2014_x86_64.whl (322 kB)<br>Using cached pyglet-2.1.8-py3-none-any.whl (1.0 MB)<br>Using cached pyparsing-3.2.3-py3-none-any.whl (111 kB)<br>Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)<br>Using cached threadpoolctl-3.6.0-py3-none-any.whl (18 kB)<br>Using cached tifffile-2025.5.10-py3-none-any.whl (226 kB)<br>Using cached freetype_py-2.5.1-py3-none-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl (1.0 MB)<br>Using cached PyYAML-6.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (751 kB)<br>Installing collected packages: PyOpenGL, json_tricks, easydict, urllib3, trimesh, tifffile, threadpoolctl, six, scipy, PyYAML, pyparsing, pyglet, pycocotools, protobuf, packaging, opencv-python, llvmlite, kornia_rs, kiwisolver, joblib, jmespath, imageio, idna, freetype-py, fonttools, einops, cython, cycler, contourpy, charset_normalizer, certifi, yacs, tensorboardx, scikit-learn, requests, python-dateutil, pyrender, numba, lazy-loader, chumpy, torchgeometry, smplx, scikit-image, matplotlib, kornia, botocore, s3transfer, filterpy, boto3<br>Successfully installed PyOpenGL-3.1.0 PyYAML-6.0.2 boto3-1.40.21 botocore-1.40.21 certifi-2025.8.3 charset_normalizer-3.4.3 chumpy-0.70 contourpy-1.3.2 cycler-0.12.1 cython-3.1.3 easydict-1.13 einops-0.8.1 filterpy-1.4.5 fonttools-4.59.2 freetype-py-2.5.1 idna-3.10 imageio-2.37.0 jmespath-1.0.1 joblib-1.5.2 json_tricks-3.17.3 kiwisolver-1.4.9 kornia-0.8.1 kornia_rs-0.1.9 lazy-loader-0.4 llvmlite-0.44.0 matplotlib-3.10.6 numba-0.61.2 opencv-python-4.12.0.88 packaging-25.0 protobuf-6.32.0 pycocotools-2.0.10 pyglet-2.1.8 pyparsing-3.2.3 pyrender-0.1.45 python-dateutil-2.9.0.post0 requests-2.32.5 s3transfer-0.13.1 scikit-image-0.25.2 scikit-learn-1.7.1 scipy-1.15.3 six-1.17.0 smplx-0.1.28 tensorboardx-2.6.4 threadpoolctl-3.6.0 tifffile-2025.5.10 torchgeometry-0.1.2 trimesh-4.7.4 urllib3-2.5.0 yacs-0.1.8<br></code></pre></td></tr></table></figure>
+<p>安装过程1min左右，中间一段warning可以不用管</p>
+<ul>
+<li>安装fetch_data.sh里面的剩余文件</li>
+</ul>
+<p>运行代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">bash fetch_data.sh<br></code></pre></td></tr></table></figure>
+<p>安装时间不到1min</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs bash">--2025-08-30 20:12:48--  &lt;http://visiondata.cis.upenn.edu/spin/data.tar.gz&gt;<br>Connecting to 127.0.0.1:7890... connected.<br>Proxy request sent, awaiting response... 301 Moved Permanently<br>Location: &lt;https://visiondata.cis.upenn.edu/spin/data.tar.gz&gt; [following]<br>--2025-08-30 20:12:49--  &lt;https://visiondata.cis.upenn.edu/spin/data.tar.gz&gt;<br>Connecting to 127.0.0.1:7890... connected.<br>Proxy request sent, awaiting response... 200 OK<br>Length: 14960640 (14M) [application/x-gzip]<br>Saving to: ‘data.tar.gz’<br><br>data.tar.gz                             100%[===============================================================================&gt;]  14.27M  2.25MB/s    <span class="hljs-keyword">in</span> 6.6s    <br><br>2025-08-30 20:12:57 (2.16 MB/s) - ‘data.tar.gz’ saved [14960640/14960640]<br><br>data/<br>data/J_regressor_h36m.npy<br>data/cube_parts.npy<br>data/train.h5<br>data/vertex_texture.npy<br>data/smpl_mean_params.npz<br>data/J_regressor_extra.npy<br>data/gmm_08.pkl<br>--2025-08-30 20:12:57--  &lt;https://github.com/nkolot/GraphCMR/raw/master/data/mesh_downsampling.npz&gt;<br>Connecting to 127.0.0.1:7890... connected.<br>Proxy request sent, awaiting response... 302 Found<br>Location: &lt;https://raw.githubusercontent.com/nkolot/GraphCMR/master/data/mesh_downsampling.npz&gt; [following]<br>--2025-08-30 20:12:58--  &lt;https://raw.githubusercontent.com/nkolot/GraphCMR/master/data/mesh_downsampling.npz&gt;<br>Connecting to 127.0.0.1:7890... connected.<br>Proxy request sent, awaiting response... 200 OK<br>Length: 1720359 (1.6M) [application/octet-stream]<br>Saving to: ‘data/smpl_downsampling.npz’<br><br>data/smpl_downsampling.npz              100%[===============================================================================&gt;]   1.64M  3.96MB/s    <span class="hljs-keyword">in</span> 0.4s    <br><br>2025-08-30 20:12:59 (3.96 MB/s) - ‘data/smpl_downsampling.npz’ saved [1720359/1720359]<br><br>--2025-08-30 20:12:59--  &lt;https://github.com/microsoft/MeshGraphormer/raw/main/src/modeling/data/mano_downsampling.npz&gt;<br>Connecting to 127.0.0.1:7890... connected.<br>Proxy request sent, awaiting response... 302 Found<br>Location: &lt;https://raw.githubusercontent.com/microsoft/MeshGraphormer/main/src/modeling/data/mano_downsampling.npz&gt; [following]<br>--2025-08-30 20:13:00--  &lt;https://raw.githubusercontent.com/microsoft/MeshGraphormer/main/src/modeling/data/mano_downsampling.npz&gt;<br>Connecting to 127.0.0.1:7890... connected.<br>Proxy request sent, awaiting response... 200 OK<br>Length: 176509 (172K) [application/octet-stream]<br>Saving to: ‘data/mano_downsampling.npz’<br><br>data/mano_downsampling.npz              100%[===============================================================================&gt;] 172.37K   111KB/s    <span class="hljs-keyword">in</span> 1.6s    <br><br>2025-08-30 20:13:02 (111 KB/s) - ‘data/mano_downsampling.npz’ saved [176509/176509]<br></code></pre></td></tr></table></figure>
+<ul>
+<li>尝试图形输入，并检查结果</li>
+</ul>
+<p>运行以下代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">xvfb-run -a python -m apps.demo_smplx --image_folder examples/coco_images --detection_threshold 0.3 --pretrained_model data/pretrained_model/PyMAF-X_model_checkpoint_v1.1.pt --misc TRAIN.BHF_MODE full_body MODEL.PyMAF.HAND_VIS_TH 0.1<br></code></pre></td></tr></table></figure>
+<p>出现问题：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">Traceback (most recent call last):<br>  File <span class="hljs-string">&quot;/data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/runpy.py&quot;</span>, line 196, <span class="hljs-keyword">in</span> _run_module_as_main<br>    <span class="hljs-built_in">return</span> _run_code(code, main_globals, None,<br>  File <span class="hljs-string">&quot;/data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/runpy.py&quot;</span>, line 86, <span class="hljs-keyword">in</span> _run_code<br>    <span class="hljs-built_in">exec</span>(code, run_globals)<br>  File <span class="hljs-string">&quot;/data1/supersmpl/wzn/PyMAF-X/apps/demo_smplx.py&quot;</span>, line 42, <span class="hljs-keyword">in</span> &lt;module&gt;<br>    from models import hmr, pymaf_net<br>  File <span class="hljs-string">&quot;/data1/supersmpl/wzn/PyMAF-X/models/__init__.py&quot;</span>, line 2, <span class="hljs-keyword">in</span> &lt;module&gt;<br>    from .pymaf_net import pymaf_net<br>  File <span class="hljs-string">&quot;/data1/supersmpl/wzn/PyMAF-X/models/pymaf_net.py&quot;</span>, line 17, <span class="hljs-keyword">in</span> &lt;module&gt;<br>    from .maf_extractor import MAF_Extractor, Mesh_Sampler<br>  File <span class="hljs-string">&quot;/data1/supersmpl/wzn/PyMAF-X/models/maf_extractor.py&quot;</span>, line 6, <span class="hljs-keyword">in</span> &lt;module&gt;<br>    from numpy.lib.twodim_base import triu_indices_from<br>ModuleNotFoundError: No module named <span class="hljs-string">&#x27;numpy.lib.twodim_base&#x27;</span><br></code></pre></td></tr></table></figure>
+<p>这里应该是numpy版本问题，选择numpy版本为1.23.0</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pip install numpy==1.23.0<br></code></pre></td></tr></table></figure>
+<p>安装成功：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">Collecting numpy==1.23.0<br>  Using cached numpy-1.23.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.2 kB)<br>Using cached numpy-1.23.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (17.0 MB)<br>Installing collected packages: numpy<br>  Attempting uninstall: numpy<br>    Found existing installation: numpy 2.2.6<br>    Uninstalling numpy-2.2.6:<br>      Successfully uninstalled numpy-2.2.6<br>ERROR: pip<span class="hljs-string">&#x27;s dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.</span><br><span class="hljs-string">numba 0.61.2 requires numpy&lt;2.3,&gt;=1.24, but you have numpy 1.23.0 which is incompatible.</span><br><span class="hljs-string">opencv-python 4.12.0.88 requires numpy&lt;2.3.0,&gt;=2; python_version &gt;= &quot;3.9&quot;, but you have numpy 1.23.0 which is incompatible.</span><br><span class="hljs-string">scikit-image 0.25.2 requires numpy&gt;=1.24, but you have numpy 1.23.0 which is incompatible.</span><br><span class="hljs-string">scipy 1.15.3 requires numpy&lt;2.5,&gt;=1.23.5, but you have numpy 1.23.0 which is incompatible.</span><br><span class="hljs-string">Successfully installed numpy-1.23.0</span><br></code></pre></td></tr></table></figure>
+<p>中间有error错误报信，不用管它，再次运行指令，出现错误：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">/data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages/skimage/transform/_warps.py:2: UserWarning: A NumPy version &gt;=1.23.5 and &lt;2.5.0 is required <span class="hljs-keyword">for</span> this version of SciPy (detected version 1.23.0)<br>  from scipy import ndimage as ndi<br>/data1/supersmpl/wzn/PyMAF-X/models/hr_module.py:481: SyntaxWarning: <span class="hljs-string">&quot;is&quot;</span> with a literal. Did you mean <span class="hljs-string">&quot;==&quot;</span>?<br>  or self.pretrained_layers[0] is <span class="hljs-string">&#x27;*&#x27;</span>:<br>INFO:OpenGL.acceleratesupport:No OpenGL_accelerate module loaded: No module named <span class="hljs-string">&#x27;OpenGL_accelerate&#x27;</span><br>Traceback (most recent call last):<br>  File <span class="hljs-string">&quot;/data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/runpy.py&quot;</span>, line 196, <span class="hljs-keyword">in</span> _run_module_as_main<br>    <span class="hljs-built_in">return</span> _run_code(code, main_globals, None,<br>  File <span class="hljs-string">&quot;/data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/runpy.py&quot;</span>, line 86, <span class="hljs-keyword">in</span> _run_code<br>    <span class="hljs-built_in">exec</span>(code, run_globals)<br>  File <span class="hljs-string">&quot;/data1/supersmpl/wzn/PyMAF-X/apps/demo_smplx.py&quot;</span>, line 56, <span class="hljs-keyword">in</span> &lt;module&gt;<br>    from openpifpaf import decoder as ppdecoder<br>ModuleNotFoundError: No module named <span class="hljs-string">&#x27;openpifpaf&#x27;</span><br></code></pre></td></tr></table></figure>
+<p>两个错误，一个是没有一个叫’OpenGL_accelerate’的模板，解决方法：</p>
+<p>运行代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pip install OpenGL_accelerate<br></code></pre></td></tr></table></figure>
+<p>将demo_smplx.py文件的第21行，train.py文件的第2行，renderer.py文件的第227，229和230行注释掉，第228行不能注释，但是注意缩进</p>
+<p>还有就是缺少openpifpaf的模板问题，解决办法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">python setup.py install<br></code></pre></td></tr></table></figure>
+<p>注意，这里面的setup.py已经将其中三行关于torch,torchvision和numpy的版本限定代码注释掉之后的结果。</p>
+<p>再次运行代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs bash">/data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages/skimage/transform/_warps.py:2: UserWarning: A NumPy version &gt;=1.23.5 and &lt;2.5.0 is required <span class="hljs-keyword">for</span> this version of SciPy (detected version 1.23.0)<br>  from scipy import ndimage as ndi<br>INFO:OpenGL.acceleratesupport:OpenGL_accelerate module loaded<br>INFO:OpenGL.arrays.arraydatatype:Using accelerated ArrayDatatype<br>initializing openpifpaf<br>Running demo...<br>Input video number of frames 2<br>INFO:openpifpaf.predictor:Using multiple GPUs: 2<br>INFO:openpifpaf.decoder.factory:No specific decoder requested. Using the first one from:<br>  --decoder=cifcaf:0<br>  --decoder=posesimilarity:0<br>Use any of the above arguments to <span class="hljs-keyword">select</span> one or multiple decoders and to suppress this message.<br>INFO:openpifpaf.predictor:neural network device: cuda (CUDA available: True, count: 2)<br>Running openpifpaf <span class="hljs-keyword">for</span> person detection...<br>  0%|                                                                                                                                     | 0/2 [00:00&lt;?, ?it/s]/data1/supersmpl/share/openpifpaf/src/openpifpaf/csrc/src/cif_hr.cpp:102: UserInfo: resizing cifhr buffer<br>/data1/supersmpl/share/openpifpaf/src/openpifpaf/csrc/src/occupancy.cpp:53: UserInfo: resizing occupancy buffer<br>INFO:openpifpaf.decoder.cifcaf:annotations 116: [130, 129, 127, 106, 100, 63, 31, 17, 13, 12, 9, 8, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]<br>INFO:openpifpaf.predictor:batch 0: examples/coco_images/COCO_val2014_000000004700.jpg<br> 50%|██████████████████████████████████████████████████████████████▌                                                              | 1/2 [00:00&lt;00:00,  1.27it/s]INFO:openpifpaf.decoder.cifcaf:annotations 12: [133, 133, 93, 1, 0, 0, 0, 0, 0, 0, 0, 0]<br>INFO:openpifpaf.predictor:batch 1: examples/coco_images/COCO_val2014_000000477655.jpg<br>100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [00:00&lt;00:00,  2.15it/s]<br>WARNING: You are using a SMPL model, with only 10 shape coefficients.<br>WARNING: You are using a SMPL model, with only 10 shape coefficients.<br>WARNING: You are using a MANO model, with only 10 shape coefficients.<br>/data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages/smplx/body_models.py:1967: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at ../torch/csrc/utils/tensor_new.cpp:274.)<br>  dynamic_lmk_b_coords = torch.tensor(<br>WARNING: You are using a SMPL model, with only 10 shape coefficients.<br>WARNING: You are using a SMPL model, with only 10 shape coefficients.<br>/data1/supersmpl/wzn/.conda/envs/PyMAF-X/lib/python3.10/site-packages/torch/functional.py:512: UserWarning: torch.meshgrid: <span class="hljs-keyword">in</span> an upcoming release, it will be required to pass the indexing argument. (Triggered internally at ../aten/src/ATen/native/TensorShape.cpp:3587.)<br>  <span class="hljs-built_in">return</span> _VF.meshgrid(tensors, **kwargs)  <span class="hljs-comment"># type: ignore[attr-defined]</span><br>/data1/supersmpl/wzn/PyMAF-X/models/maf_extractor.py:60: UserWarning: torch.sparse.SparseTensor(indices, values, shape, *, device=) is deprecated.  Please use torch.sparse_coo_tensor(indices, values, shape, dtype=, device=). (Triggered internally at ../torch/csrc/utils/tensor_new.cpp:621.)<br>  ptD.append(torch.sparse.FloatTensor(i, v, d.shape))<br>WARNING: You are using a SMPL model, with only 10 shape coefficients.<br>WARNING: You are using a SMPL model, with only 10 shape coefficients.<br>WARNING: You are using a SMPL model, with only 10 shape coefficients.<br>Loading pretrained weights from <span class="hljs-string">&quot;data/pretrained_model/PyMAF-X_model_checkpoint_v1.1.pt&quot;</span><br>loaded checkpoint: data/pretrained_model/PyMAF-X_model_checkpoint_v1.1.pt<br>Running reconstruction on each tracklet...<br>100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [00:02&lt;00:00,  1.30s/it]<br>Total <span class="hljs-keyword">time</span> spent <span class="hljs-keyword">for</span> reconstruction: 11.21 seconds (including model loading <span class="hljs-keyword">time</span>).<br>Saving output results to <span class="hljs-string">&quot;output/coco_images/output.pkl&quot;</span>.<br>WARNING: You are using a SMPL model, with only 10 shape coefficients.<br>WARNING: You are using a MANO model, with only 10 shape coefficients.<br>Rendering results, writing frames to output/coco_images/coco_images_output<br>100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2/2 [00:02&lt;00:00,  1.28s/it]<br>================= END ==============<br></code></pre></td></tr></table></figure>
+<p>复现成功</p>
+<ul>
+<li>结果记录</li>
+</ul>
+<p>原图片：</p>
+<p><img src="/picture/PyMAF-X3.jpg" srcset="/img/loading.gif" lazyload /></p>
+<p>重建后：</p>
+<p>全身复现结果：</p>
+<p><img src="/picture/PyMAF-X4.jpg" srcset="/img/loading.gif" lazyload /></p>
+<p>手臂复现结果：</p>
+<p><img src="/picture.PyMAF-X5.jpg" srcset="/img/loading.gif" lazyload /></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/SMPL%E7%B3%BB%E5%88%97/" class="category-chain-item">SMPL系列</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/SMPL/" class="print-no-link">#SMPL</a>
+      
+        <a href="/tags/PyMAF-X/" class="print-no-link">#PyMAF-X</a>
+      
+        <a href="/tags/%E4%B8%89%E7%BB%B4%E4%BA%BA%E4%BD%93%E6%A8%A1%E5%9E%8B%E9%87%8D%E5%BB%BA/" class="print-no-link">#三维人体模型重建</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>PyMAF-X模型完整复现记录</div>
+      <div>http://example.com/2025/09/16/PyMAF-X复现记录/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>牧丛</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年9月16日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/08/27/%E3%80%8A%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%8B%E7%AC%94%E8%AE%B02/" title="深度学习笔记2">
+                        <span class="hidden-mobile">深度学习笔记2</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
